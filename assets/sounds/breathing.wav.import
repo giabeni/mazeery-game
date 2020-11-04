@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/breathing.wav-06650ece74c2714586289eeb63dd4be4.sample"
+
+[deps]
+
+source_file="res://assets/sounds/breathing.wav"
+dest_files=[ "res://.import/breathing.wav-06650ece74c2714586289eeb63dd4be4.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=true
+compress/mode=0
