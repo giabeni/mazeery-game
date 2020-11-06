@@ -1,5 +1,7 @@
 extends KinematicBody
 
+class_name Player
+
 ### AUX VARIABLES ###
 var direction = Vector3.FORWARD
 var strafe_dir = Vector3.ZERO
@@ -16,7 +18,8 @@ var target_light_range = 0
 var state = {
 	"light_range": 0,
 	"light_enabled": true,
-	"sprint_fuel": 100
+	"sprint_fuel": 100,
+	"hp": 100
 }
 
 ### CONSTANTS ###
@@ -139,3 +142,8 @@ func _set_skin_energy(energy):
 	if body and skin_material:
 		skin_material.emission_energy = energy
 		(body as MeshInstance).mesh.surface_set_material(1, skin_material)
+		
+func hurt(damage):
+	anim_tree.set("parameters/toHurt/active", true)
+	state.hp -= damage
+	print("Player got damage of ", damage, ". => Cur HP = ", state.hp)

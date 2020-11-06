@@ -11,6 +11,7 @@ height = 4.50682
 [node name="Player" type="KinematicBody" groups=[
 "Player",
 ]]
+collision_layer = 2
 
 [node name="Mesh" type="Spatial" parent="."]
 
@@ -28,10 +29,6 @@ __meta__ = {
 }
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
-transform = Transform( 0.66, 0, 0, 0, -2.16556e-08, 0.495424, 0, -0.615571, -2.69075e-08, 0, 1.59257, 0 )
-shape = SubResource( 1 )
-
-[node name="CollisionShape2" type="CollisionShape" parent="."]
 transform = Transform( 0.66, 0, 0, 0, -2.16556e-08, 0.495424, 0, -0.615571, -2.69075e-08, 0, 1.59257, 0 )
 shape = SubResource( 1 )
 

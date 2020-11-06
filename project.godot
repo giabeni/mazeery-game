@@ -8,9 +8,20 @@
 
 config_version=4
 
-_global_script_classes=[  ]
+_global_script_classes=[ {
+"base": "KinematicBody",
+"class": "Player",
+"language": "GDScript",
+"path": "res://scripts/Player.gd"
+}, {
+"base": "KinematicBody",
+"class": "Spider",
+"language": "GDScript",
+"path": "res://scripts/Spider.gd"
+} ]
 _global_script_class_icons={
-
+"Player": "",
+"Spider": ""
 }
 
 [application]
@@ -70,6 +81,11 @@ light_toggle={
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777238,"unicode":0,"echo":false,"script":null)
  ]
 }
+
+[layer_names]
+
+3d_physics/layer_1="General"
+3d_physics/layer_2="Player"
 
 [rendering]
 

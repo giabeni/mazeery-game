@@ -480,7 +480,7 @@ animation = "Shoot_OneHanded"
 [sub_resource type="AnimationNodeOneShot" id=36]
 
 [sub_resource type="AnimationNodeBlendTree" id=37]
-graph_offset = Vector2( 0, 381 )
+graph_offset = Vector2( 0, 127 )
 nodes/Animation/node = SubResource( 3 )
 nodes/Animation/position = Vector2( 1102, 361 )
 nodes/DirSpeed/node = SubResource( 8 )
@@ -518,7 +518,7 @@ nodes/toShoot/node = SubResource( 35 )
 nodes/toShoot/position = Vector2( 1330, 361 )
 nodes/toSlash/node = SubResource( 36 )
 nodes/toSlash/position = Vector2( 1311, 133 )
-node_connections = [ "output", 0, "toRoll", "OneShot", 0, "toSlash", "OneShot", 1, "toShoot", "toRoll", 0, "OneShot", "toRoll", 1, "Roll", "toHurt", 0, "toJump", "toHurt", 1, "ReceiveHit", "Speed", 0, "Idle", "Speed", 1, "Walk", "Speed", 2, "Run", "toSlash", 0, "toPunch", "toSlash", 1, "Animation", "toPunch", 0, "toHurt", "toPunch", 1, "Punch", "toJump", 0, "Strafe", "toJump", 1, "Jump" ]
+node_connections = [ "output", 0, "toRoll", "OneShot", 0, "toSlash", "OneShot", 1, "toShoot", "Speed", 0, "Idle", "Speed", 1, "Walk", "Speed", 2, "Run", "toJump", 0, "Strafe", "toJump", 1, "Jump", "toHurt", 0, "toJump", "toHurt", 1, "ReceiveHit", "toSlash", 0, "toPunch", "toSlash", 1, "Animation", "toPunch", 0, "toHurt", "toPunch", 1, "Punch", "toRoll", 0, "OneShot", "toRoll", 1, "Roll" ]
 
 [node name="PunkMan" instance=ExtResource( 1 )]
 
