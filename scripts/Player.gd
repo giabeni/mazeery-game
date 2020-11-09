@@ -2,6 +2,8 @@ extends KinematicBody
 
 class_name Player
 
+const Sword = preload("res://scenes/Sword.tscn")
+
 ### AUX VARIABLES ###
 var direction = Vector3.FORWARD
 var strafe_dir = Vector3.ZERO
@@ -19,7 +21,12 @@ var state = {
 	"light_range": 0,
 	"light_enabled": true,
 	"sprint_fuel": 100,
-	"hp": 100
+	"hp": 100,
+	"weapon": null
+}
+
+var items = {
+	"sword": Sword
 }
 
 ### CONSTANTS ###
@@ -39,15 +46,18 @@ const MAX_LIGHT_RANGE = 20
 ### NODE VARIABLES ###
 onready var anim_tree: AnimationTree = $Mesh/PunkMan/AnimationTree
 onready var light: OmniLight = $Mesh/Light
+onready var skeleton: Skeleton = $Mesh/PunkMan/CharacterArmature/Skeleton
 onready var body: MeshInstance = $Mesh/PunkMan/CharacterArmature/Skeleton/Body
 onready var footsteps: AudioStreamPlayer = $SoundFootsteps
+onready var hurt_sound: AudioStreamPlayer3D = $SoundHurt
 onready var timer_light: Timer = $TimerLightUsage
 onready var light_bar: ColorRect = $UI/LightBar
 onready var current_light_bar: ColorRect = $UI/LightBar/CurrentLightBar
+onready var fist_attachment: BoneAttachment = $Mesh/PunkMan/CharacterArmature/Skeleton/FistAttachment
 
 func _ready():
 	velocity = Vector3.ZERO
-
+	
 func _input(event):
 	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 		aim_turn += -event.relative.x * TURN_SENSITIVITY
@@ -99,10 +109,22 @@ func _physics_process(delta):
 		vertical_velocity += GRAVITY * delta
 		is_jumping = false
 	
+	# Equipment ------------------
+	if Input.is_action_just_pressed("choose_item_1"):
+		if not is_instance_valid(state.weapon):
+			_equip_item(items.sword)
+		else:
+			state.weapon = null
+			fist_attachment.get_child(0).queue_free()
+		
 	
 	# Attacking ----------------------
 	if Input.is_action_just_pressed("attack"):
-		anim_tree.set("parameters/toPunch/active", true)
+		if not is_instance_valid(state.weapon):
+			anim_tree.set("parameters/toPunch/active", true)
+		else:
+			anim_tree.set("parameters/toSlash/active", true)
+			
 		
 	# Light Toggle ----------------------
 	if Input.is_action_just_pressed("light_toggle"):
@@ -142,8 +164,15 @@ func _set_skin_energy(energy):
 	if body and skin_material:
 		skin_material.emission_energy = energy
 		(body as MeshInstance).mesh.surface_set_material(1, skin_material)
+
+func _equip_item(item_class):
+	var item = item_class.instance()
+	fist_attachment.add_child(item, true)
+	state.weapon = item
 		
+
 func hurt(damage):
 	anim_tree.set("parameters/toHurt/active", true)
+	hurt_sound.play()
 	state.hp -= damage
 	print("Player got damage of ", damage, ". => Cur HP = ", state.hp)

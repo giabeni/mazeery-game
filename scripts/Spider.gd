@@ -28,6 +28,10 @@ onready var right_sight_ray_cast: RayCast = $RightSightRayCast
 onready var timer_attack_duration: Timer = $AttackDurationTimer
 onready var timer_attack_interval: Timer = $AttackIntervalTimer
 onready var blood_spill: Particles = $BloodSpill/Particles
+onready var audio_breath: AudioStreamPlayer3D = $BreathAudio
+onready var audio_steps: AudioStreamPlayer3D = $StepsAudio
+onready var audio_scream: AudioStreamPlayer3D = $ScreamAudio
+onready var audio_bite: AudioStreamPlayer3D = $BiteAudio
 
 var state = {
 	"target": null,
@@ -55,8 +59,16 @@ func _physics_process(delta):
 	if (state.sleeping):
 		_close_eyes(delta)
 		(anim_tree as AnimationTree).set("parameters/IdleWalk/blend_amount", lerp(cur_idle_walk_blend, 0, delta * 10))
+		if not audio_breath.playing:
+			audio_breath.playing = true
+		if audio_scream.playing:
+			audio_scream.playing = false
 	else:
 		_open_eyes(delta)
+		if audio_breath.playing:
+			audio_breath.playing = false
+		if not audio_scream.playing:
+			audio_scream.playing = true
 	
 	# Gravity and Jumping-------------------------
 	if is_on_floor():
@@ -80,9 +92,15 @@ func _physics_process(delta):
 	velocity.y = 0
 	
 	velocity = move_and_slide_with_snap(velocity + Vector3.DOWN * vertical_velocity, Vector3.DOWN * 10, Vector3.UP)
+	
 	cur_idle_walk_blend = 2 * velocity.length()/SPEED
 	(anim_tree as AnimationTree).set("parameters/IdleWalk/blend_amount", cur_idle_walk_blend)
-		
+	
+	if (velocity.length() > 0.2 * SPEED and not audio_steps.playing):
+		audio_steps.playing = true
+		audio_steps.pitch_scale = 0.8 * velocity.length()/SPEED
+	else:
+		audio_steps.playing = false
 	
 func _close_eyes(delta):
 	var eye_material = (body as MeshInstance).get_surface_material(1) as SpatialMaterial
@@ -139,6 +157,7 @@ func _attack():
 		anim_tree.set("parameters/Attack/active", true)
 		timer_attack_duration.start(ATTACK.duration)
 		timer_attack_duration.connect("timeout", self, "_hurt_players")
+		audio_bite.play()
 	
 func _hurt_players():
 	print("Hurting players!")
@@ -158,7 +177,6 @@ func _sleep():
 func _awake():
 #	print("Awaking...", "time = ", OS.get_ticks_msec())
 	state.sleeping = false
-
 
 func _on_AttackArea_body_entered(body):
 	if body.is_in_group("Player") and not body in state.players_in_danger:
