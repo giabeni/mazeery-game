@@ -2,7 +2,24 @@ extends KinematicBody
 
 class_name Player
 
+### CLASSESS ###
 const Sword = preload("res://scenes/Sword.tscn")
+
+### CONSTANTS ###
+const GRAVITY = 20
+const WALK_SPEED = 3
+const RUN_SPEED = 8
+const TURN_SENSITIVITY = 0.015
+
+const ACCELERATION = 6
+const ANGULAR_ACCELERATION = 7
+
+const ROLL_FORCE = 17
+const JUMP_FORCE = 200
+
+const MAX_HP = 100
+
+const MAX_LIGHT_RANGE = 20
 
 ### AUX VARIABLES ###
 var direction = Vector3.FORWARD
@@ -21,7 +38,7 @@ var state = {
 	"light_range": 0,
 	"light_enabled": true,
 	"sprint_fuel": 100,
-	"hp": 100,
+	"hp": MAX_HP,
 	"weapon": null
 }
 
@@ -29,31 +46,22 @@ var items = {
 	"sword": Sword
 }
 
-### CONSTANTS ###
-const GRAVITY = 20
-const WALK_SPEED = 3
-const RUN_SPEED = 8
-const TURN_SENSITIVITY = 0.015
 
-const ACCELERATION = 6
-const ANGULAR_ACCELERATION = 7
-
-const ROLL_FORCE = 17
-const JUMP_FORCE = 200
-
-const MAX_LIGHT_RANGE = 20
 
 ### NODE VARIABLES ###
 onready var anim_tree: AnimationTree = $Mesh/PunkMan/AnimationTree
 onready var light: OmniLight = $Mesh/Light
 onready var skeleton: Skeleton = $Mesh/PunkMan/CharacterArmature/Skeleton
 onready var body: MeshInstance = $Mesh/PunkMan/CharacterArmature/Skeleton/Body
-onready var footsteps: AudioStreamPlayer = $SoundFootsteps
+onready var footsteps_sound: AudioStreamPlayer3D = $SoundFootsteps
 onready var hurt_sound: AudioStreamPlayer3D = $SoundHurt
-onready var timer_light: Timer = $TimerLightUsage
+onready var timer_dizzy: Timer = $DizzyTimer
 onready var light_bar: ColorRect = $UI/LightBar
 onready var current_light_bar: ColorRect = $UI/LightBar/CurrentLightBar
+onready var health_bar: ColorRect = $UI/HealthBar
+onready var current_health_bar: ColorRect = $UI/HealthBar/CurrentHealthBar
 onready var fist_attachment: BoneAttachment = $Mesh/PunkMan/CharacterArmature/Skeleton/FistAttachment
+onready var blood_spill: Particles = $Mesh/BloodSpill/Particles
 
 func _ready():
 	velocity = Vector3.ZERO
@@ -87,14 +95,8 @@ func _physics_process(delta):
 	
 	velocity = lerp(velocity, direction * movement_speed, delta * ACCELERATION)
 	
-	is_walking = abs(velocity.x) <= 0.001 and abs(velocity.z) <= 0.001
+	is_walking = abs(velocity.x) >= 0.001 or abs(velocity.z) >= 0.001
 	
-#	print("\nIS WALKING  ", is_walking)
-	# Sounds -----------------------
-	if is_walking and !footsteps.playing:
-		footsteps.play()
-	elif footsteps.playing:
-		footsteps.stop()
 		
 	# Gravity and Jumping-------------------------
 	if is_on_floor():
@@ -120,10 +122,7 @@ func _physics_process(delta):
 	
 	# Attacking ----------------------
 	if Input.is_action_just_pressed("attack"):
-		if not is_instance_valid(state.weapon):
-			anim_tree.set("parameters/toPunch/active", true)
-		else:
-			anim_tree.set("parameters/toSlash/active", true)
+		_attack()
 			
 		
 	# Light Toggle ----------------------
@@ -141,11 +140,41 @@ func _physics_process(delta):
 	# Rotation --------------------------
 	$Mesh.rotation.y = lerp_angle($Mesh.rotation.y, atan2(direction.x, direction.z) - rotation.y, delta * ANGULAR_ACCELERATION)
 
-	# Set lighthing -------------------
+	# Setiing UI feedback -------------------
 	_set_lighting(delta)
+	_set_hp_bar(delta)	
+	
+	# Sounds -----------------------
+	print("\nIS WALKING  ", is_walking, velocity.length())
+	if velocity.length() > WALK_SPEED:
+		if not footsteps_sound.playing:
+			footsteps_sound.playing = true
+	else:
+		footsteps_sound.playing = false
+	
+func _can_attack():
+	if not is_instance_valid(state.weapon):
+		return not anim_tree.get("parameters/toSlash/active") and not is_dizzy()
+	else:
+		return state.weapon.can_attack() and not anim_tree.get("parameters/toSlash/active") and not is_dizzy()
+
+func _attack():
+	if not _can_attack():
+		return
+
+	if not is_instance_valid(state.weapon):
+		anim_tree.set("parameters/toPunch/active", true)
+	else:
+		state.weapon.start_attack()
+		anim_tree.set("parameters/toSlash/active", true)
 
 func _on_pumpkin_collected(energy):
 	target_light_range = light.omni_range + energy
+	
+func _set_hp_bar(delta):
+	if health_bar and current_health_bar:
+		var new_bar_width = lerp(current_health_bar.rect_size.x, state.hp * health_bar.rect_size.x / MAX_HP, delta * 10)
+		current_health_bar.rect_size.x = clamp(new_bar_width, 0, health_bar.rect_size.x)
 	
 func _set_lighting(delta):
 	light.visible = state.light_enabled
@@ -169,10 +198,16 @@ func _equip_item(item_class):
 	var item = item_class.instance()
 	fist_attachment.add_child(item, true)
 	state.weapon = item
+	if state.weapon.has_method("set_parent"):
+		state.weapon.set_parent(self)
 		
-
 func hurt(damage):
 	anim_tree.set("parameters/toHurt/active", true)
 	hurt_sound.play()
+	timer_dizzy.start()
+	blood_spill.emitting = true
 	state.hp -= damage
-	print("Player got damage of ", damage, ". => Cur HP = ", state.hp)
+#	print("Player got damage of ", damage, ". => Cur HP = ", state.hp)
+
+func is_dizzy():
+	return not timer_dizzy.is_stopped()

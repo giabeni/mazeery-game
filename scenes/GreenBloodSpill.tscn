@@ -4,7 +4,7 @@
 lifetime_randomness = 0.03
 direction = Vector3( 0, 1, 0 )
 gravity = Vector3( 0, -20, 0 )
-initial_velocity = 7.0
+initial_velocity = 8.5
 initial_velocity_random = 0.53
 angular_velocity = -71.36
 radial_accel_random = 0.14
@@ -15,10 +15,10 @@ scale = 0.4
 scale_random = 0.4
 
 [sub_resource type="SpatialMaterial" id=2]
-albedo_color = Color( 1, 0, 0, 1 )
+albedo_color = Color( 0.92549, 0.27451, 0.14902, 1 )
 roughness = 0.0
 emission_enabled = true
-emission = Color( 0.866667, 0.105882, 0.105882, 1 )
+emission = Color( 0.388235, 0.658824, 0.054902, 1 )
 emission_energy = 0.74
 emission_operator = 0
 emission_on_uv2 = false
@@ -32,10 +32,10 @@ mid_height = 0.04
 
 [node name="Particles" type="Particles" parent="."]
 emitting = false
-amount = 1037
-lifetime = 0.64
+amount = 3000
+lifetime = 0.7
 one_shot = true
-explosiveness = 0.31
+explosiveness = 0.47
 randomness = 0.26
 process_material = SubResource( 1 )
 draw_pass_1 = SubResource( 3 )

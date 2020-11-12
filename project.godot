@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Spatial",
+"class": "HealthBar3D",
+"language": "GDScript",
+"path": "res://scripts/HealthBar3D.gd"
+}, {
 "base": "KinematicBody",
 "class": "Player",
 "language": "GDScript",
@@ -20,13 +25,14 @@ _global_script_classes=[ {
 "path": "res://scripts/Spider.gd"
 } ]
 _global_script_class_icons={
+"HealthBar3D": "",
 "Player": "",
 "Spider": ""
 }
 
 [application]
 
-config/name="Maze Royale"
+config/name="Mazeery"
 run/main_scene="res://scenes/Level.tscn"
 config/icon="res://icon.png"
 
@@ -91,6 +97,7 @@ choose_item_1={
 
 3d_physics/layer_1="General"
 3d_physics/layer_2="Player"
+3d_physics/layer_3="Enemies"
 
 [rendering]
 

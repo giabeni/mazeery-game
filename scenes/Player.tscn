@@ -1,9 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://scripts/Camera.gd" type="Script" id=1]
 [ext_resource path="res://assets/sounds/Hurt/simple-hurt.wav" type="AudioStream" id=2]
 [ext_resource path="res://scenes/PunkMan.tscn" type="PackedScene" id=3]
 [ext_resource path="res://assets/sounds/breathing.wav" type="AudioStream" id=4]
+[ext_resource path="res://scenes/BloodSpill.tscn" type="PackedScene" id=5]
+[ext_resource path="res://assets/sounds/steps.wav" type="AudioStream" id=6]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 0.961246
@@ -29,6 +31,9 @@ __meta__ = {
 "_editor_description_": ""
 }
 
+[node name="BloodSpill" parent="Mesh" instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.09814, 0 )
+
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 0.66, 0, 0, 0, -2.16556e-08, 0.495424, 0, -0.615571, -2.69075e-08, 0, 1.59257, 0 )
 shape = SubResource( 1 )
@@ -46,17 +51,21 @@ transform = Transform( -1, 0, -3.25841e-07, -5.91786e-08, 0.983369, 0.181618, 3.
 current = true
 process_mode = 1
 
-[node name="SoundFootsteps" type="AudioStreamPlayer" parent="."]
-
 [node name="SoundBreathing" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 4 )
 volume_db = -1.0
 autoplay = true
 
-[node name="TimerLightUsage" type="Timer" parent="."]
-wait_time = 5.0
-autostart = true
+[node name="DizzyTimer" type="Timer" parent="."]
+wait_time = 0.625
+one_shot = true
 
 [node name="SoundHurt" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource( 2 )
 pitch_scale = 0.9
+
+[node name="SoundFootsteps" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource( 6 )
+unit_db = 10.0
+max_db = 5.5
+autoplay = true
