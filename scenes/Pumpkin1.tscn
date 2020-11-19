@@ -117,6 +117,7 @@ tracks/3/keys = {
 [node name="Pumpkin1" type="Area" groups=[
 "Pumpkins",
 ]]
+transform = Transform( 1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, 0, 0, 0 )
 script = ExtResource( 2 )
 
 [node name="Pumpkin004" type="MeshInstance" parent="."]

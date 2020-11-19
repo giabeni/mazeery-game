@@ -1,0 +1,132 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://assets/animations/GemsIdle1.anim" type="Animation" id=1]
+[ext_resource path="res://assets/materials/diamond_red.tres" type="Material" id=2]
+
+[sub_resource type="Shader" id=1]
+resource_name = "Shader Nodetree"
+code = "shader_type spatial;
+render_mode blend_mix, depth_draw_always, cull_back, diffuse_burley, specular_schlick_ggx;
+
+uniform vec2 refraction_offset = vec2(0.2, 0.2);
+
+
+void node_bsdf_glass(vec4 color, float roughness, float IOR, out vec3 albedo,
+        out float alpha, out float specular_out, out float roughness_out,
+        out float transmission_out, out float ior) {
+    albedo = color.rgb;
+    alpha = 0.0;
+    specular_out = pow((IOR - 1.0)/(IOR + 1.0), 2)/0.08;
+    roughness_out = roughness;
+    transmission_out = 0.0;
+    ior = IOR;
+}
+
+
+void refraction_fresnel(vec3 view_dir, vec3 normal, float ior, out float kr) {
+// reference [https://www.scratchapixel.com/lessons/
+// 3d-basic-rendering/introduction-to-shading/reflection-refraction-fresnel]
+    float cosi = clamp(-1.0, 1.0, dot(view_dir, normal));
+    float etai = 1.0, etat = ior;
+    if (cosi > 0.0) {
+        float tmp = etai;
+        etai = etat;
+        etat = tmp;
+    }
+    // Compute sini using Snell's law
+    float sint = etai / etat * sqrt(max(0.0, 1.0 - cosi * cosi));
+    // Total internal reflection
+    if (sint >= 1.0) {
+        kr = 1.0;
+    }
+    else {
+        float cost = sqrt(max(0.0, 1.0 - sint * sint));
+        cosi = abs(cosi);
+        float Rs = ((etat * cosi) - (etai * cost))
+                    / ((etat * cosi) + (etai * cost));
+        float Rp = ((etai * cosi) - (etat * cost))
+                    / ((etai * cosi) + (etat * cost));
+        kr = (Rs * Rs + Rp * Rp) * 0.5;
+    }
+}
+
+void vertex () {
+}
+
+void fragment () {
+	
+	// node: 'Glass BSDF'
+	// type: 'ShaderNodeBsdfGlass'
+	// input sockets handling
+	vec4 node0_in0_color = vec4(0.8000000715255737, 0.061576567590236664,
+		0.021819932386279106, 1.0);
+	float node0_in1_roughness = float(0.0);
+	float node0_in2_ior = float(1.4500000476837158);
+	vec3 node0_in3_normal = NORMAL;
+	// output sockets definitions
+	vec3 node0_bsdf_out0_albedo;
+	float node0_bsdf_out1_alpha;
+	float node0_bsdf_out2_specular;
+	float node0_bsdf_out3_roughness;
+	float node0_bsdf_out4_transmission;
+	float node0_bsdf_out5_ior;
+	
+	node_bsdf_glass(node0_in0_color, node0_in1_roughness, node0_in2_ior,
+		node0_bsdf_out0_albedo, node0_bsdf_out1_alpha, node0_bsdf_out2_specular,
+		node0_bsdf_out3_roughness, node0_bsdf_out4_transmission, node0_bsdf_out5_ior);
+	
+	
+	ALBEDO = node0_bsdf_out0_albedo;
+	SPECULAR = node0_bsdf_out2_specular;
+	ROUGHNESS = node0_bsdf_out3_roughness;
+	NORMAL = node0_in3_normal;
+	// uncomment it when you need it
+	// TRANSMISSION = vec3(1.0, 1.0, 1.0) * node0_bsdf_out4_transmission;
+	refraction_fresnel(VERTEX, NORMAL, node0_bsdf_out5_ior, node0_bsdf_out1_alpha);
+	EMISSION += textureLod(SCREEN_TEXTURE, SCREEN_UV - NORMAL.xy * refraction_offset
+		, ROUGHNESS).rgb * (1.0 - node0_bsdf_out1_alpha);
+	ALBEDO *= node0_bsdf_out1_alpha;
+	ALPHA = 1.0;
+}
+"
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
+shader_param/refraction_offset = Vector2( 0.2, 0.2 )
+
+[sub_resource type="ArrayMesh" id=3]
+resource_name = "Cube003"
+surfaces/0 = {
+"aabb": AABB( -0.157029, -0.490807, -0.157029, 0.314068, 0.822091, 0.314068 ),
+"array_data": PoolByteArray( 54, 204, 32, 62, 40, 90, 35, 61, 54, 204, 32, 62, 0, 220, 121, 0, 129, 0, 0, 127, 54, 189, 244, 59, 54, 204, 32, 190, 40, 90, 35, 61, 54, 204, 32, 62, 0, 220, 121, 0, 129, 0, 0, 127, 252, 59, 244, 59, 0, 0, 0, 0, 14, 75, 251, 190, 0, 0, 0, 0, 0, 220, 121, 0, 129, 0, 0, 127, 252, 59, 58, 189, 54, 204, 32, 62, 40, 90, 35, 61, 54, 204, 32, 190, 121, 220, 0, 0, 0, 0, 127, 127, 54, 189, 244, 59, 54, 204, 32, 62, 40, 90, 35, 61, 54, 204, 32, 62, 121, 220, 0, 0, 0, 0, 127, 127, 252, 59, 244, 59, 0, 0, 0, 0, 14, 75, 251, 190, 0, 0, 0, 0, 121, 220, 0, 0, 0, 0, 127, 127, 252, 59, 58, 189, 54, 204, 32, 190, 40, 90, 35, 61, 54, 204, 32, 190, 0, 220, 135, 0, 127, 0, 0, 127, 54, 189, 244, 59, 54, 204, 32, 62, 40, 90, 35, 61, 54, 204, 32, 190, 0, 220, 135, 0, 127, 0, 0, 127, 252, 59, 244, 59, 0, 0, 0, 0, 14, 75, 251, 190, 0, 0, 0, 0, 0, 220, 135, 0, 127, 0, 0, 127, 252, 59, 58, 189, 54, 204, 32, 190, 40, 90, 35, 61, 54, 204, 32, 62, 135, 220, 0, 0, 0, 0, 129, 127, 54, 189, 244, 59, 54, 204, 32, 190, 40, 90, 35, 61, 54, 204, 32, 190, 135, 220, 0, 0, 0, 0, 129, 127, 252, 59, 244, 59, 0, 0, 0, 0, 14, 75, 251, 190, 0, 0, 0, 0, 135, 220, 0, 0, 0, 0, 129, 127, 252, 59, 58, 189, 0, 0, 0, 0, 14, 158, 169, 62, 0, 0, 0, 0, 0, 60, 111, 0, 202, 155, 54, 127, 54, 189, 244, 59, 54, 204, 32, 190, 40, 90, 35, 61, 54, 204, 32, 62, 0, 60, 111, 0, 202, 155, 54, 127, 252, 59, 244, 59, 54, 204, 32, 62, 40, 90, 35, 61, 54, 204, 32, 62, 0, 60, 111, 0, 202, 155, 54, 127, 252, 59, 58, 189, 0, 0, 0, 0, 14, 158, 169, 62, 0, 0, 0, 0, 111, 60, 0, 0, 54, 155, 54, 127, 54, 189, 244, 59, 54, 204, 32, 62, 40, 90, 35, 61, 54, 204, 32, 62, 111, 60, 0, 0, 54, 155, 54, 127, 252, 59, 244, 59, 54, 204, 32, 62, 40, 90, 35, 61, 54, 204, 32, 190, 111, 60, 0, 0, 54, 155, 54, 127, 252, 59, 58, 189, 0, 0, 0, 0, 14, 158, 169, 62, 0, 0, 0, 0, 0, 60, 145, 0, 54, 155, 202, 127, 54, 189, 244, 59, 54, 204, 32, 62, 40, 90, 35, 61, 54, 204, 32, 190, 0, 60, 145, 0, 54, 155, 202, 127, 252, 59, 244, 59, 54, 204, 32, 190, 40, 90, 35, 61, 54, 204, 32, 190, 0, 60, 145, 0, 54, 155, 202, 127, 252, 59, 58, 189, 0, 0, 0, 0, 14, 158, 169, 62, 0, 0, 0, 0, 145, 60, 0, 0, 202, 155, 202, 127, 54, 189, 244, 59, 54, 204, 32, 190, 40, 90, 35, 61, 54, 204, 32, 190, 145, 60, 0, 0, 202, 155, 202, 127, 252, 59, 244, 59, 54, 204, 32, 190, 40, 90, 35, 61, 54, 204, 32, 62, 145, 60, 0, 0, 202, 155, 202, 127, 252, 59, 58, 189 ),
+"array_index_data": PoolByteArray( 0, 0, 2, 0, 1, 0, 3, 0, 5, 0, 4, 0, 6, 0, 8, 0, 7, 0, 9, 0, 11, 0, 10, 0, 12, 0, 14, 0, 13, 0, 15, 0, 17, 0, 16, 0, 18, 0, 20, 0, 19, 0, 21, 0, 23, 0, 22, 0 ),
+"blend_shape_data": [  ],
+"format": 97559,
+"index_count": 24,
+"material": SubResource( 2 ),
+"primitive": 4,
+"skeleton_aabb": [  ],
+"vertex_count": 24
+}
+
+[sub_resource type="BoxShape" id=4]
+extents = Vector3( 0.188303, 0.421625, 0.179908 )
+
+[node name="Gem3" type="Area"]
+transform = Transform( 1, 0, 6.51683e-07, 0, 1, 0, -6.51683e-07, 0, 1, 0, 0, 0 )
+
+[node name="Gem3" type="MeshInstance" parent="."]
+mesh = SubResource( 3 )
+material/0 = ExtResource( 2 )
+
+[node name="OmniLight" type="OmniLight" parent="."]
+light_color = Color( 0.854902, 0.254902, 0.254902, 1 )
+light_energy = 4.0
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0744145, 0 )
+shape = SubResource( 4 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "GemsIdle"
+anims/GemsIdle = ExtResource( 1 )

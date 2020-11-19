@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://assets/models/Itens/Sword/LightSteel.material" type="Material" id=1]
 [ext_resource path="res://assets/models/Itens/Sword/Steel.material" type="Material" id=2]
@@ -92,9 +92,16 @@ points = PoolVector3Array( -0.0892026, -0.363207, 0.00613727, -0.0892026, -0.284
 [sub_resource type="ConvexPolygonShape" id=8]
 points = PoolVector3Array( -0.128738, 1.5194, -0.00176753, -0.120817, 0.641507, 0.00614347, -0.112921, 0.522946, -0.00967852, -0.112921, 1.52735, 0.0140545, -0.112921, 1.74898, 0.00614347, -0.105, 0.522946, 0.0140545, -0.105, 0.823528, -0.0175895, -0.105, 1.52735, -0.0175895, -0.105, 1.75666, -0.00967852, -0.0971043, 0.522946, -0.0175895, -0.0971043, 1.75666, 0.0140545, -0.089183, 1.75666, -0.0175895, -0.0575492, 1.82793, -0.0175895, -0.0403974, 1.86343, -0.00176753, -0.0100983, 1.88331, -0.0175895, -0.00972562, 1.90109, -0.00176753, -0.00947427, 1.88628, 0.00572798, 0.0053337, 1.83704, 0.0126, 0.00551431, 1.89104, 0.00578171, 0.00559846, 1.90611, -0.00176753, 0.0513191, 1.8442, -0.00176753, 0.0531695, 1.83602, -0.0175895, 0.0848289, 1.77256, -0.0175895, 0.0927502, 0.522809, -0.0175895, 0.0927502, 0.522809, 0.0140545, 0.0927502, 1.70937, -0.0175895, 0.0927502, 1.76475, 0.0140545, 0.100646, 1.77256, -0.00967852, 0.108567, 0.522809, 0.00614347, 0.108567, 1.74898, -0.00967852, 0.108567, 1.7568, 0.00614347, 0.109031, 1.16418, 0.0120731, 0.111778, 1.16633, -0.00843436 )
 
-[node name="Sword" type="RigidBody"]
+[sub_resource type="CylinderShape" id=9]
+radius = 1.676
+height = 1.00055
+
+[node name="Sword" type="RigidBody" groups=[
+"Weapon",
+]]
 transform = Transform( -0.122788, 0.122788, -0.984808, -0.992404, -0.00759608, 0.122788, 0.00759608, 0.992404, 0.122788, 0, 0.0839491, 0 )
 collision_mask = 6
+mass = 5.0
 continuous_cd = true
 contacts_reported = 2
 contact_monitor = true
@@ -134,4 +141,15 @@ one_shot = true
 
 [node name="SlashSound" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource( 7 )
+
+[node name="PickableArea" type="Area" parent="."]
+transform = Transform( 1, -4.65661e-10, -2.32831e-10, -4.65661e-10, 1, 0, 6.0536e-09, -7.45058e-09, 1, 0, 0, 0 )
+monitorable = false
+collision_mask = 2
+
+[node name="CollisionShape" type="CollisionShape" parent="PickableArea"]
+transform = Transform( 0.109155, -0.127358, 0.960578, -1.37284, 0.11224, 0.177894, -0.177703, -0.985511, -0.103217, -0.0442575, 0.782643, 0.124047 )
+shape = SubResource( 9 )
 [connection signal="body_entered" from="." to="." method="_on_Sword_body_entered"]
+[connection signal="body_entered" from="PickableArea" to="." method="_on_PickableArea_body_entered"]
+[connection signal="body_exited" from="PickableArea" to="." method="_on_PickableArea_body_exited"]

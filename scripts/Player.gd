@@ -33,17 +33,23 @@ var vertical_velocity = 0
 var movement_speed = 0
 var target_light_range = 0
 
+var is_in_pickable_area = false
+var pickable_item = null
+
+
 ### STATE VARIABLES ###
 var state = {
 	"light_range": 0,
 	"light_enabled": true,
 	"sprint_fuel": 100,
 	"hp": MAX_HP,
-	"weapon": null
+	"weapon": null,
+	"backpack": [null, null, null],
+	"active_slot": null,
 }
 
 var items = {
-	"sword": Sword
+	"Sword": Sword
 }
 
 
@@ -58,10 +64,12 @@ onready var hurt_sound: AudioStreamPlayer3D = $SoundHurt
 onready var timer_dizzy: Timer = $DizzyTimer
 onready var light_bar: ColorRect = $UI/LightBar
 onready var current_light_bar: ColorRect = $UI/LightBar/CurrentLightBar
+onready var backpack_slots: Control = $UI/BackpackSlots
 onready var health_bar: ColorRect = $UI/HealthBar
 onready var current_health_bar: ColorRect = $UI/HealthBar/CurrentHealthBar
 onready var fist_attachment: BoneAttachment = $Mesh/PunkMan/CharacterArmature/Skeleton/FistAttachment
 onready var blood_spill: Particles = $Mesh/BloodSpill/Particles
+onready var pickable_msg: RichTextLabel = $PickableMessage
 
 func _ready():
 	velocity = Vector3.ZERO
@@ -113,11 +121,13 @@ func _physics_process(delta):
 	
 	# Equipment ------------------
 	if Input.is_action_just_pressed("choose_item_1"):
-		if not is_instance_valid(state.weapon):
-			_equip_item(items.sword)
-		else:
-			state.weapon = null
-			fist_attachment.get_child(0).queue_free()
+		_equip_item(1)
+	if Input.is_action_just_pressed("choose_item_2"):
+		_equip_item(2)
+	if Input.is_action_just_pressed("choose_item_3"):
+		_equip_item(3)
+	if Input.is_action_just_pressed("drop_item") and state.active_slot != null:
+		_drop_item(state.active_slot)
 		
 	
 	# Attacking ----------------------
@@ -145,7 +155,6 @@ func _physics_process(delta):
 	_set_hp_bar(delta)	
 	
 	# Sounds -----------------------
-	print("\nIS WALKING  ", is_walking, velocity.length())
 	if velocity.length() > WALK_SPEED:
 		if not footsteps_sound.playing:
 			footsteps_sound.playing = true
@@ -194,13 +203,90 @@ func _set_skin_energy(energy):
 		skin_material.emission_energy = energy
 		(body as MeshInstance).mesh.surface_set_material(1, skin_material)
 
-func _equip_item(item_class):
-	var item = item_class.instance()
-	fist_attachment.add_child(item, true)
-	state.weapon = item
+func _equip_item(slot):
+	
+	if is_in_pickable_area and is_instance_valid(pickable_item):
+		if state.backpack[slot - 1] != null:
+			_drop_item(slot)
+		_pickup_item(slot, pickable_item)
+	else:
+		var item_metadata = state.backpack[slot - 1]
+		anim_tree.set("parameters/toEquip/active", true)
+		yield(get_tree().create_timer(0.4), "timeout")
+		if is_instance_valid(state.weapon) and item_metadata != null:
+			if item_metadata.name == state.weapon.metadata.name:
+				_unequip_item()
+		elif state.backpack[slot - 1] != null:
+			_set_active_slot(slot)
+			_instantiate_item(item_metadata)
+			
+func _unequip_item():
+	if is_instance_valid(state.weapon):
+		state.weapon = null
+		_set_active_slot(null)
+		fist_attachment.get_child(0).queue_free()
+	
+		
+func _pickup_item(slot, item):
+	
+	if not "metadata" in item:
+		return
+		
+	anim_tree.set("parameters/toPickUp/active", true)
+	yield(get_tree().create_timer(0.7), "timeout")
+	
+	item.get_parent().remove_child(item)
+	_instantiate_item(item.metadata)
+	
+	state.backpack[slot - 1] = item.metadata
+	_set_active_slot(slot)
+	_set_slot_icon(slot, item.metadata.icon)
+
+	item.queue_free()
+	
+		
+func _instantiate_item(item_metadata):
+	var item_instance = items[item_metadata.type].instance()
+
+	fist_attachment.add_child(item_instance, true)
+	state.weapon = item_instance
+
 	if state.weapon.has_method("set_parent"):
 		state.weapon.set_parent(self)
+
+func _drop_item(slot):
+	if state.backpack[slot - 1] != null:
+		var item_metadata = state.backpack[slot - 1]
 		
+		if is_instance_valid(state.weapon) and state.weapon.metadata.name == item_metadata.name:
+			state.weapon = null
+			fist_attachment.get_child(0).queue_free()
+		
+		var item_instance = items[item_metadata.type].instance()
+		item_instance.global_transform = fist_attachment.get_child(0).global_transform
+		item_instance.scale = item_metadata.level_scale
+		get_parent().add_child(item_instance, true)
+		state.backpack[slot - 1] = null
+		_set_slot_icon(slot, null)
+		_set_active_slot(null)
+		
+func _set_active_slot(slot):
+	if slot != null:
+		state.active_slot = slot
+		var slot_button = backpack_slots.get_node("Slot" + String(slot))
+		if is_instance_valid(slot_button):
+			slot_button.grab_focus()
+	else:
+		var slot_button = backpack_slots.get_node("Slot" + String(state.active_slot))
+		if is_instance_valid(slot_button):
+			slot_button.release_focus()
+		state.active_slot = null
+	
+func _set_slot_icon(slot, icon):
+	var slot_button = backpack_slots.get_node("Slot" + String(slot))
+	if is_instance_valid(slot_button):
+		slot_button.icon = load("res://assets/icons/weapons/" + icon) if icon != null else null
+	
 func hurt(damage):
 	anim_tree.set("parameters/toHurt/active", true)
 	hurt_sound.play()
@@ -211,3 +297,13 @@ func hurt(damage):
 
 func is_dizzy():
 	return not timer_dizzy.is_stopped()
+	
+func on_PickableArea_entered(item):
+	is_in_pickable_area = true
+	pickable_item = item
+	pickable_msg.show()
+	
+func on_PickableArea_exited(item):
+	is_in_pickable_area = false
+	pickable_item = null
+	pickable_msg.hide()

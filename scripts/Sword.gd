@@ -2,6 +2,7 @@ extends RigidBody
 
 onready var timer_attack_interval: Timer = $AttackIntervalTimer
 onready var slash_sound: AudioStreamPlayer3D = $SlashSound
+onready var pickable_area: Area = $PickableArea
 
 var ATTRIBUTES = {
 	"DAMAGE": 10,
@@ -9,7 +10,14 @@ var ATTRIBUTES = {
 }
 
 var state = {
-	"attacking": true,
+	"attacking": false,
+}
+
+var metadata = {
+	"type": "Sword",
+	"name": "Sword",
+	"icon": "Sword.png",
+	"level_scale": Vector3(0.5, 0.5, 0.5)
 }
 
 var parent: Node
@@ -29,9 +37,13 @@ func stop_attack():
 
 func set_parent(node):
 	parent = node
+	if parent != null:
+		pickable_area.monitoring = false
+	else:
+		pickable_area.monitoring = true
 		
 func can_attack():
-	return timer_attack_interval.is_stopped()
+	return is_instance_valid(parent) and timer_attack_interval.is_stopped()
 
 func _hit_enemies(body: Object):
 	if body.has_method("hurt"):
@@ -50,3 +62,13 @@ func _on_Sword_body_entered(body: Object):
 		if body.is_in_group("Enemy") or body.is_in_group("Player"):
 			timer_attack_interval.start(ATTRIBUTES.ATTACK_INTERVAL)
 			_hit_enemies(body)
+
+
+func _on_PickableArea_body_entered(body):
+	if body.is_in_group("Player") and body.has_method("on_PickableArea_entered"):
+		body.on_PickableArea_entered(self)
+
+
+func _on_PickableArea_body_exited(body):
+	if body.is_in_group("Player") and body.has_method("on_PickableArea_exited"):
+		body.on_PickableArea_exited(self)

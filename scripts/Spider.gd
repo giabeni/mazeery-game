@@ -210,6 +210,8 @@ func _set_health_bar(bar: HealthBar3D, current_hp):
 		bar.set_current_hp(current_hp)
 		
 func _die():
+	if state.dead:
+		return
 	_sleep()
 	_close_eyes(1)
 	state.dead = true

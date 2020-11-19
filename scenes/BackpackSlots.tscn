@@ -1,0 +1,49 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/styles/NormalSlot.stylebox" type="StyleBox" id=1]
+[ext_resource path="res://assets/styles/ActiveSlot.stylebox" type="StyleBox" id=2]
+
+[node name="BackpackSlots" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slot1" type="Button" parent="."]
+margin_left = 735.589
+margin_top = 505.82
+margin_right = 810.589
+margin_bottom = 580.82
+custom_styles/focus = ExtResource( 2 )
+custom_styles/normal = ExtResource( 1 )
+expand_icon = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slot2" type="Button" parent="."]
+margin_left = 830.916
+margin_top = 505.82
+margin_right = 905.916
+margin_bottom = 580.82
+custom_styles/focus = ExtResource( 2 )
+custom_styles/normal = ExtResource( 1 )
+toggle_mode = true
+expand_icon = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slot3" type="Button" parent="."]
+margin_left = 928.915
+margin_top = 505.82
+margin_right = 1003.91
+margin_bottom = 580.82
+custom_styles/focus = ExtResource( 2 )
+custom_styles/normal = ExtResource( 1 )
+toggle_mode = true
+expand_icon = true
+__meta__ = {
+"_edit_use_anchors_": false
+}

@@ -12,7 +12,7 @@ var cur_hp = 100
 var target_hp = 100
 
 func _ready():
-	initial_bar_size = bar.mesh.size.x
+	initial_bar_size = bg_bar.mesh.size.x
 	
 func hide():
 	if visible:
@@ -33,3 +33,4 @@ func _process(delta):
 		cur_hp = lerp(cur_hp, target_hp, delta * 10)
 		
 		bar.mesh.size.x = initial_bar_size * cur_hp/max_hp
+		bar.translation.x = -(initial_bar_size - bar.mesh.size.x)/2

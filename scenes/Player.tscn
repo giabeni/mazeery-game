@@ -69,3 +69,15 @@ stream = ExtResource( 6 )
 unit_db = 10.0
 max_db = 5.5
 autoplay = true
+
+[node name="PickableMessage" type="RichTextLabel" parent="."]
+visible = false
+margin_left = 361.69
+margin_top = 422.997
+margin_right = 708.69
+margin_bottom = 442.997
+size_flags_horizontal = 3
+text = "Press 1, 2, or 3 to save the item in one backpack slot."
+__meta__ = {
+"_edit_use_anchors_": false
+}

@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=2]
+[gd_scene load_steps=53 format=2]
 
 [ext_resource path="res://assets/models/PunkMan/PunkMan.glb" type="PackedScene" id=1]
 [ext_resource path="res://assets/animations/Jump.anim" type="Animation" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://assets/animations/Walk_Carry.anim" type="Animation" id=7]
 [ext_resource path="res://assets/models/PunkMan/Walk_Left.anim" type="Animation" id=8]
 [ext_resource path="res://assets/models/PunkMan/Walk_Right.anim" type="Animation" id=9]
+[ext_resource path="res://assets/models/KimonoMan/ChangeEquipment.anim" type="Animation" id=10]
 
 [sub_resource type="Animation" id=1]
 resource_name = "Walk_Back"
@@ -370,170 +371,194 @@ blend_point_3/node = SubResource( 7 )
 blend_point_3/pos = 0.0
 
 [sub_resource type="AnimationNodeAnimation" id=9]
-animation = "Idle"
+animation = "ChangeEquipment"
 
 [sub_resource type="AnimationNodeAnimation" id=10]
+animation = "Idle"
+
+[sub_resource type="AnimationNodeAnimation" id=11]
 animation = "Jump"
 
-[sub_resource type="AnimationNodeOneShot" id=11]
+[sub_resource type="AnimationNodeOneShot" id=12]
 filter_enabled = true
 filters = [ "CharacterArmature/Skeleton:abdomen", "CharacterArmature/Skeleton:body", "CharacterArmature/Skeleton:bone", "CharacterArmature/Skeleton:fist_r", "CharacterArmature/Skeleton:head", "CharacterArmature/Skeleton:hips", "CharacterArmature/Skeleton:lower_arm_r", "CharacterArmature/Skeleton:neck", "CharacterArmature/Skeleton:pole_target_l", "CharacterArmature/Skeleton:pole_target_r", "CharacterArmature/Skeleton:shoulder_r", "CharacterArmature/Skeleton:torso", "CharacterArmature/Skeleton:upper_arm_r" ]
 
-[sub_resource type="AnimationNodeAnimation" id=12]
-animation = "Punch"
-
 [sub_resource type="AnimationNodeAnimation" id=13]
-animation = "RecieveHit"
+animation = "PickUp"
 
 [sub_resource type="AnimationNodeAnimation" id=14]
-animation = "Roll"
+animation = "Punch"
 
 [sub_resource type="AnimationNodeAnimation" id=15]
-animation = "Run"
+animation = "RecieveHit"
 
-[sub_resource type="AnimationNodeBlend3" id=16]
+[sub_resource type="AnimationNodeAnimation" id=16]
+animation = "Roll"
 
 [sub_resource type="AnimationNodeAnimation" id=17]
 animation = "Run"
 
-[sub_resource type="AnimationNodeAnimation" id=18]
-animation = "Idle"
+[sub_resource type="AnimationNodeBlend3" id=18]
 
 [sub_resource type="AnimationNodeAnimation" id=19]
 animation = "Run"
 
 [sub_resource type="AnimationNodeAnimation" id=20]
-animation = "Walk"
+animation = "Idle"
 
 [sub_resource type="AnimationNodeAnimation" id=21]
-animation = "Walk"
-
-[sub_resource type="AnimationNodeAnimation" id=22]
-animation = "Walk_Back"
-
-[sub_resource type="AnimationNodeAnimation" id=23]
-animation = "Walk_Left"
-
-[sub_resource type="AnimationNodeAnimation" id=24]
-animation = "Walk_Right"
-
-[sub_resource type="AnimationNodeAnimation" id=25]
-animation = "Walk_Right"
-
-[sub_resource type="AnimationNodeAnimation" id=26]
-animation = "Walk_Left"
-
-[sub_resource type="AnimationNodeAnimation" id=27]
 animation = "Run"
 
-[sub_resource type="AnimationNodeAnimation" id=28]
+[sub_resource type="AnimationNodeAnimation" id=22]
 animation = "Walk"
 
-[sub_resource type="AnimationNodeBlendSpace2D" id=29]
-blend_point_0/node = SubResource( 17 )
-blend_point_0/pos = Vector2( 1, 0 )
-blend_point_1/node = SubResource( 18 )
-blend_point_1/pos = Vector2( 0, 0 )
-blend_point_2/node = SubResource( 21 )
-blend_point_2/pos = Vector2( 0.4, 0 )
-blend_point_3/node = SubResource( 22 )
-blend_point_3/pos = Vector2( -0.5, 0 )
-blend_point_4/node = SubResource( 23 )
-blend_point_4/pos = Vector2( 0.9, 1.4 )
-blend_point_5/node = SubResource( 24 )
-blend_point_5/pos = Vector2( 0.9, -1.4 )
-blend_point_6/node = SubResource( 25 )
-blend_point_6/pos = Vector2( -0.5, 1 )
-blend_point_7/node = SubResource( 26 )
-blend_point_7/pos = Vector2( -0.5, -1 )
-blend_point_8/node = SubResource( 27 )
-blend_point_8/pos = Vector2( 0, 1 )
-blend_point_9/node = SubResource( 28 )
-blend_point_9/pos = Vector2( 0, 0.4 )
-blend_point_10/node = SubResource( 19 )
-blend_point_10/pos = Vector2( 0, -1 )
-blend_point_11/node = SubResource( 20 )
-blend_point_11/pos = Vector2( 0, -0.4 )
-min_space = Vector2( -1, -2 )
-max_space = Vector2( 2, 2 )
+[sub_resource type="AnimationNodeAnimation" id=23]
+animation = "Walk"
 
-[sub_resource type="AnimationNodeTimeScale" id=38]
+[sub_resource type="AnimationNodeAnimation" id=24]
+animation = "Walk_Back"
+
+[sub_resource type="AnimationNodeAnimation" id=25]
+animation = "Walk_Left"
+
+[sub_resource type="AnimationNodeAnimation" id=26]
+animation = "Walk_Right"
+
+[sub_resource type="AnimationNodeAnimation" id=27]
+animation = "Walk_Right"
+
+[sub_resource type="AnimationNodeAnimation" id=28]
+animation = "Walk_Left"
+
+[sub_resource type="AnimationNodeAnimation" id=29]
+animation = "Run"
 
 [sub_resource type="AnimationNodeAnimation" id=30]
 animation = "Walk"
 
-[sub_resource type="AnimationNodeOneShot" id=31]
-filter_enabled = true
-filters = [ "CharacterArmature/Skeleton:abdomen", "CharacterArmature/Skeleton:body", "CharacterArmature/Skeleton:bone", "CharacterArmature/Skeleton:fist_l", "CharacterArmature/Skeleton:fist_r", "CharacterArmature/Skeleton:head", "CharacterArmature/Skeleton:hips", "CharacterArmature/Skeleton:lower_arm_l", "CharacterArmature/Skeleton:lower_arm_r", "CharacterArmature/Skeleton:neck", "CharacterArmature/Skeleton:pole_target_l", "CharacterArmature/Skeleton:pole_target_r", "CharacterArmature/Skeleton:shoulder_l", "CharacterArmature/Skeleton:shoulder_r", "CharacterArmature/Skeleton:torso", "CharacterArmature/Skeleton:upper_arm_l", "CharacterArmature/Skeleton:upper_arm_r" ]
+[sub_resource type="AnimationNodeBlendSpace2D" id=31]
+blend_point_0/node = SubResource( 19 )
+blend_point_0/pos = Vector2( 1, 0 )
+blend_point_1/node = SubResource( 20 )
+blend_point_1/pos = Vector2( 0, 0 )
+blend_point_2/node = SubResource( 23 )
+blend_point_2/pos = Vector2( 0.4, 0 )
+blend_point_3/node = SubResource( 24 )
+blend_point_3/pos = Vector2( -0.5, 0 )
+blend_point_4/node = SubResource( 25 )
+blend_point_4/pos = Vector2( 0.9, 1.4 )
+blend_point_5/node = SubResource( 26 )
+blend_point_5/pos = Vector2( 0.9, -1.4 )
+blend_point_6/node = SubResource( 27 )
+blend_point_6/pos = Vector2( -0.5, 1 )
+blend_point_7/node = SubResource( 28 )
+blend_point_7/pos = Vector2( -0.5, -1 )
+blend_point_8/node = SubResource( 29 )
+blend_point_8/pos = Vector2( 0, 1 )
+blend_point_9/node = SubResource( 30 )
+blend_point_9/pos = Vector2( 0, 0.4 )
+blend_point_10/node = SubResource( 21 )
+blend_point_10/pos = Vector2( 0, -1 )
+blend_point_11/node = SubResource( 22 )
+blend_point_11/pos = Vector2( 0, -0.4 )
+min_space = Vector2( -1, -2 )
+max_space = Vector2( 2, 2 )
 
-[sub_resource type="AnimationNodeOneShot" id=32]
-filter_enabled = true
-filters = [ "CharacterArmature/Skeleton:abdomen", "CharacterArmature/Skeleton:body", "CharacterArmature/Skeleton:bone", "CharacterArmature/Skeleton:foot_l", "CharacterArmature/Skeleton:foot_r", "CharacterArmature/Skeleton:head", "CharacterArmature/Skeleton:hips", "CharacterArmature/Skeleton:lower_leg_l", "CharacterArmature/Skeleton:lower_leg_r", "CharacterArmature/Skeleton:neck", "CharacterArmature/Skeleton:pole_target_l", "CharacterArmature/Skeleton:pole_target_r", "CharacterArmature/Skeleton:torso", "CharacterArmature/Skeleton:upper_leg_l", "CharacterArmature/Skeleton:upper_leg_r" ]
+[sub_resource type="AnimationNodeTimeScale" id=32]
 
-[sub_resource type="AnimationNodeOneShot" id=33]
-filter_enabled = true
-filters = [ "CharacterArmature/Skeleton:abdomen", "CharacterArmature/Skeleton:body", "CharacterArmature/Skeleton:bone", "CharacterArmature/Skeleton:fist_l", "CharacterArmature/Skeleton:fist_r", "CharacterArmature/Skeleton:head", "CharacterArmature/Skeleton:hips", "CharacterArmature/Skeleton:lower_arm_l", "CharacterArmature/Skeleton:lower_arm_r", "CharacterArmature/Skeleton:neck", "CharacterArmature/Skeleton:pole_target_l", "CharacterArmature/Skeleton:pole_target_r", "CharacterArmature/Skeleton:shoulder_l", "CharacterArmature/Skeleton:shoulder_r", "CharacterArmature/Skeleton:torso", "CharacterArmature/Skeleton:upper_arm_l", "CharacterArmature/Skeleton:upper_arm_r" ]
+[sub_resource type="AnimationNodeAnimation" id=33]
+animation = "Walk"
 
 [sub_resource type="AnimationNodeOneShot" id=34]
+filter_enabled = true
+filters = [ "CharacterArmature/Skeleton:fist_r", "CharacterArmature/Skeleton:head", "CharacterArmature/Skeleton:lower_arm_r", "CharacterArmature/Skeleton:neck", "CharacterArmature/Skeleton:shoulder_r", "CharacterArmature/Skeleton:upper_arm_r" ]
 
-[sub_resource type="AnimationNodeAnimation" id=35]
-animation = "Shoot_OneHanded"
+[sub_resource type="AnimationNodeOneShot" id=35]
+filter_enabled = true
+filters = [ "CharacterArmature/Skeleton:abdomen", "CharacterArmature/Skeleton:body", "CharacterArmature/Skeleton:bone", "CharacterArmature/Skeleton:fist_l", "CharacterArmature/Skeleton:fist_r", "CharacterArmature/Skeleton:head", "CharacterArmature/Skeleton:hips", "CharacterArmature/Skeleton:lower_arm_l", "CharacterArmature/Skeleton:lower_arm_r", "CharacterArmature/Skeleton:neck", "CharacterArmature/Skeleton:pole_target_l", "CharacterArmature/Skeleton:pole_target_r", "CharacterArmature/Skeleton:shoulder_l", "CharacterArmature/Skeleton:shoulder_r", "CharacterArmature/Skeleton:torso", "CharacterArmature/Skeleton:upper_arm_l", "CharacterArmature/Skeleton:upper_arm_r" ]
 
 [sub_resource type="AnimationNodeOneShot" id=36]
 filter_enabled = true
+filters = [ "CharacterArmature/Skeleton:abdomen", "CharacterArmature/Skeleton:body", "CharacterArmature/Skeleton:bone", "CharacterArmature/Skeleton:foot_l", "CharacterArmature/Skeleton:foot_r", "CharacterArmature/Skeleton:head", "CharacterArmature/Skeleton:hips", "CharacterArmature/Skeleton:lower_leg_l", "CharacterArmature/Skeleton:lower_leg_r", "CharacterArmature/Skeleton:neck", "CharacterArmature/Skeleton:pole_target_l", "CharacterArmature/Skeleton:pole_target_r", "CharacterArmature/Skeleton:torso", "CharacterArmature/Skeleton:upper_leg_l", "CharacterArmature/Skeleton:upper_leg_r" ]
+
+[sub_resource type="AnimationNodeOneShot" id=37]
+
+[sub_resource type="AnimationNodeOneShot" id=38]
+filter_enabled = true
+filters = [ "CharacterArmature/Skeleton:abdomen", "CharacterArmature/Skeleton:body", "CharacterArmature/Skeleton:bone", "CharacterArmature/Skeleton:fist_l", "CharacterArmature/Skeleton:fist_r", "CharacterArmature/Skeleton:head", "CharacterArmature/Skeleton:hips", "CharacterArmature/Skeleton:lower_arm_l", "CharacterArmature/Skeleton:lower_arm_r", "CharacterArmature/Skeleton:neck", "CharacterArmature/Skeleton:pole_target_l", "CharacterArmature/Skeleton:pole_target_r", "CharacterArmature/Skeleton:shoulder_l", "CharacterArmature/Skeleton:shoulder_r", "CharacterArmature/Skeleton:torso", "CharacterArmature/Skeleton:upper_arm_l", "CharacterArmature/Skeleton:upper_arm_r" ]
+
+[sub_resource type="AnimationNodeOneShot" id=39]
+
+[sub_resource type="AnimationNodeAnimation" id=40]
+animation = "Shoot_OneHanded"
+
+[sub_resource type="AnimationNodeOneShot" id=41]
+filter_enabled = true
 filters = [ "CharacterArmature/Skeleton:abdomen", "CharacterArmature/Skeleton:body", "CharacterArmature/Skeleton:bone", "CharacterArmature/Skeleton:fist_l", "CharacterArmature/Skeleton:fist_r", "CharacterArmature/Skeleton:head", "CharacterArmature/Skeleton:hips", "CharacterArmature/Skeleton:lower_arm_l", "CharacterArmature/Skeleton:lower_arm_r", "CharacterArmature/Skeleton:neck", "CharacterArmature/Skeleton:shoulder_l", "CharacterArmature/Skeleton:shoulder_r", "CharacterArmature/Skeleton:torso", "CharacterArmature/Skeleton:upper_arm_l", "CharacterArmature/Skeleton:upper_arm_r" ]
 
-[sub_resource type="AnimationNodeBlendTree" id=37]
-graph_offset = Vector2( -255, 358.5 )
+[sub_resource type="AnimationNodeBlendTree" id=42]
+graph_offset = Vector2( 1471.72, 7 )
 nodes/Animation/node = SubResource( 3 )
 nodes/Animation/position = Vector2( 1080, 360 )
 nodes/DirSpeed/node = SubResource( 8 )
 nodes/DirSpeed/position = Vector2( -240, 460 )
-nodes/Idle/node = SubResource( 9 )
+nodes/Equipment/node = SubResource( 9 )
+nodes/Equipment/position = Vector2( 2220, 360 )
+nodes/Idle/node = SubResource( 10 )
 nodes/Idle/position = Vector2( -100, 0 )
-nodes/Jump/node = SubResource( 10 )
+nodes/Jump/node = SubResource( 11 )
 nodes/Jump/position = Vector2( 418, 361 )
-nodes/OneShot/node = SubResource( 11 )
+nodes/OneShot/node = SubResource( 12 )
 nodes/OneShot/position = Vector2( 1740, 140 )
-nodes/Punch/node = SubResource( 12 )
+nodes/PickUp/node = SubResource( 13 )
+nodes/PickUp/position = Vector2( 2020, 360 )
+nodes/Punch/node = SubResource( 14 )
 nodes/Punch/position = Vector2( 893, 361 )
-nodes/ReceiveHit/node = SubResource( 13 )
+nodes/ReceiveHit/node = SubResource( 15 )
 nodes/ReceiveHit/position = Vector2( 646, 361 )
-nodes/Roll/node = SubResource( 14 )
+nodes/Roll/node = SubResource( 16 )
 nodes/Roll/position = Vector2( 1760, 360 )
-nodes/Run/node = SubResource( 15 )
+nodes/Run/node = SubResource( 17 )
 nodes/Run/position = Vector2( -100, 280 )
-nodes/Speed/node = SubResource( 16 )
+nodes/Speed/node = SubResource( 18 )
 nodes/Speed/position = Vector2( 300, 100 )
-nodes/Strafe/node = SubResource( 29 )
+nodes/Strafe/node = SubResource( 31 )
 nodes/Strafe/position = Vector2( 20, 440 )
-nodes/TimeScale/node = SubResource( 38 )
+nodes/TimeScale/node = SubResource( 32 )
 nodes/TimeScale/position = Vector2( 1300, 280 )
-nodes/Walk/node = SubResource( 30 )
+nodes/Walk/node = SubResource( 33 )
 nodes/Walk/position = Vector2( -100, 140 )
-nodes/output/position = Vector2( 2280, 200 )
-nodes/toHurt/node = SubResource( 31 )
+nodes/output/position = Vector2( 2660, 180 )
+nodes/toEquip/node = SubResource( 34 )
+nodes/toEquip/position = Vector2( 2460, 140 )
+nodes/toHurt/node = SubResource( 35 )
 nodes/toHurt/position = Vector2( 855, 133 )
-nodes/toJump/node = SubResource( 32 )
+nodes/toJump/node = SubResource( 36 )
 nodes/toJump/position = Vector2( 627, 133 )
-nodes/toPunch/node = SubResource( 33 )
+nodes/toPickUp/node = SubResource( 37 )
+nodes/toPickUp/position = Vector2( 2180, 140 )
+nodes/toPunch/node = SubResource( 38 )
 nodes/toPunch/position = Vector2( 1083, 133 )
-nodes/toRoll/node = SubResource( 34 )
+nodes/toRoll/node = SubResource( 39 )
 nodes/toRoll/position = Vector2( 1960, 140 )
-nodes/toShoot/node = SubResource( 35 )
+nodes/toShoot/node = SubResource( 40 )
 nodes/toShoot/position = Vector2( 1500, 360 )
-nodes/toSlash/node = SubResource( 36 )
+nodes/toSlash/node = SubResource( 41 )
 nodes/toSlash/position = Vector2( 1500, 140 )
-node_connections = [ "output", 0, "toRoll", "TimeScale", 0, "Animation", "toRoll", 0, "OneShot", "toRoll", 1, "Roll", "toHurt", 0, "toJump", "toHurt", 1, "ReceiveHit", "OneShot", 0, "toSlash", "OneShot", 1, "toShoot", "toPunch", 0, "toHurt", "toPunch", 1, "Punch", "toJump", 0, "Strafe", "toJump", 1, "Jump", "Speed", 0, "Idle", "Speed", 1, "Walk", "Speed", 2, "Run", "toSlash", 0, "toPunch", "toSlash", 1, "TimeScale" ]
+node_connections = [ "output", 0, "toEquip", "toSlash", 0, "toPunch", "toSlash", 1, "TimeScale", "toPickUp", 0, "toRoll", "toPickUp", 1, "PickUp", "Speed", 0, "Idle", "Speed", 1, "Walk", "Speed", 2, "Run", "toPunch", 0, "toHurt", "toPunch", 1, "Punch", "OneShot", 0, "toSlash", "OneShot", 1, "toShoot", "TimeScale", 0, "Animation", "toHurt", 0, "toJump", "toHurt", 1, "ReceiveHit", "toRoll", 0, "OneShot", "toRoll", 1, "Roll", "toJump", 0, "Strafe", "toJump", 1, "Jump", "toEquip", 0, "toPickUp", "toEquip", 1, "Equipment" ]
 
 [node name="PunkMan" instance=ExtResource( 1 )]
 
+[node name="Skeleton" parent="CharacterArmature" index="0"]
+bones/15/bound_children = [ NodePath("FistAttachment") ]
+
 [node name="FistAttachment" type="BoneAttachment" parent="CharacterArmature/Skeleton" index="1"]
-transform = Transform( -0.971081, -0.0394295, -0.235472, 0.0116243, -0.992907, 0.118323, -0.238467, 0.112164, 0.964651, -0.509905, 0.905796, 0.0123314 )
+transform = Transform( -0.970677, -0.0396334, -0.237095, 0.0117162, -0.992942, 0.118016, -0.240099, 0.111778, 0.964291, -0.50293, 0.92133, -0.0119711 )
 bone_name = "fist_r"
 
 [node name="AnimationPlayer" parent="." index="1"]
 autoplay = "Idle"
+anims/ChangeEquipment = ExtResource( 10 )
 anims/Jump = ExtResource( 2 )
 anims/Roll = ExtResource( 5 )
 anims/Run_Carry = ExtResource( 4 )
@@ -546,7 +571,7 @@ anims/Walk_Left = ExtResource( 8 )
 anims/Walk_Right = ExtResource( 9 )
 
 [node name="AnimationTree" type="AnimationTree" parent="." index="2"]
-tree_root = SubResource( 37 )
+tree_root = SubResource( 42 )
 anim_player = NodePath("../AnimationPlayer")
 active = true
 parameters/DirSpeed/blend_position = 0.0
@@ -554,8 +579,10 @@ parameters/OneShot/active = false
 parameters/Speed/blend_amount = -1.0
 parameters/Strafe/blend_position = Vector2( 0, 0 )
 parameters/TimeScale/scale = 1.5
+parameters/toEquip/active = false
 parameters/toHurt/active = false
 parameters/toJump/active = false
+parameters/toPickUp/active = false
 parameters/toPunch/active = false
 parameters/toRoll/active = false
 parameters/toSlash/active = false
