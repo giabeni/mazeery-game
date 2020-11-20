@@ -111,7 +111,7 @@ surfaces/0 = {
 }
 
 [sub_resource type="BoxShape" id=4]
-extents = Vector3( 0.122499, 0.382656, 0.11741 )
+extents = Vector3( 1.52709, 1.83849, 1.85794 )
 
 [sub_resource type="Animation" id=5]
 resource_name = "Collected"

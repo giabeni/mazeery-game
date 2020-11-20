@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://assets/sounds/Steps/right-step-strong.wav" type="AudioStream" id=1]
+[ext_resource path="res://assets/sounds/Steps/left-step-weak.wav" type="AudioStream" id=2]
+[ext_resource path="res://assets/sounds/Steps/left-step-weaker.wav" type="AudioStream" id=3]
+[ext_resource path="res://assets/sounds/Steps/left-step-strong.wav" type="AudioStream" id=4]
+
+[node name="StepsSounds" type="Spatial"]
+
+[node name="LeftWalkStepSound" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource( 3 )
+unit_size = 4.0
+
+[node name="RightWalkStepSound" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource( 2 )
+unit_size = 4.0
+
+[node name="LeftRunStepSound" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource( 4 )
+unit_size = 2.5
+
+[node name="RightStepSound" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource( 1 )
+unit_size = 2.5

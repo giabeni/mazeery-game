@@ -14,6 +14,10 @@ enum TalismanColor {
 
 export(TalismanColor) var talisman_color
 
+var state = {
+	"collected": false
+}
+
 onready var anim_player: AnimationPlayer = $AnimationPlayer
 onready var idle_sound: AudioStreamPlayer3D = $Sounds/IdleSound
 onready var collected_sound: AudioStreamPlayer3D = $Sounds/CollectedSound
@@ -29,7 +33,11 @@ func _disappear(anim_name):
 func _on_Gem_body_entered(body):
 	if not body.is_in_group("Player") or not body.has_method("on_talisman_collected"):
 		return
-		
+	if state.collected:
+		return
+	
+	state.collected = true
+	self.monitoring = false
 	var prev_origin = self.global_transform.origin
 	self.get_parent().remove_child(self)
 	body.add_child(self)

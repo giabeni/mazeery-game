@@ -84,6 +84,8 @@ onready var pickable_msg: RichTextLabel = $MessagesControl/PickableMessage
 
 func _ready():
 	velocity = Vector3.ZERO
+	# @TODO REMOVE
+	footsteps_sound.stop()
 	
 func _input(event):
 	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
@@ -168,9 +170,11 @@ func _physics_process(delta):
 	# Sounds -----------------------
 	if velocity.length() > WALK_SPEED:
 		if not footsteps_sound.playing:
-			footsteps_sound.playing = true
+			pass
+#			footsteps_sound.playing = true
 	else:
-		footsteps_sound.playing = false
+		pass
+#		footsteps_sound.playing = false
 	
 func _can_attack():
 	if not is_instance_valid(state.weapon):

@@ -216,7 +216,7 @@ tracks/4/keys = {
 }
 
 [sub_resource type="BoxShape" id=6]
-extents = Vector3( 0.281821, 0.294853, 0.270141 )
+extents = Vector3( 1.19872, 1.14509, 1.03495 )
 
 [node name="Gem2" type="Area"]
 transform = Transform( 1, 0, 6.51683e-07, 0, 1, 0, -6.51683e-07, 0, 1, 0, 0, 0 )
