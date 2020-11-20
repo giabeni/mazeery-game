@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=2]
+[gd_scene load_steps=55 format=2]
 
 [ext_resource path="res://assets/models/PunkMan/PunkMan.glb" type="PackedScene" id=1]
 [ext_resource path="res://assets/animations/Jump.anim" type="Animation" id=2]
@@ -467,37 +467,44 @@ max_space = Vector2( 2, 2 )
 [sub_resource type="AnimationNodeTimeScale" id=32]
 
 [sub_resource type="AnimationNodeAnimation" id=33]
-animation = "Walk"
+animation = "Victory"
 
-[sub_resource type="AnimationNodeOneShot" id=34]
-filter_enabled = true
-filters = [ "CharacterArmature/Skeleton:fist_r", "CharacterArmature/Skeleton:head", "CharacterArmature/Skeleton:lower_arm_r", "CharacterArmature/Skeleton:neck", "CharacterArmature/Skeleton:shoulder_r", "CharacterArmature/Skeleton:upper_arm_r" ]
+[sub_resource type="AnimationNodeAnimation" id=34]
+animation = "Walk"
 
 [sub_resource type="AnimationNodeOneShot" id=35]
 filter_enabled = true
-filters = [ "CharacterArmature/Skeleton:abdomen", "CharacterArmature/Skeleton:body", "CharacterArmature/Skeleton:bone", "CharacterArmature/Skeleton:fist_l", "CharacterArmature/Skeleton:fist_r", "CharacterArmature/Skeleton:head", "CharacterArmature/Skeleton:hips", "CharacterArmature/Skeleton:lower_arm_l", "CharacterArmature/Skeleton:lower_arm_r", "CharacterArmature/Skeleton:neck", "CharacterArmature/Skeleton:pole_target_l", "CharacterArmature/Skeleton:pole_target_r", "CharacterArmature/Skeleton:shoulder_l", "CharacterArmature/Skeleton:shoulder_r", "CharacterArmature/Skeleton:torso", "CharacterArmature/Skeleton:upper_arm_l", "CharacterArmature/Skeleton:upper_arm_r" ]
+filters = [ "CharacterArmature/Skeleton:fist_r", "CharacterArmature/Skeleton:head", "CharacterArmature/Skeleton:lower_arm_r", "CharacterArmature/Skeleton:neck", "CharacterArmature/Skeleton:shoulder_r", "CharacterArmature/Skeleton:upper_arm_r" ]
 
 [sub_resource type="AnimationNodeOneShot" id=36]
 filter_enabled = true
-filters = [ "CharacterArmature/Skeleton:abdomen", "CharacterArmature/Skeleton:body", "CharacterArmature/Skeleton:bone", "CharacterArmature/Skeleton:foot_l", "CharacterArmature/Skeleton:foot_r", "CharacterArmature/Skeleton:head", "CharacterArmature/Skeleton:hips", "CharacterArmature/Skeleton:lower_leg_l", "CharacterArmature/Skeleton:lower_leg_r", "CharacterArmature/Skeleton:neck", "CharacterArmature/Skeleton:pole_target_l", "CharacterArmature/Skeleton:pole_target_r", "CharacterArmature/Skeleton:torso", "CharacterArmature/Skeleton:upper_leg_l", "CharacterArmature/Skeleton:upper_leg_r" ]
+filters = [ "CharacterArmature/Skeleton:abdomen", "CharacterArmature/Skeleton:body", "CharacterArmature/Skeleton:bone", "CharacterArmature/Skeleton:fist_l", "CharacterArmature/Skeleton:fist_r", "CharacterArmature/Skeleton:head", "CharacterArmature/Skeleton:hips", "CharacterArmature/Skeleton:lower_arm_l", "CharacterArmature/Skeleton:lower_arm_r", "CharacterArmature/Skeleton:neck", "CharacterArmature/Skeleton:pole_target_l", "CharacterArmature/Skeleton:pole_target_r", "CharacterArmature/Skeleton:shoulder_l", "CharacterArmature/Skeleton:shoulder_r", "CharacterArmature/Skeleton:torso", "CharacterArmature/Skeleton:upper_arm_l", "CharacterArmature/Skeleton:upper_arm_r" ]
 
 [sub_resource type="AnimationNodeOneShot" id=37]
+filter_enabled = true
+filters = [ "CharacterArmature/Skeleton:abdomen", "CharacterArmature/Skeleton:body", "CharacterArmature/Skeleton:bone", "CharacterArmature/Skeleton:foot_l", "CharacterArmature/Skeleton:foot_r", "CharacterArmature/Skeleton:head", "CharacterArmature/Skeleton:hips", "CharacterArmature/Skeleton:lower_leg_l", "CharacterArmature/Skeleton:lower_leg_r", "CharacterArmature/Skeleton:neck", "CharacterArmature/Skeleton:pole_target_l", "CharacterArmature/Skeleton:pole_target_r", "CharacterArmature/Skeleton:torso", "CharacterArmature/Skeleton:upper_leg_l", "CharacterArmature/Skeleton:upper_leg_r" ]
 
 [sub_resource type="AnimationNodeOneShot" id=38]
+
+[sub_resource type="AnimationNodeOneShot" id=39]
 filter_enabled = true
 filters = [ "CharacterArmature/Skeleton:abdomen", "CharacterArmature/Skeleton:body", "CharacterArmature/Skeleton:bone", "CharacterArmature/Skeleton:fist_l", "CharacterArmature/Skeleton:fist_r", "CharacterArmature/Skeleton:head", "CharacterArmature/Skeleton:hips", "CharacterArmature/Skeleton:lower_arm_l", "CharacterArmature/Skeleton:lower_arm_r", "CharacterArmature/Skeleton:neck", "CharacterArmature/Skeleton:pole_target_l", "CharacterArmature/Skeleton:pole_target_r", "CharacterArmature/Skeleton:shoulder_l", "CharacterArmature/Skeleton:shoulder_r", "CharacterArmature/Skeleton:torso", "CharacterArmature/Skeleton:upper_arm_l", "CharacterArmature/Skeleton:upper_arm_r" ]
 
-[sub_resource type="AnimationNodeOneShot" id=39]
+[sub_resource type="AnimationNodeOneShot" id=40]
 
-[sub_resource type="AnimationNodeAnimation" id=40]
+[sub_resource type="AnimationNodeAnimation" id=41]
 animation = "Shoot_OneHanded"
 
-[sub_resource type="AnimationNodeOneShot" id=41]
+[sub_resource type="AnimationNodeOneShot" id=42]
 filter_enabled = true
 filters = [ "CharacterArmature/Skeleton:abdomen", "CharacterArmature/Skeleton:body", "CharacterArmature/Skeleton:bone", "CharacterArmature/Skeleton:fist_l", "CharacterArmature/Skeleton:fist_r", "CharacterArmature/Skeleton:head", "CharacterArmature/Skeleton:hips", "CharacterArmature/Skeleton:lower_arm_l", "CharacterArmature/Skeleton:lower_arm_r", "CharacterArmature/Skeleton:neck", "CharacterArmature/Skeleton:shoulder_l", "CharacterArmature/Skeleton:shoulder_r", "CharacterArmature/Skeleton:torso", "CharacterArmature/Skeleton:upper_arm_l", "CharacterArmature/Skeleton:upper_arm_r" ]
 
-[sub_resource type="AnimationNodeBlendTree" id=42]
-graph_offset = Vector2( 1471.72, 7 )
+[sub_resource type="AnimationNodeOneShot" id=43]
+filter_enabled = true
+filters = [ "CharacterArmature/Skeleton:abdomen", "CharacterArmature/Skeleton:body", "CharacterArmature/Skeleton:bone", "CharacterArmature/Skeleton:fist_l", "CharacterArmature/Skeleton:fist_r", "CharacterArmature/Skeleton:head", "CharacterArmature/Skeleton:hips", "CharacterArmature/Skeleton:lower_arm_l", "CharacterArmature/Skeleton:lower_arm_r", "CharacterArmature/Skeleton:neck", "CharacterArmature/Skeleton:shoulder_l", "CharacterArmature/Skeleton:shoulder_r", "CharacterArmature/Skeleton:torso", "CharacterArmature/Skeleton:upper_arm_l", "CharacterArmature/Skeleton:upper_arm_r" ]
+
+[sub_resource type="AnimationNodeBlendTree" id=44]
+graph_offset = Vector2( 2211.11, 75.5 )
 nodes/Animation/node = SubResource( 3 )
 nodes/Animation/position = Vector2( 1080, 360 )
 nodes/DirSpeed/node = SubResource( 8 )
@@ -526,26 +533,30 @@ nodes/Strafe/node = SubResource( 31 )
 nodes/Strafe/position = Vector2( 20, 440 )
 nodes/TimeScale/node = SubResource( 32 )
 nodes/TimeScale/position = Vector2( 1300, 280 )
-nodes/Walk/node = SubResource( 33 )
+nodes/Victory/node = SubResource( 33 )
+nodes/Victory/position = Vector2( 2540, 360 )
+nodes/Walk/node = SubResource( 34 )
 nodes/Walk/position = Vector2( -100, 140 )
-nodes/output/position = Vector2( 2660, 180 )
-nodes/toEquip/node = SubResource( 34 )
+nodes/output/position = Vector2( 3000, 140 )
+nodes/toEquip/node = SubResource( 35 )
 nodes/toEquip/position = Vector2( 2460, 140 )
-nodes/toHurt/node = SubResource( 35 )
+nodes/toHurt/node = SubResource( 36 )
 nodes/toHurt/position = Vector2( 855, 133 )
-nodes/toJump/node = SubResource( 36 )
+nodes/toJump/node = SubResource( 37 )
 nodes/toJump/position = Vector2( 627, 133 )
-nodes/toPickUp/node = SubResource( 37 )
+nodes/toPickUp/node = SubResource( 38 )
 nodes/toPickUp/position = Vector2( 2180, 140 )
-nodes/toPunch/node = SubResource( 38 )
+nodes/toPunch/node = SubResource( 39 )
 nodes/toPunch/position = Vector2( 1083, 133 )
-nodes/toRoll/node = SubResource( 39 )
+nodes/toRoll/node = SubResource( 40 )
 nodes/toRoll/position = Vector2( 1960, 140 )
-nodes/toShoot/node = SubResource( 40 )
+nodes/toShoot/node = SubResource( 41 )
 nodes/toShoot/position = Vector2( 1500, 360 )
-nodes/toSlash/node = SubResource( 41 )
+nodes/toSlash/node = SubResource( 42 )
 nodes/toSlash/position = Vector2( 1500, 140 )
-node_connections = [ "output", 0, "toEquip", "toSlash", 0, "toPunch", "toSlash", 1, "TimeScale", "toPickUp", 0, "toRoll", "toPickUp", 1, "PickUp", "Speed", 0, "Idle", "Speed", 1, "Walk", "Speed", 2, "Run", "toPunch", 0, "toHurt", "toPunch", 1, "Punch", "OneShot", 0, "toSlash", "OneShot", 1, "toShoot", "TimeScale", 0, "Animation", "toHurt", 0, "toJump", "toHurt", 1, "ReceiveHit", "toRoll", 0, "OneShot", "toRoll", 1, "Roll", "toJump", 0, "Strafe", "toJump", 1, "Jump", "toEquip", 0, "toPickUp", "toEquip", 1, "Equipment" ]
+nodes/toWin/node = SubResource( 43 )
+nodes/toWin/position = Vector2( 2720, 140 )
+node_connections = [ "toWin", 0, "toEquip", "toWin", 1, "Victory", "output", 0, "toWin", "toRoll", 0, "OneShot", "toRoll", 1, "Roll", "toPunch", 0, "toHurt", "toPunch", 1, "Punch", "toEquip", 0, "toPickUp", "toEquip", 1, "Equipment", "toPickUp", 0, "toRoll", "toPickUp", 1, "PickUp", "OneShot", 0, "toSlash", "OneShot", 1, "toShoot", "toJump", 0, "Strafe", "toJump", 1, "Jump", "Speed", 0, "Idle", "Speed", 1, "Walk", "Speed", 2, "Run", "toSlash", 0, "toPunch", "toSlash", 1, "TimeScale", "toHurt", 0, "toJump", "toHurt", 1, "ReceiveHit", "TimeScale", 0, "Animation" ]
 
 [node name="PunkMan" instance=ExtResource( 1 )]
 
@@ -553,7 +564,7 @@ node_connections = [ "output", 0, "toEquip", "toSlash", 0, "toPunch", "toSlash",
 bones/15/bound_children = [ NodePath("FistAttachment") ]
 
 [node name="FistAttachment" type="BoneAttachment" parent="CharacterArmature/Skeleton" index="1"]
-transform = Transform( -0.970677, -0.0396334, -0.237095, 0.0117162, -0.992942, 0.118016, -0.240099, 0.111778, 0.964291, -0.50293, 0.92133, -0.0119711 )
+transform = Transform( -0.970796, -0.0395737, -0.236618, 0.0116904, -0.992932, 0.118102, -0.239619, 0.111887, 0.964398, -0.504331, 0.919561, -0.00621678 )
 bone_name = "fist_r"
 
 [node name="AnimationPlayer" parent="." index="1"]
@@ -571,7 +582,7 @@ anims/Walk_Left = ExtResource( 8 )
 anims/Walk_Right = ExtResource( 9 )
 
 [node name="AnimationTree" type="AnimationTree" parent="." index="2"]
-tree_root = SubResource( 42 )
+tree_root = SubResource( 44 )
 anim_player = NodePath("../AnimationPlayer")
 active = true
 parameters/DirSpeed/blend_position = 0.0
@@ -586,6 +597,7 @@ parameters/toPickUp/active = false
 parameters/toPunch/active = false
 parameters/toRoll/active = false
 parameters/toSlash/active = false
+parameters/toWin/active = false
 __meta__ = {
 "_editor_description_": ""
 }

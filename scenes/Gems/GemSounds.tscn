@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/sounds/Talisman/harmonybells.ogg" type="AudioStream" id=1]
+[ext_resource path="res://assets/sounds/Talisman/powerup.ogg" type="AudioStream" id=2]
+
+[node name="Sounds" type="Spatial"]
+
+[node name="IdleSound" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource( 1 )
+unit_size = 3.8
+max_db = 2.0
+max_distance = 30.0
+
+[node name="CollectedSound" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource( 2 )
+unit_size = 8.0
+max_db = 2.0
+max_distance = 30.0

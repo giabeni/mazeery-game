@@ -23,11 +23,17 @@ _global_script_classes=[ {
 "class": "Spider",
 "language": "GDScript",
 "path": "res://scripts/Spider.gd"
+}, {
+"base": "Area",
+"class": "Talisman",
+"language": "GDScript",
+"path": "res://scripts/Gem.gd"
 } ]
 _global_script_class_icons={
 "HealthBar3D": "",
 "Player": "",
-"Spider": ""
+"Spider": "",
+"Talisman": ""
 }
 
 [application]
@@ -38,6 +44,8 @@ config/icon="res://icon.png"
 
 [display]
 
+window/size/width=1600
+window/size/height=800
 window/size/always_on_top=true
 
 [input]

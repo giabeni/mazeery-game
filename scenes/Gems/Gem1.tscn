@@ -1,11 +1,12 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://assets/materials/shader_glass_green.material" type="Material" id=1]
 [ext_resource path="res://assets/materials/diamond_gree.tres" type="Material" id=2]
 [ext_resource path="res://assets/animations/GemsIdle1.anim" type="Animation" id=3]
-[ext_resource path="res://scripts/Gem1.gd" type="Script" id=4]
+[ext_resource path="res://scripts/Gem.gd" type="Script" id=4]
+[ext_resource path="res://scenes/Gems/GemSounds.tscn" type="PackedScene" id=5]
 
-[sub_resource type="ArrayMesh" id=3]
+[sub_resource type="ArrayMesh" id=1]
 resource_name = "Cube"
 surfaces/0 = {
 "aabb": AABB( -0.0956749, -0.335073, -0.25662, 0.19135, 0.670146, 0.51324 ),
@@ -20,7 +21,7 @@ surfaces/0 = {
 "vertex_count": 128
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=2]
 resource_name = "Collected"
 length = 2.0
 tracks/0/type = "value"
@@ -30,7 +31,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.3, 0.7, 1, 2 ),
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 1.7 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
 "update": 0,
 "values": [ 5.0, 7.0, 90.0, 5.0, 0.0 ]
@@ -42,10 +43,10 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.7, 1.3, 2 ),
+"times": PoolRealArray( 0, 0.4, 0.8, 1.7 ),
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 0,
-"values": [ 0.2, 7.0, 0.5, 0.0 ]
+"values": [ 0.2, 10.86, 0.5, 0.0 ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath(".:scale")
@@ -54,35 +55,35 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 1.7, 2 ),
+"times": PoolRealArray( 0.6, 1.7 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ Vector3( 1, 1, 1 ), Vector3( 0, 0, 0 ) ]
 }
 
-[sub_resource type="BoxShape" id=4]
+[sub_resource type="BoxShape" id=3]
 extents = Vector3( 0.111608, 0.267813, 0.354203 )
 
 [node name="Gem1" type="Area"]
-transform = Transform( 0.568427, 0, 0.348332, 0, 0.666667, 0, -0.348332, 0, 0.568427, 0, 0.104938, 0 )
+transform = Transform( 9.65599e-07, 0, -1, 0, 1, 0, 1, 0, 9.65599e-07, 0, 1, 0 )
 collision_mask = 2
 script = ExtResource( 4 )
 
 [node name="Gem1" type="MeshInstance" parent="."]
-mesh = SubResource( 3 )
+mesh = SubResource( 1 )
 material/0 = ExtResource( 2 )
 
 [node name="OmniLight" type="OmniLight" parent="."]
 light_color = Color( 0.0823529, 0.737255, 0.4, 1 )
-light_energy = 3.3
-omni_range = 90.0
+light_energy = 4.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "Idle"
-anims/Collected = SubResource( 5 )
+anims/Collected = SubResource( 2 )
 anims/Idle = ExtResource( 3 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0 )
-shape = SubResource( 4 )
-[connection signal="body_entered" from="." to="." method="_on_Gem1_body_entered"]
+shape = SubResource( 3 )
+
+[node name="Sounds" parent="." instance=ExtResource( 5 )]

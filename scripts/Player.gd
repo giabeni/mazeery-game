@@ -36,6 +36,15 @@ var target_light_range = 0
 var is_in_pickable_area = false
 var pickable_item = null
 
+enum TalismanColor {
+	RED,
+	ORANGE,
+	YELLOW,
+	GREEN,
+	CYAN,
+	BLUE,
+	PURPLE
+}
 
 ### STATE VARIABLES ###
 var state = {
@@ -46,6 +55,7 @@ var state = {
 	"weapon": null,
 	"backpack": [null, null, null],
 	"active_slot": null,
+	"talismans": []
 }
 
 var items = {
@@ -62,14 +72,15 @@ onready var body: MeshInstance = $Mesh/PunkMan/CharacterArmature/Skeleton/Body
 onready var footsteps_sound: AudioStreamPlayer3D = $SoundFootsteps
 onready var hurt_sound: AudioStreamPlayer3D = $SoundHurt
 onready var timer_dizzy: Timer = $DizzyTimer
-onready var light_bar: ColorRect = $UI/LightBar
-onready var current_light_bar: ColorRect = $UI/LightBar/CurrentLightBar
-onready var backpack_slots: Control = $UI/BackpackSlots
-onready var health_bar: ColorRect = $UI/HealthBar
-onready var current_health_bar: ColorRect = $UI/HealthBar/CurrentHealthBar
+onready var light_bar: ColorRect = $UI/VerticalContainer/TopContainer/RightContainer/LightBar
+onready var current_light_bar: ColorRect = $UI/VerticalContainer/TopContainer/RightContainer/LightBar/CurrentLightBar
+onready var health_bar: ColorRect = $UI/VerticalContainer/TopContainer/RightContainer/HealthBar
+onready var current_health_bar: ColorRect = $UI/VerticalContainer/TopContainer/RightContainer/HealthBar/CurrentHealthBar
+onready var backpack_slots: Control = $UI/VerticalContainer/BottomContainer/RightContainer/BackpackSlots
+onready var talismans_icons: HBoxContainer = $UI/VerticalContainer/TopContainer/LeftContainer/TalismansIcons
 onready var fist_attachment: BoneAttachment = $Mesh/PunkMan/CharacterArmature/Skeleton/FistAttachment
 onready var blood_spill: Particles = $Mesh/BloodSpill/Particles
-onready var pickable_msg: RichTextLabel = $PickableMessage
+onready var pickable_msg: RichTextLabel = $MessagesControl/PickableMessage
 
 func _ready():
 	velocity = Vector3.ZERO
@@ -211,6 +222,8 @@ func _equip_item(slot):
 		_pickup_item(slot, pickable_item)
 	else:
 		var item_metadata = state.backpack[slot - 1]
+		if item_metadata == null:
+			return
 		anim_tree.set("parameters/toEquip/active", true)
 		yield(get_tree().create_timer(0.4), "timeout")
 		if is_instance_valid(state.weapon) and item_metadata != null:
@@ -307,3 +320,35 @@ func on_PickableArea_exited(item):
 	is_in_pickable_area = false
 	pickable_item = null
 	pickable_msg.hide()
+	
+func on_talisman_collected(talisman_color):
+	print("Collected ", talisman_color, " ", get_color_name(talisman_color))
+	
+	anim_tree.set("parameters/toWin/active", true)
+	
+	var color_name = get_color_name(talisman_color)
+	var icon_node_name = "Talisman" + color_name
+	var icon_node = talismans_icons.get_node(icon_node_name) as TextureRect
+	icon_node.texture = load("res://assets/icons/Gems/" + color_name + "Gem.png")
+	
+	state.talismans.append(talisman_color)
+	if state.talismans.size() == 7:
+		# @TODO trigger vicotry
+		print("VICTORY!!!!!")
+
+func get_color_name(talisman_color):
+	match talisman_color:
+		TalismanColor.RED:
+			return "Red"
+		TalismanColor.ORANGE:
+			return "Orange"
+		TalismanColor.YELLOW:
+			return "Yellow"
+		TalismanColor.GREEN:
+			return "Green"
+		TalismanColor.CYAN:
+			return "Cyan"
+		TalismanColor.BLUE:
+			return "Blue"
+		TalismanColor.PURPLE:
+			return "Purple"

@@ -4,17 +4,23 @@
 [ext_resource path="res://assets/styles/ActiveSlot.stylebox" type="StyleBox" id=2]
 
 [node name="BackpackSlots" type="Control"]
+anchor_left = 1.0
+anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_right = -1600.0
+margin_bottom = -800.0
+grow_horizontal = 0
+grow_vertical = 0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Slot1" type="Button" parent="."]
-margin_left = 735.589
-margin_top = 505.82
-margin_right = 810.589
-margin_bottom = 580.82
+margin_left = 1.4989
+margin_top = 5.20193
+margin_right = 76.4989
+margin_bottom = 80.2019
 custom_styles/focus = ExtResource( 2 )
 custom_styles/normal = ExtResource( 1 )
 expand_icon = true
@@ -23,10 +29,10 @@ __meta__ = {
 }
 
 [node name="Slot2" type="Button" parent="."]
-margin_left = 830.916
-margin_top = 505.82
-margin_right = 905.916
-margin_bottom = 580.82
+margin_left = 96.8259
+margin_top = 5.20193
+margin_right = 171.826
+margin_bottom = 80.2019
 custom_styles/focus = ExtResource( 2 )
 custom_styles/normal = ExtResource( 1 )
 toggle_mode = true
@@ -36,10 +42,10 @@ __meta__ = {
 }
 
 [node name="Slot3" type="Button" parent="."]
-margin_left = 928.915
-margin_top = 505.82
-margin_right = 1003.91
-margin_bottom = 580.82
+margin_left = 194.825
+margin_top = 5.20193
+margin_right = 269.82
+margin_bottom = 80.2019
 custom_styles/focus = ExtResource( 2 )
 custom_styles/normal = ExtResource( 1 )
 toggle_mode = true
