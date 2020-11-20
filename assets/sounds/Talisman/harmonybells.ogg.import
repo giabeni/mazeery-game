@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/harmonybells.ogg-69c45a9f478ec2885fc9787c24506566.oggstr"
+
+[deps]
+
+source_file="res://assets/sounds/Talisman/harmonybells.ogg"
+dest_files=[ "res://.import/harmonybells.ogg-69c45a9f478ec2885fc9787c24506566.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0
