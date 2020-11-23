@@ -22,8 +22,6 @@
 [ext_resource path="res://assets/animations/Victory.anim" type="Animation" id=20]
 [ext_resource path="res://assets/animations/Walk_Carry.anim" type="Animation" id=21]
 
-
-
 [sub_resource type="AnimationNodeAnimation" id=1]
 animation = "SwordSlash"
 
@@ -108,7 +106,7 @@ nodes/toShoot/node = SubResource( 15 )
 nodes/toShoot/position = Vector2( 1330, 361 )
 nodes/toSlash/node = SubResource( 16 )
 nodes/toSlash/position = Vector2( 1311, 133 )
-node_connections = [ "output", 0, "toRoll", "Speed", 0, "Idle", "Speed", 1, "Walk", "Speed", 2, "Run", "OneShot", 0, "toSlash", "OneShot", 1, "toShoot", "toHurt", 0, "toJump", "toHurt", 1, "ReceiveHit", "toJump", 0, "Speed", "toJump", 1, "Jump", "toSlash", 0, "toPunch", "toSlash", 1, "Animation", "toRoll", 0, "OneShot", "toRoll", 1, "Roll", "toPunch", 0, "toHurt", "toPunch", 1, "Punch" ]
+node_connections = [ "output", 0, "toRoll", "OneShot", 0, "toSlash", "OneShot", 1, "toShoot", "Speed", 0, "Idle", "Speed", 1, "Walk", "Speed", 2, "Run", "toHurt", 0, "toJump", "toHurt", 1, "ReceiveHit", "toJump", 0, "Speed", "toJump", 1, "Jump", "toPunch", 0, "toHurt", "toPunch", 1, "Punch", "toRoll", 0, "OneShot", "toRoll", 1, "Roll", "toSlash", 0, "toPunch", "toSlash", 1, "Animation" ]
 
 [node name="Casual2_Male" instance=ExtResource( 1 )]
 
