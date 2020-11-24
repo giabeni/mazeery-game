@@ -153,10 +153,11 @@ func _physics_process(delta):
 	anim_tree.set("parameters/Strafe/blend_position", Vector2(strafe.z, -strafe.x) * velocity.length()/RUN_SPEED)
 	
 	# Gravity and Jumping-------------------------
-	print ("is on floor? ", is_on_floor(), "  is jumping? ", is_jumping)
+	# print ("is on floor? ", is_on_floor(), "  is jumping? ", is_jumping)
 	
 	if Input.is_action_just_pressed("jump"):
-		print ("is on floor? ", is_on_floor(), "  is jumping? ", is_jumping)
+		pass
+		# print ("is on floor? ", is_on_floor(), "  is jumping? ", is_jumping)
 	if is_on_floor():
 		if Input.is_action_just_pressed("jump") and not is_jumping:
 			anim_tree.set("parameters/toJump/active", true)

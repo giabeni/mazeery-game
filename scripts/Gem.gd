@@ -36,6 +36,7 @@ func _on_Gem_body_entered(body):
 	if state.collected:
 		return
 	
+	print("Talisman collected", body.get_instance_id())
 	state.collected = true
 	self.monitoring = false
 	var prev_origin = self.global_transform.origin
