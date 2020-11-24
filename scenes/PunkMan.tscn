@@ -483,7 +483,7 @@ filters = [ "CharacterArmature/Skeleton:abdomen", "CharacterArmature/Skeleton:bo
 
 [sub_resource type="AnimationNodeOneShot" id=37]
 filter_enabled = true
-filters = [ "CharacterArmature/Skeleton:abdomen", "CharacterArmature/Skeleton:body", "CharacterArmature/Skeleton:bone", "CharacterArmature/Skeleton:foot_l", "CharacterArmature/Skeleton:foot_r", "CharacterArmature/Skeleton:head", "CharacterArmature/Skeleton:hips", "CharacterArmature/Skeleton:lower_leg_l", "CharacterArmature/Skeleton:lower_leg_r", "CharacterArmature/Skeleton:neck", "CharacterArmature/Skeleton:pole_target_l", "CharacterArmature/Skeleton:pole_target_r", "CharacterArmature/Skeleton:torso", "CharacterArmature/Skeleton:upper_leg_l", "CharacterArmature/Skeleton:upper_leg_r" ]
+filters = [ "CharacterArmature/Skeleton:abdomen", "CharacterArmature/Skeleton:bone", "CharacterArmature/Skeleton:foot_l", "CharacterArmature/Skeleton:foot_r", "CharacterArmature/Skeleton:head", "CharacterArmature/Skeleton:hips", "CharacterArmature/Skeleton:lower_leg_l", "CharacterArmature/Skeleton:lower_leg_r", "CharacterArmature/Skeleton:neck", "CharacterArmature/Skeleton:pole_target_l", "CharacterArmature/Skeleton:pole_target_r", "CharacterArmature/Skeleton:torso", "CharacterArmature/Skeleton:upper_leg_l", "CharacterArmature/Skeleton:upper_leg_r" ]
 
 [sub_resource type="AnimationNodeOneShot" id=38]
 
@@ -505,7 +505,7 @@ filter_enabled = true
 filters = [ "CharacterArmature/Skeleton:abdomen", "CharacterArmature/Skeleton:body", "CharacterArmature/Skeleton:bone", "CharacterArmature/Skeleton:fist_l", "CharacterArmature/Skeleton:fist_r", "CharacterArmature/Skeleton:head", "CharacterArmature/Skeleton:hips", "CharacterArmature/Skeleton:lower_arm_l", "CharacterArmature/Skeleton:lower_arm_r", "CharacterArmature/Skeleton:neck", "CharacterArmature/Skeleton:shoulder_l", "CharacterArmature/Skeleton:shoulder_r", "CharacterArmature/Skeleton:torso", "CharacterArmature/Skeleton:upper_arm_l", "CharacterArmature/Skeleton:upper_arm_r" ]
 
 [sub_resource type="AnimationNodeBlendTree" id=44]
-graph_offset = Vector2( 0, -129.25 )
+graph_offset = Vector2( 0, 127 )
 nodes/Animation/node = SubResource( 3 )
 nodes/Animation/position = Vector2( 1080, 360 )
 nodes/DirSpeed/node = SubResource( 8 )
@@ -557,7 +557,7 @@ nodes/toSlash/node = SubResource( 42 )
 nodes/toSlash/position = Vector2( 1500, 140 )
 nodes/toWin/node = SubResource( 43 )
 nodes/toWin/position = Vector2( 2720, 140 )
-node_connections = [ "output", 0, "toWin", "OneShot", 0, "toSlash", "OneShot", 1, "toShoot", "Speed", 0, "Idle", "Speed", 1, "Walk", "Speed", 2, "Run", "TimeScale", 0, "Animation", "toPickUp", 0, "toRoll", "toPickUp", 1, "PickUp", "toPunch", 0, "toHurt", "toPunch", 1, "Punch", "toRoll", 0, "OneShot", "toRoll", 1, "Roll", "toEquip", 0, "toPickUp", "toEquip", 1, "Equipment", "toJump", 0, "Strafe", "toJump", 1, "Jump", "toHurt", 0, "toJump", "toHurt", 1, "ReceiveHit", "toSlash", 0, "toPunch", "toSlash", 1, "TimeScale", "toWin", 0, "toEquip", "toWin", 1, "Victory" ]
+node_connections = [ "output", 0, "toWin", "toEquip", 0, "toPickUp", "toEquip", 1, "Equipment", "OneShot", 0, "toSlash", "OneShot", 1, "toShoot", "Speed", 0, "Idle", "Speed", 1, "Walk", "Speed", 2, "Run", "TimeScale", 0, "Animation", "toJump", 0, "Strafe", "toJump", 1, "Jump", "toPickUp", 0, "toRoll", "toPickUp", 1, "PickUp", "toHurt", 0, "toJump", "toHurt", 1, "ReceiveHit", "toPunch", 0, "toHurt", "toPunch", 1, "Punch", "toRoll", 0, "OneShot", "toRoll", 1, "Roll", "toWin", 0, "toEquip", "toWin", 1, "Victory", "toSlash", 0, "toPunch", "toSlash", 1, "TimeScale" ]
 
 [sub_resource type="SphereMesh" id=45]
 radius = 0.1
@@ -575,7 +575,7 @@ emission_on_uv2 = false
 [node name="PunkMan" instance=ExtResource( 1 )]
 
 [node name="FistAttachment" type="BoneAttachment" parent="CharacterArmature/Skeleton" index="1"]
-transform = Transform( -0.971131, -0.0394038, -0.235268, 0.0116129, -0.992902, 0.118361, -0.238262, 0.112212, 0.964696, -0.509624, 0.903637, 0.0160976 )
+transform = Transform( -0.97082, -0.0395613, -0.236521, 0.0116836, -0.99293, 0.118125, -0.239522, 0.111915, 0.964419, -0.50675, 0.916627, -0.00475894 )
 bone_name = "fist_r"
 
 [node name="AnimationPlayer" parent="." index="1"]
@@ -621,7 +621,7 @@ unit_size = 3.0
 [node name="RightWalkStepSound" parent="StepsSounds" index="1"]
 unit_size = 3.0
 
-[node name="MeshInstance" type="MeshInstance" parent="." index="4"]
+[node name="Aim" type="MeshInstance" parent="." index="4"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.359149, 1.53891, 2.64497 )
 mesh = SubResource( 45 )
 material/0 = SubResource( 46 )

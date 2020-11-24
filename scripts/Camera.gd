@@ -30,17 +30,6 @@ func _input(event):
 func _physics_process(delta):
 	
 	camrot_v = clamp(camrot_v, CAM_V_MIN, CAM_V_MAX)
-#	camrot_h = clamp(camrot_h, CAM_H_MIN, CAM_H_MAX)
-#	print('camroth', camrot_h) 
-#	var mesh_front = get_node("../Mesh").global_transform.basis.z
-#	var auto_rotate_speed =  (PI - mesh_front.angle_to($h.global_transform.basis.z)) * get_parent().velocity.length() * ROT_SPEED
-	
-#	if $mouse_control_stay_delay.is_stopped():
-#		#FOLLOW CAMERA
-#		$h.rotation.y = lerp_angle($h.rotation.y, get_node("../Mesh").global_transform.basis.get_euler().y, delta * auto_rotate_speed)
-#		camrot_h = $h.rotation_degrees.y
-#	else:
-		#MOUSE CAMERA
 	$h.rotation_degrees.y = lerp($h.rotation_degrees.y, camrot_h, delta * H_ACCELERATION)
 	
 	$h/v.rotation_degrees.x = lerp($h/v.rotation_degrees.x, camrot_v, delta * V_ACCELERATION)

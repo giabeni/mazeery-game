@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://scripts/Camera.gd" type="Script" id=1]
 [ext_resource path="res://assets/sounds/Hurt/simple-hurt.wav" type="AudioStream" id=2]
@@ -6,10 +6,11 @@
 [ext_resource path="res://assets/sounds/breathing.wav" type="AudioStream" id=4]
 [ext_resource path="res://scenes/BloodSpill.tscn" type="PackedScene" id=5]
 [ext_resource path="res://assets/sounds/steps.wav" type="AudioStream" id=6]
+[ext_resource path="res://assets/sounds/Player/pickup.wav" type="AudioStream" id=7]
 
 [sub_resource type="CapsuleShape" id=1]
-radius = 0.961246
-height = 4.50682
+radius = 0.93116
+height = 4.57095
 
 [node name="Player" type="KinematicBody" groups=[
 "Player",
@@ -68,6 +69,12 @@ pitch_scale = 0.9
 stream = ExtResource( 6 )
 unit_db = 10.0
 max_db = 5.5
+autoplay = true
+
+[node name="SoundPickup" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource( 7 )
+unit_db = 5.0
+unit_size = 1.5
 autoplay = true
 
 [node name="MessagesControl" type="Control" parent="."]

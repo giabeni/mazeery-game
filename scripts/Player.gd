@@ -6,7 +6,7 @@ class_name Player
 const Sword = preload("res://scenes/Sword.tscn")
 
 ### CONSTANTS ###
-const GRAVITY = 20
+const GRAVITY = 9
 const WALK_SPEED = 3
 const RUN_SPEED = 8
 const TURN_SENSITIVITY = 0.015
@@ -15,7 +15,7 @@ const ACCELERATION = 6
 const ANGULAR_ACCELERATION = 7
 
 const ROLL_FORCE = 17
-const JUMP_FORCE = 200
+const JUMP_FORCE = 3.1
 
 const MAX_HP = 100
 
@@ -69,8 +69,14 @@ onready var anim_tree: AnimationTree = $Mesh/PunkMan/AnimationTree
 onready var light: OmniLight = $Mesh/Light
 onready var skeleton: Skeleton = $Mesh/PunkMan/CharacterArmature/Skeleton
 onready var body: MeshInstance = $Mesh/PunkMan/CharacterArmature/Skeleton/Body
+
 onready var footsteps_sound: AudioStreamPlayer3D = $SoundFootsteps
 onready var hurt_sound: AudioStreamPlayer3D = $SoundHurt
+onready var pickup_sound: AudioStreamPlayer3D = $SoundPickup
+onready var left_walk_step_sound: AudioStreamPlayer3D = $Mesh/PunkMan/StepsSounds/LeftWalkStepSound
+onready var right_walk_step_sound: AudioStreamPlayer3D = $Mesh/PunkMan/StepsSounds/RightWalkStepSound
+onready var left_run_step_sound: AudioStreamPlayer3D = $Mesh/PunkMan/StepsSounds/LeftRunStepSound
+onready var right_run_step_sound: AudioStreamPlayer3D = $Mesh/PunkMan/StepsSounds/RightStepSound
 onready var timer_dizzy: Timer = $DizzyTimer
 onready var light_bar: ColorRect = $UI/VerticalContainer/TopContainer/RightContainer/LightBar
 onready var current_light_bar: ColorRect = $UI/VerticalContainer/TopContainer/RightContainer/LightBar/CurrentLightBar
@@ -113,24 +119,10 @@ func _physics_process(delta):
 	else:
 		movement_speed = 0
 		strafe_dir = Vector3.ZERO
-	
+		
 	velocity = lerp(velocity, direction * movement_speed, delta * ACCELERATION)
 	
-	is_walking = abs(velocity.x) >= 0.001 or abs(velocity.z) >= 0.001
-	
-		
-	# Gravity and Jumping-------------------------
-	if is_on_floor():
-		if Input.is_action_just_pressed("jump"):
-			vertical_velocity = JUMP_FORCE
-			anim_tree.set("parameters/toJump/active", true)
-			is_jumping = true
-		else:
-			vertical_velocity = 0
-			
-	else:
-		vertical_velocity += GRAVITY * delta
-		is_jumping = false
+	is_walking = abs(velocity.x) >= 0.01 or abs(velocity.z) >= 0.01
 	
 	# Equipment ------------------
 	if Input.is_action_just_pressed("choose_item_1"):
@@ -152,6 +144,7 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("light_toggle"):
 		state.light_enabled = !state.light_enabled
 
+	vertical_velocity += GRAVITY * delta
 	velocity = move_and_slide(velocity + Vector3.DOWN * vertical_velocity, Vector3.UP)
 	
 	strafe = lerp(strafe, strafe_dir, delta * ACCELERATION)
@@ -159,22 +152,44 @@ func _physics_process(delta):
 #	print('Strafe', strafe, strafe_dir, Vector2(strafe.z, -strafe.x) * velocity.length()/RUN_SPEED)
 	anim_tree.set("parameters/Strafe/blend_position", Vector2(strafe.z, -strafe.x) * velocity.length()/RUN_SPEED)
 	
+	# Gravity and Jumping-------------------------
+	print ("is on floor? ", is_on_floor(), "  is jumping? ", is_jumping)
+	
+	if Input.is_action_just_pressed("jump"):
+		print ("is on floor? ", is_on_floor(), "  is jumping? ", is_jumping)
+	if is_on_floor():
+		if Input.is_action_just_pressed("jump") and not is_jumping:
+			anim_tree.set("parameters/toJump/active", true)
+			yield(get_tree().create_timer(0.2), "timeout")			
+			vertical_velocity = -JUMP_FORCE
+			is_jumping = true
+			
+	else:
+		is_jumping = false
+	
 	
 	# Rotation --------------------------
-	$Mesh.rotation.y = lerp_angle($Mesh.rotation.y, atan2(direction.x, direction.z) - rotation.y, delta * ANGULAR_ACCELERATION)
+	if (Input.is_action_pressed("aim")):
+		var rotation_angle = $Camroot/h.rotation.y - self.rotation.y
+		self.rotation.y = lerp_angle(self.rotation.y, $Camroot/h.rotation.y, delta * ANGULAR_ACCELERATION)
+		$Mesh.rotation.y = lerp_angle($Mesh.rotation.y, $Camroot/h.rotation.y, delta * ANGULAR_ACCELERATION)
+		direction = direction.rotated(Vector3.UP, rotation_angle)
+	elif not Input.is_action_just_released("aim"):
+		$Mesh.rotation.y = lerp_angle($Mesh.rotation.y, atan2(direction.x, direction.z) - rotation.y, delta * ANGULAR_ACCELERATION)
 
 	# Setiing UI feedback -------------------
 	_set_lighting(delta)
 	_set_hp_bar(delta)	
 	
 	# Sounds -----------------------
-	if velocity.length() > WALK_SPEED:
-		if not footsteps_sound.playing:
-			pass
-#			footsteps_sound.playing = true
-	else:
-		pass
-#		footsteps_sound.playing = false
+	if Vector2(velocity.x, velocity.z).length() < WALK_SPEED * 0.3:
+		_stop_steps_sounds()
+		
+func _stop_steps_sounds():
+	left_walk_step_sound.stop()
+	right_walk_step_sound.stop()
+	left_run_step_sound.stop()
+	right_run_step_sound.stop()
 	
 func _can_attack():
 	if not is_instance_valid(state.weapon):
@@ -250,7 +265,9 @@ func _pickup_item(slot, item):
 		return
 		
 	anim_tree.set("parameters/toPickUp/active", true)
-	yield(get_tree().create_timer(0.7), "timeout")
+	yield(get_tree().create_timer(0.4), "timeout")
+	pickup_sound.play()
+	yield(get_tree().create_timer(0.3), "timeout")
 	
 	item.get_parent().remove_child(item)
 	_instantiate_item(item.metadata)
