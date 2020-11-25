@@ -1,0 +1,80 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://scenes/Fader.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/Menu Components/3DMenuScene.tscn" type="PackedScene" id=2]
+[ext_resource path="res://assets/fonts/murder.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://assets/fonts/default_font.tres" type="DynamicFont" id=4]
+[ext_resource path="res://scenes/Menu Components/MainMenu.gd" type="Script" id=5]
+[ext_resource path="res://scenes/Level.tscn" type="PackedScene" id=6]
+
+[sub_resource type="DynamicFont" id=1]
+size = 350
+font_data = ExtResource( 3 )
+
+[node name="MainMenu" type="Spatial"]
+script = ExtResource( 5 )
+game_scene = ExtResource( 6 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Fader" parent="CanvasLayer" instance=ExtResource( 1 )]
+color = Color( 0, 0, 0, 0 )
+
+[node name="Control" type="Control" parent="CanvasLayer/Fader"]
+show_behind_parent = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Fader/Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="CanvasLayer/Fader/Control/VBoxContainer"]
+margin_top = 55.0
+margin_right = 1600.0
+margin_bottom = 343.0
+size_flags_vertical = 6
+custom_fonts/font = SubResource( 1 )
+text = "MAZEERY"
+align = 1
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/Fader/Control/VBoxContainer"]
+anchor_right = 0.053
+margin_top = 402.0
+margin_right = 1600.0
+margin_bottom = 800.0
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Fader/Control/VBoxContainer/CenterContainer"]
+margin_left = 720.0
+margin_top = 109.0
+margin_right = 967.0
+margin_bottom = 288.0
+
+[node name="StartButton" type="Button" parent="CanvasLayer/Fader/Control/VBoxContainer/CenterContainer/VBoxContainer"]
+margin_right = 251.0
+margin_bottom = 57.0
+custom_fonts/font = ExtResource( 4 )
+text = "START GAME"
+
+[node name="HowToPlayButton" type="Button" parent="CanvasLayer/Fader/Control/VBoxContainer/CenterContainer/VBoxContainer"]
+margin_top = 61.0
+margin_right = 251.0
+margin_bottom = 118.0
+custom_fonts/font = ExtResource( 4 )
+text = "How to play"
+
+[node name="QuitButton" type="Button" parent="CanvasLayer/Fader/Control/VBoxContainer/CenterContainer/VBoxContainer"]
+margin_top = 122.0
+margin_right = 251.0
+margin_bottom = 179.0
+custom_fonts/font = ExtResource( 4 )
+text = "QUIT GAME"
+
+[node name="3DMenuScene" parent="." instance=ExtResource( 2 )]
