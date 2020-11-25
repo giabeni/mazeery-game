@@ -18,13 +18,15 @@ var state = {
 	"collected": false
 }
 
+export var sound_playing = true
+
 onready var anim_player: AnimationPlayer = $AnimationPlayer
 onready var idle_sound: AudioStreamPlayer3D = $Sounds/IdleSound
 onready var collected_sound: AudioStreamPlayer3D = $Sounds/CollectedSound
 
 func _ready():
 	self.connect("body_entered", self, "_on_Gem_body_entered")
-	idle_sound.play()
+	idle_sound.playing = sound_playing
 
 func _disappear(anim_name):
 	if (anim_name == "Collected"):

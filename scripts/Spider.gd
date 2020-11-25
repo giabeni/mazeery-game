@@ -40,7 +40,7 @@ onready var hurt_audio: AudioStreamPlayer3D = $HurtAudio
 onready var death_audio: AudioStreamPlayer3D = $DeathAudio
 onready var health_bar = $SpiderArmature/Skeleton/Cube/HealthBar3D
 
-var state = {
+export var state = {
 	"target": null,
 	"dead": false,
 	"sleeping": true,

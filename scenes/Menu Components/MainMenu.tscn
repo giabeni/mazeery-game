@@ -43,18 +43,18 @@ size_flags_vertical = 6
 custom_fonts/font = SubResource( 1 )
 text = "MAZEERY"
 align = 1
+valign = 1
 
 [node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/Fader/Control/VBoxContainer"]
-anchor_right = 0.053
 margin_top = 402.0
 margin_right = 1600.0
 margin_bottom = 800.0
 size_flags_vertical = 3
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Fader/Control/VBoxContainer/CenterContainer"]
-margin_left = 720.0
+margin_left = 674.0
 margin_top = 109.0
-margin_right = 967.0
+margin_right = 925.0
 margin_bottom = 288.0
 
 [node name="StartButton" type="Button" parent="CanvasLayer/Fader/Control/VBoxContainer/CenterContainer/VBoxContainer"]
