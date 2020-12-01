@@ -1,25 +1,25 @@
-[gd_resource type="Environment" load_steps=2 format=2]
+[gd_resource type="Environment" load_steps=3 format=2]
 
-[sub_resource type="ProceduralSky" id=1]
-sky_top_color = Color( 0.0470588, 0.207843, 0.298039, 1 )
-sky_horizon_color = Color( 0.0509804, 0.0862745, 0.113725, 1 )
-sky_curve = 0.413532
-ground_horizon_color = Color( 0, 0, 0, 1 )
+[ext_resource path="res://assets/textures/Sky/night2-purple.png" type="Texture" id=1]
+
+[sub_resource type="PanoramaSky" id=1]
+panorama = ExtResource( 1 )
 
 [resource]
-background_mode = 3
+background_mode = 2
 background_sky = SubResource( 1 )
-background_sky_custom_fov = 41.1
-background_color = Color( 0.0196078, 0.0117647, 0.109804, 1 )
-background_energy = 0.89
-ambient_light_color = Color( 0, 0, 0, 0 )
-ambient_light_sky_contribution = 0.2
+background_sky_orientation = Basis( -0.422619, 0, 0.906308, 0, 1, 0, -0.906308, 0, -0.422619 )
+background_color = Color( 0.0705882, 0.0627451, 0.0980392, 1 )
+background_energy = 0.2
 fog_color = Color( 1, 1, 1, 0.341176 )
 fog_sun_color = Color( 0.929412, 0.898039, 0.780392, 1 )
 fog_depth_end = 2433.3
 fog_height_min = -45.6
 fog_height_max = 166.7
 fog_height_curve = 3.24901
+tonemap_exposure = 1.76
+auto_exposure_enabled = true
+auto_exposure_scale = 0.1
 dof_blur_far_distance = 116.87
 dof_blur_far_transition = 15.55
 glow_enabled = true

@@ -9,13 +9,13 @@ const BLACK_EYE_COLOR = "#160202"
 const RED_EYE_COLOR = "#ea2525"
 
 const SPEED = 9
-const ACCEL = 3
-const ANGULAR_ACCEL = 2
+const ACCEL = 2
+const ANGULAR_ACCEL = 1.4
 const GRAVITY = 20
 
 const ATTACK = {
 	"duration": 0.4,
-	"interval": 0.5,
+	"interval": 1,
 	"damage": 10
 }
 

@@ -13,6 +13,7 @@ const TURN_SENSITIVITY = 0.015
 
 const ACCELERATION = 6
 const ANGULAR_ACCELERATION = 7
+const AIM_SENSITIVITY = 2
 
 const ROLL_FORCE = 17
 const JUMP_FORCE = 3.1
@@ -32,9 +33,13 @@ var is_walking = false
 var vertical_velocity = 0
 var movement_speed = 0
 var target_light_range = 0
+var h_rot
+var slash_timer: SceneTreeTimer
 
 var is_in_pickable_area = false
 var pickable_item = null
+
+var next_aim_blend = 0
 
 enum TalismanColor {
 	RED,
@@ -66,6 +71,7 @@ var items = {
 
 ### NODE VARIABLES ###
 onready var anim_tree: AnimationTree = $Mesh/PunkMan/AnimationTree
+onready var anim_player: AnimationPlayer = $Mesh/PunkMan/AnimationPlayer
 onready var light: OmniLight = $Mesh/Light
 onready var skeleton: Skeleton = $Mesh/PunkMan/CharacterArmature/Skeleton
 onready var body: MeshInstance = $Mesh/PunkMan/CharacterArmature/Skeleton/Body
@@ -87,6 +93,7 @@ onready var talismans_icons: HBoxContainer = $UI/VerticalContainer/TopContainer/
 onready var fist_attachment: BoneAttachment = $Mesh/PunkMan/CharacterArmature/Skeleton/FistAttachment
 onready var blood_spill: Particles = $Mesh/BloodSpill/Particles
 onready var pickable_msg: RichTextLabel = $MessagesControl/PickableMessage
+onready var aim_slash: CSGPolygon = $Mesh/PunkMan/AimSlash
 
 func _ready():
 	velocity = Vector3.ZERO
@@ -101,7 +108,7 @@ func _physics_process(delta):
 	
 	# Horizontal Translation ----------------------
 	if Input.is_action_pressed("move_forward") ||  Input.is_action_pressed("move_backward") ||  Input.is_action_pressed("move_left") ||  Input.is_action_pressed("move_right"):
-		var h_rot = $Camroot/h.global_transform.basis.get_euler().y
+		h_rot = $Camroot/h.global_transform.basis.get_euler().y
 		direction = Vector3(
 			Input.get_action_strength("move_left") - Input.get_action_strength("move_right"),
 			0,
@@ -168,14 +175,30 @@ func _physics_process(delta):
 	else:
 		is_jumping = false
 	
+	# Aiming
+	if Input.is_action_just_pressed("aim"):
+		$Camroot.set_mode('AIM')
+		_aim()
+	if Input.is_action_just_released("aim"):
+		_quit_aim()
+		$Camroot.set_mode('MOVE')
+	
+	var cur_aim_blend = anim_tree.get('parameters/AimSlashBlend/blend_amount')
+	if cur_aim_blend != next_aim_blend:
+		cur_aim_blend = lerp(cur_aim_blend, next_aim_blend, delta * 15)
+		anim_tree.set('parameters/AimSlashBlend/blend_amount', cur_aim_blend)
+	
+	print('aim blend ',cur_aim_blend, ' / ', next_aim_blend)
+	
 	
 	# Rotation --------------------------
 	if (Input.is_action_pressed("aim")):
-		var rotation_angle = $Camroot/h.rotation.y - self.rotation.y
-		self.rotation.y = lerp_angle(self.rotation.y, $Camroot/h.rotation.y, delta * ANGULAR_ACCELERATION)
-		$Mesh.rotation.y = lerp_angle($Mesh.rotation.y, $Camroot/h.rotation.y, delta * ANGULAR_ACCELERATION)
-		direction = direction.rotated(Vector3.UP, rotation_angle)
-	elif not Input.is_action_just_released("aim"):
+		if cur_aim_blend >= 0.95:
+			aim_slash.show()
+		h_rot = $Camroot/h.global_transform.basis.get_euler().y
+		direction = $Camroot/h.global_transform.basis.z.normalized()
+		$Mesh.rotation.y = lerp_angle($Mesh.rotation.y, atan2(direction.x, direction.z) - rotation.y, delta * ANGULAR_ACCELERATION * AIM_SENSITIVITY)
+	else:
 		$Mesh.rotation.y = lerp_angle($Mesh.rotation.y, atan2(direction.x, direction.z) - rotation.y, delta * ANGULAR_ACCELERATION)
 
 	# Setiing UI feedback -------------------
@@ -198,6 +221,22 @@ func _can_attack():
 	else:
 		return state.weapon.can_attack() and not anim_tree.get("parameters/toSlash/active") and not is_dizzy()
 
+func _aim():
+	if is_instance_valid(state.weapon) and state.weapon.metadata.name == 'Sword':
+		anim_tree.set('parameters/AimSlashState/current', 0)
+		next_aim_blend = 0.99
+		
+func _quit_aim():
+	if is_instance_valid(state.weapon) and state.weapon.metadata.name == 'Sword':
+		state.weapon.start_attack()
+		anim_tree.set('parameters/AimSlashState/current', 1)
+		aim_slash.hide()
+		slash_timer = get_tree().create_timer(0.78)
+		yield(slash_timer, "timeout")
+		state.weapon.stop_attack()
+		next_aim_blend = 0
+		anim_tree.set('parameters/AimSlashBlend/blend_amount', 0)
+
 func _attack():
 	if not _can_attack():
 		return
@@ -207,6 +246,7 @@ func _attack():
 	else:
 		state.weapon.start_attack()
 		anim_tree.set("parameters/toSlash/active", true)
+		aim_slash.hide()
 
 func _on_pumpkin_collected(energy):
 	target_light_range = light.omni_range + energy
@@ -270,14 +310,15 @@ func _pickup_item(slot, item):
 	pickup_sound.play()
 	yield(get_tree().create_timer(0.3), "timeout")
 	
-	item.get_parent().remove_child(item)
-	_instantiate_item(item.metadata)
-	
-	state.backpack[slot - 1] = item.metadata
-	_set_active_slot(slot)
-	_set_slot_icon(slot, item.metadata.icon)
+	if is_instance_valid(item):
+		item.get_parent().remove_child(item)
+		_instantiate_item(item.metadata)
+		
+		state.backpack[slot - 1] = item.metadata
+		_set_active_slot(slot)
+		_set_slot_icon(slot, item.metadata.icon)
 
-	item.queue_free()
+		item.queue_free()
 	
 		
 func _instantiate_item(item_metadata):

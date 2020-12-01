@@ -42,11 +42,19 @@ config/name="Mazeery"
 run/main_scene="res://scenes/Menu Components/MainMenu.tscn"
 config/icon="res://icon.png"
 
+[debug]
+
+settings/stdout/print_fps=true
+
 [display]
 
 window/size/width=1600
 window/size/height=800
 window/size/always_on_top=true
+
+[editor_plugins]
+
+enabled=PoolStringArray(  )
 
 [input]
 
@@ -135,3 +143,6 @@ aim={
 [rendering]
 
 environment/default_environment="res://default_env.tres"
+quality/godrays/sample_number=50
+quality/godrays/use_pcf5=false
+quality/godrays/dither_amount=1.0
