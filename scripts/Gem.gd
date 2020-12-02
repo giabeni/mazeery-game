@@ -42,14 +42,16 @@ func _on_Gem_body_entered(body):
 	state.collected = true
 	self.monitoring = false
 	var prev_origin = self.global_transform.origin
-	self.get_parent().remove_child(self)
-	body.add_child(self)
-	self.owner = body
-	self.global_transform.origin = prev_origin
+	call_deferred("reparent", body, prev_origin)
 	anim_player.play("Collected")
 	anim_player.connect("animation_finished", self, "_disappear")
 	collected_sound.play()
 	idle_sound.stop()
 	
 	body.on_talisman_collected(talisman_color)
-		
+
+func reparent(body, prev_origin):
+	self.get_parent().remove_child(self)
+	body.add_child(self)
+	self.owner = body
+	self.global_transform.origin = prev_origin
