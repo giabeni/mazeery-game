@@ -13,13 +13,14 @@ export(int) var Z_SECTIONS = 10
 const SECTION_SIZE = 20
 
 export var ENEMY_PROB = 0
-export var ITEM_PROB = 0.8
+export var ITEM_PROB = 0.7
 
 export(NodePath) var player_node
 var player: Player
 
 
-var enemies_num = 0
+var enemies_count = 0
+var gems_count = 0
 
 
 var sections_with_gem = []
@@ -51,6 +52,7 @@ func _ready():
 			if (sections_with_gem.find(Vector2(x/SECTION_SIZE, z/SECTION_SIZE)) != -1):
 				print ("ADDING GEM ", x, " ", z)
 				section.set_gem(GEMS.pop_front(), player)
+				gems_count = gems_count + 1
 				
 			if (randf() <= ITEM_PROB):
 				var item_index = rng.randi_range(0, ITEMS.size() - 1)
@@ -59,7 +61,7 @@ func _ready():
 			if (randf() <= ENEMY_PROB):
 				var enemy_index = rng.randi_range(0, ENEMIES.size() - 1)
 				section.set_enemy(ENEMIES[enemy_index], player)
-				enemies_num = enemies_num + 1
+				enemies_count = enemies_count + 1
 			
 			maze.add_child(section)
 			section.global_transform.origin = Vector3(x, 0, z)
@@ -86,7 +88,8 @@ func _ready():
 				side.rotation_degrees = Vector3(0, 90, 0)
 				side.global_transform.origin = Vector3(Z_SECTIONS * SECTION_SIZE - SECTION_SIZE/2, 0, z)
 		
-		print ("NUMBER OF ENEMIES", enemies_num)	
+		print ("NUMBER OF ENEMIES", enemies_count)	
+		print ("NUMBER OF GEMS", gems_count)	
 func _rand_sections_with_gems():
 	for x in range(0, X_SECTIONS):
 		for z in range(0, Z_SECTIONS):

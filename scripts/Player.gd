@@ -11,7 +11,7 @@ export (PackedScene) var defeat_scene = null
 export (PackedScene) var victory_scene = null
 
 ### CONSTANTS ###
-const GRAVITY = 9
+const GRAVITY = 5
 const WALK_SPEED = 3
 const RUN_SPEED = 8
 const TURN_SENSITIVITY = 0.015
@@ -21,7 +21,7 @@ const ANGULAR_ACCELERATION = 7
 const AIM_SENSITIVITY = 2
 
 const ROLL_FORCE = 17
-const JUMP_FORCE = 3.1
+const JUMP_FORCE = 2
 
 const MAX_HP = 100
 
@@ -118,8 +118,8 @@ func _physics_process(delta):
 	if not state.alive:
 		return
 		
-	if state.talismans.size() > 0:
-		print("Position = ", transform.origin)
+	if transform.origin.y < -100:
+		_die()
 		
 	
 	# Horizontal Translation ----------------------

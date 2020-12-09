@@ -68,6 +68,7 @@ extents = Vector3( 0.76773, 0.754727, 1.1467 )
 transform = Transform( 9.65599e-07, 0, -1, 0, 1, 0, 1, 0, 9.65599e-07, 0, 1, 0 )
 collision_mask = 2
 script = ExtResource( 4 )
+talisman_color = 3
 
 [node name="Gem1" type="MeshInstance" parent="."]
 mesh = SubResource( 1 )
