@@ -38,11 +38,14 @@ next_pass = SubResource( 1 )
 script = ExtResource( 32 )
 
 [node name="LevelBuilder" parent="." instance=ExtResource( 1 )]
-ENEMY_PROB = 0.1
+X_SECTIONS = 3
+Z_SECTIONS = 3
+ENEMY_PROB = 0.3
+ITEM_PROB = 0.9
 player_node = NodePath("../Player")
 
-[node name="Sword" parent="LevelBuilder" instance=ExtResource( 12 )]
-transform = Transform( -0.428812, 0.176445, -0.187049, -0.190786, 0.0255321, 0.461464, 0.172398, 0.467135, 0.0454297, 6.32753, -61.4236, 1.18836 )
+[node name="Sword" parent="." instance=ExtResource( 12 )]
+transform = Transform( -0.428812, 0.176445, -0.187049, -0.190786, 0.0255321, 0.461464, 0.172398, 0.467135, 0.0454297, 2, 5, 0 )
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
 transform = Transform( -1.17225e-07, 0, 0.5, 0, 0.5, 0, -0.5, 0, -1.17225e-07, 2, 5, 0 )

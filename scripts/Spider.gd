@@ -13,6 +13,8 @@ const ACCEL = 2
 const ANGULAR_ACCEL = 1.4
 const GRAVITY = 5
 
+const MAX_HP = 20
+
 const ATTACK = {
 	"duration": 0.4,
 	"interval": 1,
@@ -44,7 +46,7 @@ export var state = {
 	"target": null,
 	"dead": false,
 	"sleeping": true,
-	"hp": 50,
+	"hp": MAX_HP,
 	"players_in_danger": []
 }
 

@@ -27,7 +27,7 @@ func _ready():
 		var enemy: Spatial = enemy_scene.instance()
 		enemy_container.add_child(enemy)
 		enemy.transform.origin = Vector3(0, 0, 0)
-		enemy.scale = Vector3(0.5, 0.5, 0.5)
+		enemy.scale = Vector3(0.4, 0.4, 0.4)
 		
 func set_gem(scene, player):
 	gem_scene = scene

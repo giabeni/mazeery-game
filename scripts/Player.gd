@@ -118,7 +118,7 @@ func _physics_process(delta):
 	if not state.alive:
 		return
 		
-	if transform.origin.y < -100:
+	if transform.origin.y < -18:
 		_die()
 		
 	

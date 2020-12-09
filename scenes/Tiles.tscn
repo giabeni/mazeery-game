@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://assets/materials/Moss003_2K_Color.png" type="Texture" id=1]
 [ext_resource path="res://assets/materials/Floor.material" type="Material" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://assets/materials/PavingStones009_2K_AmbientOcclusion.png" type="Texture" id=9]
 [ext_resource path="res://assets/materials/PavingStones009_2K_Displacement.png" type="Texture" id=10]
 [ext_resource path="res://assets/materials/PavingStones009_2K_Normal.png" type="Texture" id=11]
+[ext_resource path="res://assets/Shaders/Lava.shader" type="Shader" id=12]
 
 [sub_resource type="CubeMesh" id=1]
 size = Vector3( 2, 12, 2 )
@@ -70,16 +71,32 @@ margin = 0.001
 
 [sub_resource type="CubeMesh" id=7]
 
-[sub_resource type="SpatialMaterial" id=8]
-albedo_color = Color( 0.419608, 0.858824, 0.905882, 1 )
-emission_enabled = true
-emission = Color( 0.572549, 0.815686, 0.780392, 1 )
-emission_energy = 1.0
-emission_operator = 0
-emission_on_uv2 = false
+[sub_resource type="ShaderMaterial" id=9]
+render_priority = 2
+shader = ExtResource( 12 )
+shader_param/OCTAVES = 4
+shader_param/red = Color( 1, 0.329412, 0.0705882, 1 )
+shader_param/yellow = Color( 0.839216, 0.639216, 0.298039, 1 )
+shader_param/grey = Color( 0.239216, 0.223529, 0.223529, 1 )
+shader_param/black = Color( 0, 0, 0, 1 )
 
-[sub_resource type="ConcavePolygonShape" id=9]
+[sub_resource type="ConcavePolygonShape" id=10]
 data = PoolVector3Array( -1, 1, 1, 1, 1, 1, -1, -1, 1, 1, 1, 1, 1, -1, 1, -1, -1, 1, 1, 1, -1, -1, 1, -1, 1, -1, -1, -1, 1, -1, -1, -1, -1, 1, -1, -1, 1, 1, 1, 1, 1, -1, 1, -1, 1, 1, 1, -1, 1, -1, -1, 1, -1, 1, -1, 1, -1, -1, 1, 1, -1, -1, -1, -1, 1, 1, -1, -1, 1, -1, -1, -1, 1, 1, 1, -1, 1, 1, 1, 1, -1, -1, 1, 1, -1, 1, -1, 1, 1, -1, -1, -1, 1, 1, -1, 1, -1, -1, -1, 1, -1, 1, 1, -1, -1, -1, -1, -1 )
+
+[sub_resource type="ShaderMaterial" id=11]
+shader = ExtResource( 12 )
+shader_param/OCTAVES = 30
+shader_param/red = Color( 0.960784, 0.286275, 0.0784314, 1 )
+shader_param/yellow = Color( 0.862745, 0.631373, 0.184314, 1 )
+shader_param/grey = Color( 0.27451, 0.211765, 0.211765, 1 )
+shader_param/black = null
+
+[sub_resource type="CubeMesh" id=12]
+material = SubResource( 11 )
+size = Vector3( 23, 23, 23 )
+
+[sub_resource type="BoxShape" id=13]
+extents = Vector3( 11.5, 4, 11.5 )
 
 [node name="Tiles" type="Node"]
 
@@ -117,9 +134,21 @@ shape = SubResource( 6 )
 [node name="MeshInstance" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.01474, 6.75492 )
 mesh = SubResource( 7 )
-material/0 = SubResource( 8 )
+material/0 = SubResource( 9 )
 
 [node name="StaticBody" type="StaticBody" parent="MeshInstance"]
 
 [node name="CollisionShape" type="CollisionShape" parent="MeshInstance/StaticBody"]
-shape = SubResource( 9 )
+shape = SubResource( 10 )
+
+[node name="MeshInstance2" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -18.7627, 1.01474, 6.75492 )
+mesh = SubResource( 12 )
+material/0 = null
+
+[node name="StaticBody" type="StaticBody" parent="MeshInstance2"]
+
+[node name="CollisionShape" type="CollisionShape" parent="MeshInstance2/StaticBody"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5.36191, 0 )
+shape = SubResource( 13 )
+disabled = true
