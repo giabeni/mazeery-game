@@ -5,7 +5,7 @@ onready var start_button = $CanvasLayer/Fader/Control/VBoxContainer/CenterContai
 onready var quit_button = $CanvasLayer/Fader/Control/VBoxContainer/CenterContainer/VBoxContainer/QuitButton
 onready var fader = $CanvasLayer/Fader
 
-export (PackedScene) var game_scene = null
+export (PackedScene) var game_scene = preload("res://scenes/Level.tscn")
 
 func _ready():
 	start_button.connect("pressed", self, "on_start_pressed")

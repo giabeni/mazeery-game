@@ -7,6 +7,8 @@ var mode = 'MOVE'
 var new_translation
 var new_rotation_degrees
 
+export var enable_movement = true
+
 const CAM_V_MIN = -55
 const CAM_V_MAX = 60
 #
@@ -54,6 +56,11 @@ func _input(event):
 		camrot_v += event.relative.y * V_SENSITIVITY
 		
 func _physics_process(delta):
+	
+	if not enable_movement:
+		if Input.get_mouse_mode() != Input.MOUSE_MODE_VISIBLE:
+			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		return
 	
 	if self.translation != new_translation:
 		self.translation = self.translation.linear_interpolate(new_translation, delta * MODE_CHANGE_VEL)

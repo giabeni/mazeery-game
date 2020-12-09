@@ -22,6 +22,7 @@ export var sound_playing = true
 
 onready var anim_player: AnimationPlayer = $AnimationPlayer
 onready var idle_sound: AudioStreamPlayer3D = $Sounds/IdleSound
+onready var collider: CollisionShape = $CollisionShape
 onready var collected_sound: AudioStreamPlayer3D = $Sounds/CollectedSound
 
 func _ready():
@@ -40,15 +41,16 @@ func _on_Gem_body_entered(body):
 	
 	print("Talisman collected", body.get_instance_id())
 	state.collected = true
-	self.monitoring = false
+	collider.disabled = true
+	set_deferred("monitoring", false)
 	var prev_origin = self.global_transform.origin
 	call_deferred("reparent", body, prev_origin)
-	anim_player.play("Collected")
 	anim_player.connect("animation_finished", self, "_disappear")
+	anim_player.play("Collected")
 	collected_sound.play()
 	idle_sound.stop()
 	
-	body.on_talisman_collected(talisman_color)
+	(body as Player).on_talisman_collected(talisman_color)
 
 func reparent(body, prev_origin):
 	self.get_parent().remove_child(self)

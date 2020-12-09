@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://scripts/Camera.gd" type="Script" id=1]
 [ext_resource path="res://assets/sounds/Hurt/simple-hurt.wav" type="AudioStream" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://assets/sounds/steps.wav" type="AudioStream" id=6]
 [ext_resource path="res://assets/sounds/Player/pickup.wav" type="AudioStream" id=7]
 [ext_resource path="res://assets/sounds/Hurt/male-hurt-4.wav" type="AudioStream" id=8]
+[ext_resource path="res://assets/sounds/Win/victory.wav" type="AudioStream" id=9]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 0.93116
@@ -43,6 +44,7 @@ shape = SubResource( 1 )
 [node name="DeadCollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 0.66, 0, 0, 0, 0.615571, 5.25183e-09, 0, 5.25186e-09, 0.495424, 0, 0.591255, 1.19367 )
 shape = SubResource( 1 )
+disabled = true
 
 [node name="Camroot" type="Spatial" parent="."]
 transform = Transform( 0.967872, 0, 0.251444, 0, 1, 0, -0.251444, 0, 0.967872, -1.73149, 2.07692, -1.6852 )
@@ -62,6 +64,9 @@ process_mode = 1
 stream = ExtResource( 4 )
 volume_db = -1.0
 autoplay = true
+
+[node name="SoundVictory" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 9 )
 
 [node name="DizzyTimer" type="Timer" parent="."]
 wait_time = 0.625

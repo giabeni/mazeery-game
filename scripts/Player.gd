@@ -8,6 +8,7 @@ const Sword = preload("res://scenes/Sword.tscn")
 ## SCENES ###
 
 export (PackedScene) var defeat_scene = null
+export (PackedScene) var victory_scene = null
 
 ### CONSTANTS ###
 const GRAVITY = 9
@@ -85,6 +86,7 @@ onready var footsteps_sound: AudioStreamPlayer3D = $SoundFootsteps
 onready var hurt_sound: AudioStreamPlayer3D = $SoundHurt
 onready var pickup_sound: AudioStreamPlayer3D = $SoundPickup
 onready var die_sound: AudioStreamPlayer = $SoundDeath
+onready var win_sound: AudioStreamPlayer = $SoundVictory
 onready var left_walk_step_sound: AudioStreamPlayer3D = $Mesh/PunkMan/StepsSounds/LeftWalkStepSound
 onready var right_walk_step_sound: AudioStreamPlayer3D = $Mesh/PunkMan/StepsSounds/RightWalkStepSound
 onready var left_run_step_sound: AudioStreamPlayer3D = $Mesh/PunkMan/StepsSounds/LeftRunStepSound
@@ -112,6 +114,13 @@ func _ready():
 #		aim_turn += -event.relative.x * TURN_SENSITIVITY
 
 func _physics_process(delta):
+	
+	if not state.alive:
+		return
+		
+	if state.talismans.size() > 0:
+		print("Position = ", transform.origin)
+		
 	
 	# Horizontal Translation ----------------------
 	if Input.is_action_pressed("move_forward") ||  Input.is_action_pressed("move_backward") ||  Input.is_action_pressed("move_left") ||  Input.is_action_pressed("move_right"):
@@ -195,8 +204,6 @@ func _physics_process(delta):
 		cur_aim_blend = lerp(cur_aim_blend, next_aim_blend, delta * 15)
 		anim_tree.set('parameters/AimSlashBlend/blend_amount', cur_aim_blend)
 	
-	print('aim blend ',cur_aim_blend, ' / ', next_aim_blend)
-	
 	
 	# Rotation --------------------------
 	if (Input.is_action_pressed("aim")):
@@ -277,6 +284,8 @@ func _set_lighting(delta):
 		current_light_bar.rect_size.x = lerp(current_light_bar.rect_size.x, state.light_range * light_bar.rect_size.x / MAX_LIGHT_RANGE, delta * 10)
 
 func _set_skin_energy(energy):
+	if energy < 0.05:
+		energy = 0.05
 	var skin_material = (body as MeshInstance).mesh.surface_get_material(1)
 	if body and skin_material:
 		skin_material.emission_energy = energy
@@ -383,17 +392,32 @@ func hurt(damage):
 		
 func _die():
 	state.alive = false
+	$Camroot.enable_movement = false
 	dead_collision.disabled = true
 	die_sound.play()
-	anim_tree.set("parameters/deadOrAlive/current", 1)
+	anim_tree.set("parameters/gameState/current", 1)
 	yield(get_tree().create_timer(3), "timeout")
 	_go_to_defeat()
 	
 func _go_to_defeat():
-	get_tree().change_scene_to(defeat_scene)
+	var defeat = defeat_scene.instance()
+	get_tree().root.add_child(defeat)
 
 func is_alive():
 	return state.alive
+	
+func _win():
+	win_sound.play()
+	state.alive = false
+	get_parent_spatial().set_env("light")
+	$Camroot.enable_movement = false
+	anim_tree.set("parameters/gameState/current", 2)
+	yield(get_tree().create_timer(2), "timeout")
+	_go_to_victory()
+	
+func _go_to_victory():
+	var win = victory_scene.instance()
+	get_tree().root.add_child(win)
 
 func is_dizzy():
 	return not timer_dizzy.is_stopped()
@@ -411,8 +435,7 @@ func on_PickableArea_exited(item):
 func on_talisman_collected(talisman_color):
 	print("Collected ", talisman_color, " ", get_color_name(talisman_color))
 	
-	anim_tree.set("parameters/toWin/active", true)
-	
+#	anim_tree.set("parameters/toWin/active", true)	
 	var color_name = get_color_name(talisman_color)
 	var icon_node_name = "Talisman" + color_name
 	var icon_node = talismans_icons.get_node(icon_node_name) as TextureRect
@@ -420,8 +443,7 @@ func on_talisman_collected(talisman_color):
 	
 	state.talismans.append(talisman_color)
 	if state.talismans.size() == 7:
-		# @TODO trigger vicotry
-		print("VICTORY!!!!!")
+		_win()
 
 func get_color_name(talisman_color):
 	match talisman_color:

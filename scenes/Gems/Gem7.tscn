@@ -110,7 +110,7 @@ surfaces/0 = {
 "vertex_count": 344
 }
 
-[sub_resource type="CylinderShape" id=7]
+[sub_resource type="CylinderShape" id=4]
 radius = 2.94893
 height = 7.12456
 
@@ -139,7 +139,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0.6, 1.8 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector3( 1, 1, 1 ), Vector3( 0, 0, 0 ) ]
+"values": [ Vector3( 1, 1, 1 ), Vector3( 0.1, 0.1, 0.1 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("Gem7:material/0:emission_energy")
@@ -233,7 +233,7 @@ light_color = Color( 0.921569, 0.8, 0.247059, 1 )
 light_energy = 4.0
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
-shape = SubResource( 7 )
+shape = SubResource( 4 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "Idle"

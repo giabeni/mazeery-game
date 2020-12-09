@@ -58,7 +58,7 @@ tracks/2/keys = {
 "times": PoolRealArray( 0.6, 1.7 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector3( 1, 1, 1 ), Vector3( 0, 0, 0 ) ]
+"values": [ Vector3( 1, 1, 1 ), Vector3( 0.1, 0.1, 0.1 ) ]
 }
 
 [sub_resource type="BoxShape" id=3]
