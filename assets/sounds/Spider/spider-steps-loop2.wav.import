@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/spider-steps-loop2.wav-17694b0ea6b6d02c3a4877ac2dba6b1d.sample"
+
+[deps]
+
+source_file="res://assets/sounds/Spider/spider-steps-loop2.wav"
+dest_files=[ "res://.import/spider-steps-loop2.wav-17694b0ea6b6d02c3a4877ac2dba6b1d.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=true
+compress/mode=0

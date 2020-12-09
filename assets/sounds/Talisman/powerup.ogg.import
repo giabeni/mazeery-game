@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/powerup.ogg-cae5288e83dd36b39775483e6caf46c1.oggstr"
+
+[deps]
+
+source_file="res://assets/sounds/Talisman/powerup.ogg"
+dest_files=[ "res://.import/powerup.ogg-cae5288e83dd36b39775483e6caf46c1.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

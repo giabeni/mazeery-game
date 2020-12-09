@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/male-hurt-4.wav-87347353f1471d98e3e117ea8f93242b.sample"
+
+[deps]
+
+source_file="res://assets/sounds/Hurt/male-hurt-4.wav"
+dest_files=[ "res://.import/male-hurt-4.wav-87347353f1471d98e3e117ea8f93242b.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

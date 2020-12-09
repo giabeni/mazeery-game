@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/left-step-weak.wav-2d9fb1b5726446d6fadd97efe371682a.sample"
+
+[deps]
+
+source_file="res://assets/sounds/Steps/left-step-weak.wav"
+dest_files=[ "res://.import/left-step-weak.wav-2d9fb1b5726446d6fadd97efe371682a.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

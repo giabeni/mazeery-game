@@ -1,0 +1,148 @@
+[gd_scene load_steps=39 format=2]
+
+[ext_resource path="res://assets/models/Casual2_Male/Casual2_Male.glb" type="PackedScene" id=1]
+[ext_resource path="res://assets/models/Casual2_Male/RecieveHit.anim" type="Animation" id=2]
+[ext_resource path="res://assets/models/Casual2_Male/SitDown.anim" type="Animation" id=3]
+[ext_resource path="res://assets/models/Casual2_Male/Shoot_OneHanded.anim" type="Animation" id=4]
+[ext_resource path="res://assets/models/Casual2_Male/Punch.anim" type="Animation" id=5]
+[ext_resource path="res://assets/models/Casual2_Male/PickUp.anim" type="Animation" id=6]
+[ext_resource path="res://assets/models/Casual2_Male/Run.anim" type="Animation" id=7]
+[ext_resource path="res://assets/models/Casual2_Male/Walk.anim" type="Animation" id=8]
+[ext_resource path="res://assets/models/PunkMan/Shirt.material" type="Material" id=9]
+[ext_resource path="res://assets/models/PunkMan/Pants.material" type="Material" id=10]
+[ext_resource path="res://assets/models/PunkMan/Face.material" type="Material" id=11]
+[ext_resource path="res://assets/models/PunkMan/Skin.material" type="Material" id=12]
+[ext_resource path="res://assets/models/PunkMan/Hair.material" type="Material" id=13]
+[ext_resource path="res://assets/models/PunkMan/Belt.material" type="Material" id=14]
+[ext_resource path="res://assets/animations/Idle.anim" type="Animation" id=15]
+[ext_resource path="res://assets/animations/Roll.anim" type="Animation" id=16]
+[ext_resource path="res://assets/animations/Jump.anim" type="Animation" id=17]
+[ext_resource path="res://assets/animations/Run_Carry.anim" type="Animation" id=18]
+[ext_resource path="res://assets/animations/SwordSlash.anim" type="Animation" id=19]
+[ext_resource path="res://assets/animations/Victory.anim" type="Animation" id=20]
+[ext_resource path="res://assets/animations/Walk_Carry.anim" type="Animation" id=21]
+
+[sub_resource type="AnimationNodeAnimation" id=1]
+animation = "SwordSlash"
+
+[sub_resource type="AnimationNodeAnimation" id=2]
+animation = "Idle"
+
+[sub_resource type="AnimationNodeAnimation" id=3]
+animation = "Jump"
+
+[sub_resource type="AnimationNodeOneShot" id=4]
+filter_enabled = true
+filters = [ "CharacterArmature/Skeleton:abdomen", "CharacterArmature/Skeleton:body", "CharacterArmature/Skeleton:bone", "CharacterArmature/Skeleton:fist_r", "CharacterArmature/Skeleton:head", "CharacterArmature/Skeleton:hips", "CharacterArmature/Skeleton:lower_arm_r", "CharacterArmature/Skeleton:neck", "CharacterArmature/Skeleton:pole_target_l", "CharacterArmature/Skeleton:pole_target_r", "CharacterArmature/Skeleton:shoulder_r", "CharacterArmature/Skeleton:torso", "CharacterArmature/Skeleton:upper_arm_r" ]
+
+[sub_resource type="AnimationNodeAnimation" id=5]
+animation = "Punch"
+
+[sub_resource type="AnimationNodeAnimation" id=6]
+animation = "RecieveHit"
+
+[sub_resource type="AnimationNodeAnimation" id=7]
+animation = "Roll"
+
+[sub_resource type="AnimationNodeAnimation" id=8]
+animation = "Run"
+
+[sub_resource type="AnimationNodeBlend3" id=9]
+
+[sub_resource type="AnimationNodeAnimation" id=10]
+animation = "Walk"
+
+[sub_resource type="AnimationNodeOneShot" id=11]
+filter_enabled = true
+filters = [ "CharacterArmature/Skeleton:abdomen", "CharacterArmature/Skeleton:body", "CharacterArmature/Skeleton:bone", "CharacterArmature/Skeleton:fist_l", "CharacterArmature/Skeleton:fist_r", "CharacterArmature/Skeleton:head", "CharacterArmature/Skeleton:hips", "CharacterArmature/Skeleton:lower_arm_l", "CharacterArmature/Skeleton:lower_arm_r", "CharacterArmature/Skeleton:neck", "CharacterArmature/Skeleton:pole_target_l", "CharacterArmature/Skeleton:pole_target_r", "CharacterArmature/Skeleton:shoulder_l", "CharacterArmature/Skeleton:shoulder_r", "CharacterArmature/Skeleton:torso", "CharacterArmature/Skeleton:upper_arm_l", "CharacterArmature/Skeleton:upper_arm_r" ]
+
+[sub_resource type="AnimationNodeOneShot" id=12]
+filter_enabled = true
+filters = [ "CharacterArmature/Skeleton:abdomen", "CharacterArmature/Skeleton:body", "CharacterArmature/Skeleton:bone", "CharacterArmature/Skeleton:foot_l", "CharacterArmature/Skeleton:foot_r", "CharacterArmature/Skeleton:head", "CharacterArmature/Skeleton:hips", "CharacterArmature/Skeleton:lower_leg_l", "CharacterArmature/Skeleton:lower_leg_r", "CharacterArmature/Skeleton:neck", "CharacterArmature/Skeleton:pole_target_l", "CharacterArmature/Skeleton:pole_target_r", "CharacterArmature/Skeleton:torso", "CharacterArmature/Skeleton:upper_leg_l", "CharacterArmature/Skeleton:upper_leg_r" ]
+
+[sub_resource type="AnimationNodeOneShot" id=13]
+filter_enabled = true
+filters = [ "CharacterArmature/Skeleton:abdomen", "CharacterArmature/Skeleton:body", "CharacterArmature/Skeleton:bone", "CharacterArmature/Skeleton:fist_l", "CharacterArmature/Skeleton:fist_r", "CharacterArmature/Skeleton:head", "CharacterArmature/Skeleton:hips", "CharacterArmature/Skeleton:lower_arm_l", "CharacterArmature/Skeleton:lower_arm_r", "CharacterArmature/Skeleton:neck", "CharacterArmature/Skeleton:pole_target_l", "CharacterArmature/Skeleton:pole_target_r", "CharacterArmature/Skeleton:shoulder_l", "CharacterArmature/Skeleton:shoulder_r", "CharacterArmature/Skeleton:torso", "CharacterArmature/Skeleton:upper_arm_l", "CharacterArmature/Skeleton:upper_arm_r" ]
+
+[sub_resource type="AnimationNodeOneShot" id=14]
+
+[sub_resource type="AnimationNodeAnimation" id=15]
+animation = "Shoot_OneHanded"
+
+[sub_resource type="AnimationNodeOneShot" id=16]
+
+[sub_resource type="AnimationNodeBlendTree" id=17]
+graph_offset = Vector2( -279.26, 127 )
+nodes/Animation/node = SubResource( 1 )
+nodes/Animation/position = Vector2( 1102, 361 )
+nodes/Idle/node = SubResource( 2 )
+nodes/Idle/position = Vector2( 38, 0 )
+nodes/Jump/node = SubResource( 3 )
+nodes/Jump/position = Vector2( 418, 361 )
+nodes/OneShot/node = SubResource( 4 )
+nodes/OneShot/position = Vector2( 1577, 133 )
+nodes/Punch/node = SubResource( 5 )
+nodes/Punch/position = Vector2( 893, 361 )
+nodes/ReceiveHit/node = SubResource( 6 )
+nodes/ReceiveHit/position = Vector2( 646, 361 )
+nodes/Roll/node = SubResource( 7 )
+nodes/Roll/position = Vector2( 1596, 361 )
+nodes/Run/node = SubResource( 8 )
+nodes/Run/position = Vector2( 38, 285 )
+nodes/Speed/node = SubResource( 9 )
+nodes/Speed/position = Vector2( 399, 133 )
+nodes/Walk/node = SubResource( 10 )
+nodes/Walk/position = Vector2( 38, 152 )
+nodes/output/position = Vector2( 2090, 209 )
+nodes/toHurt/node = SubResource( 11 )
+nodes/toHurt/position = Vector2( 855, 133 )
+nodes/toJump/node = SubResource( 12 )
+nodes/toJump/position = Vector2( 627, 133 )
+nodes/toPunch/node = SubResource( 13 )
+nodes/toPunch/position = Vector2( 1083, 133 )
+nodes/toRoll/node = SubResource( 14 )
+nodes/toRoll/position = Vector2( 1786, 133 )
+nodes/toShoot/node = SubResource( 15 )
+nodes/toShoot/position = Vector2( 1330, 361 )
+nodes/toSlash/node = SubResource( 16 )
+nodes/toSlash/position = Vector2( 1311, 133 )
+node_connections = [ "output", 0, "toRoll", "OneShot", 0, "toSlash", "OneShot", 1, "toShoot", "Speed", 0, "Idle", "Speed", 1, "Walk", "Speed", 2, "Run", "toHurt", 0, "toJump", "toHurt", 1, "ReceiveHit", "toJump", 0, "Speed", "toJump", 1, "Jump", "toPunch", 0, "toHurt", "toPunch", 1, "Punch", "toRoll", 0, "OneShot", "toRoll", 1, "Roll", "toSlash", 0, "toPunch", "toSlash", 1, "Animation" ]
+
+[node name="Casual2_Male" instance=ExtResource( 1 )]
+
+[node name="Body" parent="CharacterArmature/Skeleton" index="0"]
+material/0 = ExtResource( 9 )
+material/1 = ExtResource( 12 )
+material/2 = ExtResource( 10 )
+material/3 = ExtResource( 14 )
+material/4 = ExtResource( 11 )
+material/5 = ExtResource( 13 )
+
+[node name="AnimationPlayer" parent="." index="1"]
+autoplay = "Idle"
+anims/Idle = ExtResource( 15 )
+anims/Jump = ExtResource( 17 )
+anims/PickUp = ExtResource( 6 )
+anims/Punch = ExtResource( 5 )
+anims/RecieveHit = ExtResource( 2 )
+anims/Roll = ExtResource( 16 )
+anims/Run = ExtResource( 7 )
+anims/Run_Carry = ExtResource( 18 )
+anims/Shoot_OneHanded = ExtResource( 4 )
+anims/SitDown = ExtResource( 3 )
+anims/SwordSlash = ExtResource( 19 )
+anims/Victory = ExtResource( 20 )
+anims/Walk = ExtResource( 8 )
+anims/Walk_Carry = ExtResource( 21 )
+
+[node name="AnimationTree" type="AnimationTree" parent="." index="2"]
+tree_root = SubResource( 17 )
+anim_player = NodePath("../AnimationPlayer")
+active = true
+parameters/OneShot/active = false
+parameters/Speed/blend_amount = -1.0
+parameters/toHurt/active = false
+parameters/toJump/active = false
+parameters/toPunch/active = false
+parameters/toRoll/active = false
+parameters/toSlash/active = false

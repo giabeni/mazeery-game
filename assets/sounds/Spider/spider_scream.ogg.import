@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/spider_scream.ogg-db7565c6c178d1828b6e84278b224772.oggstr"
+
+[deps]
+
+source_file="res://assets/sounds/Spider/spider_scream.ogg"
+dest_files=[ "res://.import/spider_scream.ogg-db7565c6c178d1828b6e84278b224772.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

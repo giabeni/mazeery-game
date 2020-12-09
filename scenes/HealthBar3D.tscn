@@ -1,0 +1,24 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://assets/materials/health_bar.material.tres" type="Material" id=1]
+[ext_resource path="res://assets/materials/health_bar_bg.material" type="Material" id=2]
+[ext_resource path="res://scripts/HealthBar3D.gd" type="Script" id=3]
+
+[sub_resource type="QuadMesh" id=1]
+size = Vector2( 0.5, 0.02 )
+
+[sub_resource type="CubeMesh" id=2]
+size = Vector3( 0.5, 0.02, 0.01 )
+
+[node name="HealthBar3D" type="Spatial"]
+script = ExtResource( 3 )
+
+[node name="Bar" type="MeshInstance" parent="."]
+material_override = ExtResource( 1 )
+mesh = SubResource( 1 )
+material/0 = null
+
+[node name="BackgroundBar" type="MeshInstance" parent="."]
+material_override = ExtResource( 2 )
+mesh = SubResource( 2 )
+material/0 = null
