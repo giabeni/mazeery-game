@@ -38,6 +38,7 @@ next_pass = SubResource( 1 )
 script = ExtResource( 32 )
 
 [node name="LevelBuilder" parent="." instance=ExtResource( 1 )]
+ENEMY_PROB = 0.1
 player_node = NodePath("../Player")
 
 [node name="Sword" parent="LevelBuilder" instance=ExtResource( 12 )]

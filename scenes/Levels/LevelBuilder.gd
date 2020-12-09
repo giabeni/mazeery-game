@@ -8,11 +8,11 @@ export(Array, PackedScene) var ITEMS = []
 
 export(PackedScene) var MAZE_SIDE = null
 
-export(int) var X_SECTIONS = 10
-export(int) var Z_SECTIONS = 10
+export(int) var X_SECTIONS = 5
+export(int) var Z_SECTIONS = 5
 const SECTION_SIZE = 20
 
-export var ENEMY_PROB = 0
+export var ENEMY_PROB = 0.4
 export var ITEM_PROB = 0.7
 
 export(NodePath) var player_node

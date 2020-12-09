@@ -11,7 +11,7 @@ const RED_EYE_COLOR = "#ea2525"
 const SPEED = 9
 const ACCEL = 2
 const ANGULAR_ACCEL = 1.4
-const GRAVITY = 20
+const GRAVITY = 5
 
 const ATTACK = {
 	"duration": 0.4,
@@ -84,10 +84,10 @@ func _physics_process(delta):
 			audio_scream.playing = true
 	
 	# Gravity and Jumping-------------------------
-	if is_on_floor():
-		vertical_velocity = 0
-	else:
-		vertical_velocity += GRAVITY * delta
+#	if is_on_floor():
+#		vertical_velocity = 0
+#	else:
+	vertical_velocity += GRAVITY * delta
 	
 	if is_instance_valid(state.target) and not state.sleeping:
 		var target_position = (state.target as KinematicBody).global_transform.origin
@@ -104,7 +104,7 @@ func _physics_process(delta):
 	velocity = lerp(velocity, direction * SPEED, delta * ACCEL)
 	velocity.y = 0
 	
-	velocity = move_and_slide_with_snap(velocity + Vector3.DOWN * vertical_velocity, Vector3.DOWN * 10, Vector3.UP)
+	velocity = move_and_slide_with_snap(velocity + Vector3.DOWN * vertical_velocity, Vector3.ZERO * 100, Vector3.UP)
 	
 	cur_idle_walk_blend = 2 * velocity.length()/SPEED
 	(anim_tree as AnimationTree).set("parameters/IdleWalk/blend_amount", cur_idle_walk_blend)
