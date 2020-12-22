@@ -39,9 +39,8 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="CanvasLayer/UI/Control/VBoxContainer"]
-margin_top = 41.0
-margin_right = 1600.0
-margin_bottom = 329.0
+margin_right = 1024.0
+margin_bottom = 288.0
 size_flags_vertical = 6
 custom_fonts/font = SubResource( 1 )
 custom_colors/font_color = Color( 0.878431, 0.0666667, 0.0666667, 1 )
@@ -49,24 +48,24 @@ text = "DEFEAT"
 align = 1
 
 [node name="Label2" type="Label" parent="CanvasLayer/UI/Control/VBoxContainer"]
-margin_top = 374.0
-margin_right = 1600.0
-margin_bottom = 425.0
+margin_top = 292.0
+margin_right = 1024.0
+margin_bottom = 343.0
 custom_fonts/font = ExtResource( 2 )
 text = "Your character has died!"
 align = 1
 
 [node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/UI/Control/VBoxContainer"]
-margin_top = 429.0
-margin_right = 1600.0
-margin_bottom = 800.0
+margin_top = 347.0
+margin_right = 1024.0
+margin_bottom = 600.0
 size_flags_vertical = 3
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/UI/Control/VBoxContainer/CenterContainer"]
-margin_left = 671.0
-margin_top = 96.0
-margin_right = 929.0
-margin_bottom = 275.0
+margin_left = 383.0
+margin_top = 37.0
+margin_right = 641.0
+margin_bottom = 216.0
 
 [node name="RestartButton" type="Button" parent="CanvasLayer/UI/Control/VBoxContainer/CenterContainer/VBoxContainer"]
 margin_right = 258.0

@@ -25,9 +25,6 @@ onready var body: MeshInstance = $SpiderArmature/Skeleton/Cube
 onready var eyes_light: OmniLight = $SpiderArmature/Skeleton/Cube/EyesLight
 onready var anim_tree: AnimationTree = $AnimationTree
 onready var anim_player: AnimationPlayer = $AnimationPlayer
-onready var middle_sight_ray_cast: RayCast = $MiddleSightRayCast
-onready var left_sight_ray_cast: RayCast = $LeftSightRayCast
-onready var right_sight_ray_cast: RayCast = $RightSightRayCast
 onready var timer_exit_sight: Timer = $ExitTimer
 onready var timer_attack_duration: Timer = $AttackDurationTimer
 onready var timer_attack_interval: Timer = $AttackIntervalTimer
@@ -41,8 +38,9 @@ onready var audio_bite: AudioStreamPlayer3D = $BiteAudio
 onready var hurt_audio: AudioStreamPlayer3D = $HurtAudio
 onready var death_audio: AudioStreamPlayer3D = $DeathAudio
 onready var health_bar = $SpiderArmature/Skeleton/Cube/HealthBar3D
+onready var sight_area: Area = $SightArea
 
-export var state = {
+var state = {
 	"target": null,
 	"dead": false,
 	"sleeping": true,
@@ -50,13 +48,16 @@ export var state = {
 	"players_in_danger": []
 }
 
+var has_target_in_area = false
+
 var velocity = Vector3.ZERO
 var vertical_velocity = 0
 var direction = Vector3.ZERO
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	_set_health_bar_max(health_bar, state.hp)
+	print("Spider ready, HP is ", state.hp)
+	_set_health_bar_max(health_bar, MAX_HP)
 	
 func _physics_process(delta):
 	
@@ -85,10 +86,7 @@ func _physics_process(delta):
 		if not audio_scream.playing:
 			audio_scream.playing = true
 	
-	# Gravity and Jumping-------------------------
-#	if is_on_floor():
-#		vertical_velocity = 0
-#	else:
+	
 	vertical_velocity += GRAVITY * delta
 	
 	if is_instance_valid(state.target) and not state.sleeping:
@@ -140,22 +138,40 @@ func _open_eyes(delta):
 #	print("After enable light open eyes", "time = ", OS.get_ticks_msec())
 
 func _check_for_players_in_sight():
-	if middle_sight_ray_cast.is_colliding() or left_sight_ray_cast.is_colliding() or right_sight_ray_cast.is_colliding():
-		var body
-		if middle_sight_ray_cast.is_colliding():
-			body = middle_sight_ray_cast.get_collider()
-		elif left_sight_ray_cast.is_colliding():
-			body = left_sight_ray_cast.get_collider()
-		elif right_sight_ray_cast.is_colliding():
-			body = right_sight_ray_cast.get_collider()
-
-		if is_instance_valid(body) and body.is_in_group("Player") and body.is_alive():
-			state.target = body
-			_awake()
-		else:
+	if has_target_in_area:
+		var players_in_sight_area = sight_area.get_overlapping_bodies()
+#		print("Players in sight", players_in_sight_area)
+		if players_in_sight_area.size() == 0:
 			_forget_target()
-	else:
-		_forget_target()
+			return
+
+		for target in players_in_sight_area:
+			if target.is_in_group("Player"):
+				var space = get_world().direct_space_state
+				var collision = space.intersect_ray(global_transform.origin, target.global_transform.origin)
+				if collision.has("collider") and collision.collider.is_in_group("Player"):
+					_set_target(collision.collider)
+					_awake()
+#	if middle_sight_ray_cast.is_colliding() or left_sight_ray_cast.is_colliding() or right_sight_ray_cast.is_colliding():
+#		var body
+#		if middle_sight_ray_cast.is_colliding():
+#			body = middle_sight_ray_cast.get_collider()
+#		elif left_sight_ray_cast.is_colliding():
+#			body = left_sight_ray_cast.get_collider()
+#		elif right_sight_ray_cast.is_colliding():
+#			body = right_sight_ray_cast.get_collider()
+#
+#		if is_instance_valid(body) and body.is_in_group("Player") and body.is_alive():
+#			state.target = body
+#			_awake()
+#		else:
+#			_forget_target()
+#	else:
+#		_forget_target()
+
+func _set_target(body):
+	if body.is_alive():
+		state.target = body
 			
 func _forget_target():
 	if is_instance_valid(state.target) and timer_exit_sight.is_stopped():
@@ -232,9 +248,17 @@ func _die():
 	
 func _on_AttackArea_body_entered(body):
 	if body.is_in_group("Player") and not body in state.players_in_danger:
+		print("Player able to atack ", body.name)
 		state.players_in_danger.append(body)
 
 
 func _on_AttackArea_body_exited(body):
 	if body in state.players_in_danger:
 		state.players_in_danger.erase(body)
+
+
+func _on_SightArea_body_entered(body):
+	print("Body entered sight area")
+	if (body.is_in_group("Player")):
+		print("Body entered is Player")
+		has_target_in_area = true

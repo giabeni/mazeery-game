@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://scenes/Levels/LevelBuilder.gd" type="Script" id=1]
 [ext_resource path="res://scenes/MazeSections/MazeSection2.tscn" type="PackedScene" id=2]
@@ -18,12 +18,6 @@
 [ext_resource path="res://scenes/Pumpkin1.tscn" type="PackedScene" id=16]
 [ext_resource path="res://scenes/MazeSections/MazeSide.tscn" type="PackedScene" id=17]
 
-[sub_resource type="CubeMesh" id=1]
-size = Vector3( 60, 2, 60 )
-
-[sub_resource type="SpatialMaterial" id=2]
-albedo_color = Color( 0.713726, 0.509804, 0.329412, 1 )
-
 [node name="LevelBuilder" type="Spatial"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 62.5701, 0 )
 script = ExtResource( 1 )
@@ -32,11 +26,7 @@ GEMS = [ ExtResource( 8 ), ExtResource( 9 ), ExtResource( 11 ), ExtResource( 12 
 ENEMIES = [ ExtResource( 15 ) ]
 ITEMS = [ ExtResource( 16 ) ]
 MAZE_SIDE = ExtResource( 17 )
-
-[node name="MeshInstance" type="MeshInstance" parent="."]
-visible = false
-mesh = SubResource( 1 )
-material/0 = SubResource( 2 )
+ENEMY_PROB = 0.8
 
 [node name="Maze" type="Spatial" parent="."]
 

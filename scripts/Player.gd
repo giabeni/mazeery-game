@@ -7,25 +7,25 @@ const Sword = preload("res://scenes/Sword.tscn")
 
 ## SCENES ###
 
-export (PackedScene) var defeat_scene = null
-export (PackedScene) var victory_scene = null
+var defeat_scene: PackedScene = preload("res://scenes/Defeat.tscn")
+var victory_scene: PackedScene = preload("res://scenes/Victory.tscn")
 
 ### CONSTANTS ###
-const GRAVITY = 5
-const WALK_SPEED = 3
-const RUN_SPEED = 8
-const TURN_SENSITIVITY = 0.015
+export(float) var GRAVITY = 5
+export(float) var WALK_SPEED = 3
+export(float) var RUN_SPEED = 8
+export(float) var TURN_SENSITIVITY = 0.015
 
-const ACCELERATION = 6
-const ANGULAR_ACCELERATION = 7
-const AIM_SENSITIVITY = 2
+export(float) var ACCELERATION = 6
+export(float) var ANGULAR_ACCELERATION = 7
+export(float) var AIM_SENSITIVITY = 2
 
-const ROLL_FORCE = 17
-const JUMP_FORCE = 2
+export(float) var ROLL_FORCE = 17
+export(float) var JUMP_FORCE = 2
 
-const MAX_HP = 100
+export(float) var MAX_HP = 100
 
-const MAX_LIGHT_RANGE = 20
+export(float) var MAX_LIGHT_RANGE = 20
 
 ### AUX VARIABLES ###
 var direction = Vector3.FORWARD
@@ -108,6 +108,7 @@ func _ready():
 	velocity = Vector3.ZERO
 	aim_slash.hide()
 	footsteps_sound.stop()
+	direction = -transform.basis.z
 	
 #func _input(event):
 #	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
@@ -134,7 +135,7 @@ func _physics_process(delta):
 		
 		direction = direction.rotated(Vector3.UP, h_rot).normalized()
 		
-		if Input.is_action_pressed("run"):
+		if Input.is_action_pressed("run") and is_on_floor():
 			movement_speed = RUN_SPEED
 		else:
 			movement_speed = WALK_SPEED
@@ -170,21 +171,21 @@ func _physics_process(delta):
 	vertical_velocity += GRAVITY * delta
 	velocity = move_and_slide(velocity + Vector3.DOWN * vertical_velocity, Vector3.UP)
 	
+	if Input.is_action_just_pressed("force_die"):
+		_die()
+	
 	strafe = lerp(strafe, strafe_dir, delta * ACCELERATION)
 	
 #	print('Strafe', strafe, strafe_dir, Vector2(strafe.z, -strafe.x) * velocity.length()/RUN_SPEED)
 	anim_tree.set("parameters/Strafe/blend_position", Vector2(strafe.z, -strafe.x) * velocity.length()/RUN_SPEED)
 	
 	# Gravity and Jumping-------------------------
-	# print ("is on floor? ", is_on_floor(), "  is jumping? ", is_jumping)
-	
-	if Input.is_action_just_pressed("jump"):
-		pass
-		# print ("is on floor? ", is_on_floor(), "  is jumping? ", is_jumping)
+
 	if is_on_floor():
 		if Input.is_action_just_pressed("jump") and not is_jumping:
+			print ("is on floor? ", is_on_floor(), "  is jumping? ", is_jumping)
 			anim_tree.set("parameters/toJump/active", true)
-			yield(get_tree().create_timer(0.2), "timeout")			
+			yield(get_tree().create_timer(0.1), "timeout")
 			vertical_velocity = -JUMP_FORCE
 			is_jumping = true
 			

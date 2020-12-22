@@ -1,0 +1,310 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://assets/models/Terrain/ModularDungeonPack/ModularDangeonPack.dae" type="PackedScene" id=1]
+
+[sub_resource type="BoxShape" id=1]
+margin = 0.001
+extents = Vector3( 1, 0.247027, 1 )
+
+[sub_resource type="BoxShape" id=2]
+margin = 0.001
+extents = Vector3( 0.205785, 1, 1 )
+
+[node name="ModularDangeonPack" instance=ExtResource( 1 )]
+
+[node name="Arch" parent="." index="0"]
+use_in_baked_light = true
+
+[node name="Arch_Door" parent="." index="1"]
+use_in_baked_light = true
+
+[node name="Arch_Door_bottompivot" parent="." index="2"]
+use_in_baked_light = true
+
+[node name="Arch_bars" parent="." index="3"]
+use_in_baked_light = true
+
+[node name="Bag_Coins" parent="." index="4"]
+use_in_baked_light = true
+
+[node name="Bag_Standing" parent="." index="5"]
+use_in_baked_light = true
+
+[node name="Banner" parent="." index="6"]
+use_in_baked_light = true
+
+[node name="Banner_wall" parent="." index="7"]
+use_in_baked_light = true
+
+[node name="Barrel" parent="." index="8"]
+use_in_baked_light = true
+
+[node name="Barrel001" parent="." index="9"]
+use_in_baked_light = true
+
+[node name="Barrel002" parent="." index="10"]
+use_in_baked_light = true
+
+[node name="Bars" parent="." index="11"]
+use_in_baked_light = true
+
+[node name="BonePile" parent="." index="12"]
+use_in_baked_light = true
+
+[node name="BonePile2" parent="." index="13"]
+use_in_baked_light = true
+
+[node name="Book2" parent="." index="14"]
+use_in_baked_light = true
+
+[node name="Book3" parent="." index="15"]
+use_in_baked_light = true
+
+[node name="Book_Open" parent="." index="16"]
+use_in_baked_light = true
+
+[node name="Brick" parent="." index="17"]
+use_in_baked_light = true
+
+[node name="Bucket" parent="." index="18"]
+use_in_baked_light = true
+
+[node name="Candelabrum" parent="." index="19"]
+use_in_baked_light = true
+
+[node name="Candelabrum_tall" parent="." index="20"]
+use_in_baked_light = true
+
+[node name="Candle" parent="." index="21"]
+use_in_baked_light = true
+
+[node name="Carpet" parent="." index="22"]
+use_in_baked_light = true
+
+[node name="Chair" parent="." index="23"]
+use_in_baked_light = true
+
+[node name="ChestBottom" parent="." index="24"]
+use_in_baked_light = true
+
+[node name="ChestBottom001" parent="." index="25"]
+use_in_baked_light = true
+
+[node name="ChestTop" parent="." index="26"]
+use_in_baked_light = true
+
+[node name="ChestTop001" parent="." index="27"]
+use_in_baked_light = true
+
+[node name="Chest_Base" parent="." index="28"]
+use_in_baked_light = true
+
+[node name="Chest_Base001" parent="." index="29"]
+use_in_baked_light = true
+
+[node name="Chest_Top" parent="." index="30"]
+use_in_baked_light = true
+
+[node name="Chest_Top001" parent="." index="31"]
+use_in_baked_light = true
+
+[node name="Cobweb" parent="." index="32"]
+use_in_baked_light = true
+
+[node name="Cobweb2" parent="." index="33"]
+use_in_baked_light = true
+
+[node name="Coin_Pile" parent="." index="34"]
+use_in_baked_light = true
+
+[node name="Column" parent="." index="35"]
+use_in_baked_light = true
+
+[node name="Column001" parent="." index="36"]
+use_in_baked_light = true
+
+[node name="Column2" parent="." index="37"]
+use_in_baked_light = true
+
+[node name="ColumnBottom" parent="." index="38"]
+use_in_baked_light = true
+
+[node name="ColumnBroken" parent="." index="39"]
+use_in_baked_light = true
+
+[node name="ColumnBroken2" parent="." index="40"]
+use_in_baked_light = true
+
+[node name="ColumnMid" parent="." index="41"]
+use_in_baked_light = true
+
+[node name="ColumnTop" parent="." index="42"]
+use_in_baked_light = true
+
+[node name="Crate" parent="." index="43"]
+use_in_baked_light = true
+
+[node name="Decorative_Wall" parent="." index="44"]
+use_in_baked_light = true
+
+[node name="Entrance" parent="." index="45"]
+use_in_baked_light = true
+
+[node name="Entrance2" parent="." index="46"]
+use_in_baked_light = true
+
+[node name="Fence_90_Modular" parent="." index="47"]
+use_in_baked_light = true
+
+[node name="Fence_End_Modular" parent="." index="48"]
+use_in_baked_light = true
+
+[node name="Fence_Straight_Modular" parent="." index="49"]
+use_in_baked_light = true
+
+[node name="Floor_BricksSeparate" parent="." index="50"]
+use_in_baked_light = true
+
+[node name="Floor_BricksSeparate2" parent="." index="51"]
+use_in_baked_light = true
+
+[node name="Floor_Modular" parent="." index="52"]
+use_in_baked_light = true
+
+[node name="Horse" parent="." index="53"]
+use_in_baked_light = true
+
+[node name="ModularFloor" parent="." index="54"]
+use_in_baked_light = true
+
+[node name="StaticBody" type="StaticBody" parent="ModularFloor" index="0"]
+
+[node name="CollisionShape" type="CollisionShape" parent="ModularFloor/StaticBody" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.246568, 0 )
+shape = SubResource( 1 )
+
+[node name="Pedestal" parent="." index="55"]
+use_in_baked_light = true
+
+[node name="Pedestal001" parent="." index="56"]
+use_in_baked_light = true
+
+[node name="Pedestal2" parent="." index="57"]
+use_in_baked_light = true
+
+[node name="Potion" parent="." index="58"]
+use_in_baked_light = true
+
+[node name="Potion2" parent="." index="59"]
+use_in_baked_light = true
+
+[node name="Potion3" parent="." index="60"]
+use_in_baked_light = true
+
+[node name="Potion4" parent="." index="61"]
+use_in_baked_light = true
+
+[node name="Potion5" parent="." index="62"]
+use_in_baked_light = true
+
+[node name="Potion6" parent="." index="63"]
+use_in_baked_light = true
+
+[node name="Rock" parent="." index="64"]
+use_in_baked_light = true
+
+[node name="Rock2" parent="." index="65"]
+use_in_baked_light = true
+
+[node name="Rock3" parent="." index="66"]
+use_in_baked_light = true
+
+[node name="Rock4" parent="." index="67"]
+use_in_baked_light = true
+
+[node name="Rock5" parent="." index="68"]
+use_in_baked_light = true
+
+[node name="Skull" parent="." index="69"]
+use_in_baked_light = true
+
+[node name="Spikes" parent="." index="70"]
+use_in_baked_light = true
+
+[node name="Stairs" parent="." index="71"]
+use_in_baked_light = true
+
+[node name="Stairs_Modular" parent="." index="72"]
+use_in_baked_light = true
+
+[node name="Stairs_SideCover" parent="." index="73"]
+use_in_baked_light = true
+
+[node name="Stairs_SideCoverWall" parent="." index="74"]
+use_in_baked_light = true
+
+[node name="StoneWall" parent="." index="75"]
+use_in_baked_light = true
+
+[node name="StaticBody" type="StaticBody" parent="StoneWall" index="0"]
+
+[node name="CollisionShape" type="CollisionShape" parent="StoneWall/StaticBody" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.181326, 0, 0 )
+shape = SubResource( 2 )
+
+[node name="StoneWall_top" parent="." index="76"]
+use_in_baked_light = true
+
+[node name="Sword" parent="." index="77"]
+use_in_baked_light = true
+
+[node name="Sword_WallMount" parent="." index="78"]
+use_in_baked_light = true
+
+[node name="Sword_big" parent="." index="79"]
+use_in_baked_light = true
+
+[node name="Table_Big" parent="." index="80"]
+use_in_baked_light = true
+
+[node name="Table_Small" parent="." index="81"]
+use_in_baked_light = true
+
+[node name="Torch" parent="." index="82"]
+use_in_baked_light = true
+
+[node name="Torch001" parent="." index="83"]
+use_in_baked_light = true
+
+[node name="Torch002" parent="." index="84"]
+use_in_baked_light = true
+
+[node name="Trap_empty" parent="." index="85"]
+use_in_baked_light = true
+
+[node name="Trap_spikes" parent="." index="86"]
+use_in_baked_light = true
+
+[node name="Trapdoor" parent="." index="87"]
+use_in_baked_light = true
+
+[node name="Trapdoor_open" parent="." index="88"]
+use_in_baked_light = true
+
+[node name="Vase" parent="." index="89"]
+use_in_baked_light = true
+
+[node name="WallCover_Modular" parent="." index="90"]
+use_in_baked_light = true
+
+[node name="WallRocks" parent="." index="91"]
+use_in_baked_light = true
+
+[node name="Wall_Modular" parent="." index="92"]
+use_in_baked_light = true
+
+[node name="Window" parent="." index="93"]
+use_in_baked_light = true
+
+[node name="WoodFire" parent="." index="94"]
+use_in_baked_light = true
