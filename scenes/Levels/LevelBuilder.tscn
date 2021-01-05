@@ -1,12 +1,8 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://scenes/Levels/LevelBuilder.gd" type="Script" id=1]
-[ext_resource path="res://scenes/MazeSections/MazeSection2.tscn" type="PackedScene" id=2]
-[ext_resource path="res://scenes/MazeSections/MazeSection1.tscn" type="PackedScene" id=3]
-[ext_resource path="res://scenes/MazeSections/MazeSection3.tscn" type="PackedScene" id=4]
-[ext_resource path="res://scenes/MazeSections/MazeSection5.tscn" type="PackedScene" id=5]
-[ext_resource path="res://scenes/MazeSections/MazeSection4.tscn" type="PackedScene" id=6]
-[ext_resource path="res://scenes/MazeSections/MazeSection6.tscn" type="PackedScene" id=7]
+[ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/MazeSections/Ruins/RuinSection1.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/Gems/Gem1.tscn" type="PackedScene" id=8]
 [ext_resource path="res://scenes/Gems/Gem2.tscn" type="PackedScene" id=9]
 [ext_resource path="res://scenes/Gems/Gem6.tscn" type="PackedScene" id=10]
@@ -21,16 +17,16 @@
 [node name="LevelBuilder" type="Spatial"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 62.5701, 0 )
 script = ExtResource( 1 )
-SECTIONS = [ ExtResource( 3 ), ExtResource( 2 ), ExtResource( 4 ), ExtResource( 6 ), ExtResource( 5 ), ExtResource( 7 ) ]
+SECTIONS = [ ExtResource( 3 ) ]
 GEMS = [ ExtResource( 8 ), ExtResource( 9 ), ExtResource( 11 ), ExtResource( 12 ), ExtResource( 13 ), ExtResource( 10 ), ExtResource( 14 ) ]
 ENEMIES = [ ExtResource( 15 ) ]
 ITEMS = [ ExtResource( 16 ) ]
 MAZE_SIDE = ExtResource( 17 )
-ENEMY_PROB = 0.8
+PLAYER_SCENE = ExtResource( 2 )
+X_SECTIONS = 4
+Z_SECTIONS = 4
+SECTION_SIZE = 48.0
+ENEMY_PROB = 0.0
+ITEM_PROB = 0.8
 
 [node name="Maze" type="Spatial" parent="."]
-
-[node name="Camera" type="Camera" parent="Maze"]
-transform = Transform( 1, 0, 0, 0, -1.62921e-07, 1, 0, -1, -1.62921e-07, 66.7332, 50.6243, 50.4611 )
-near = 0.02
-far = 2711.0

@@ -27,6 +27,8 @@ export(float) var MAX_HP = 100
 
 export(float) var MAX_LIGHT_RANGE = 20
 
+export(bool) var debug_vectors = true
+
 ### AUX VARIABLES ###
 var direction = Vector3.FORWARD
 var strafe_dir = Vector3.ZERO
@@ -104,6 +106,8 @@ onready var pickable_msg: RichTextLabel = $MessagesControl/PickableMessage
 onready var aim_slash: CSGPolygon = $Mesh/PunkMan/AimSlash
 onready var dead_collision: CollisionShape = $DeadCollisionShape
 
+onready var debug_axes: Spatial = $DebugAxes
+
 func _ready():
 	velocity = Vector3.ZERO
 	aim_slash.hide()
@@ -134,6 +138,7 @@ func _physics_process(delta):
 		strafe_dir = direction
 		
 		direction = direction.rotated(Vector3.UP, h_rot).normalized()
+		debug_axes.rotation.y = h_rot
 		
 		if Input.is_action_pressed("run") and is_on_floor():
 			movement_speed = RUN_SPEED
@@ -169,7 +174,7 @@ func _physics_process(delta):
 		state.light_enabled = !state.light_enabled
 
 	vertical_velocity += GRAVITY * delta
-	velocity = move_and_slide(velocity + Vector3.DOWN * vertical_velocity, Vector3.UP)
+	velocity = move_and_slide(velocity + Vector3.DOWN * vertical_velocity, Vector3.UP, true, 18)
 	
 	if Input.is_action_just_pressed("force_die"):
 		_die()
@@ -207,14 +212,15 @@ func _physics_process(delta):
 	
 	
 	# Rotation --------------------------
+	var angle_dir_rot = atan2(direction.x, direction.z) - self.rotation.y
 	if (Input.is_action_pressed("aim")):
 		if cur_aim_blend >= 0.95:
 			aim_slash.show()
 		h_rot = $Camroot/h.global_transform.basis.get_euler().y
 		direction = $Camroot/h.global_transform.basis.z.normalized()
-		$Mesh.rotation.y = lerp_angle($Mesh.rotation.y, atan2(direction.x, direction.z) - rotation.y, delta * ANGULAR_ACCELERATION * AIM_SENSITIVITY)
+		$Mesh.rotation.y = lerp_angle($Mesh.rotation.y, angle_dir_rot, delta * ANGULAR_ACCELERATION * AIM_SENSITIVITY)
 	else:
-		$Mesh.rotation.y = lerp_angle($Mesh.rotation.y, atan2(direction.x, direction.z) - rotation.y, delta * ANGULAR_ACCELERATION)
+		$Mesh.rotation.y = lerp_angle($Mesh.rotation.y, angle_dir_rot, delta * ANGULAR_ACCELERATION)
 
 	# Setiing UI feedback -------------------
 	_set_lighting(delta)

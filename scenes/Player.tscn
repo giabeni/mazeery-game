@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://scripts/Camera.gd" type="Script" id=1]
 [ext_resource path="res://assets/sounds/Hurt/simple-hurt.wav" type="AudioStream" id=2]
@@ -36,6 +36,18 @@ emission_on_uv2 = false
 [sub_resource type="CanvasItemMaterial" id=3]
 next_pass = SubResource( 2 )
 
+[sub_resource type="PrismMesh" id=4]
+size = Vector3( 0.2, 4, 0.2 )
+
+[sub_resource type="SpatialMaterial" id=5]
+albedo_color = Color( 0.105882, 0.631373, 0.945098, 1 )
+
+[sub_resource type="SpatialMaterial" id=6]
+albedo_color = Color( 0.309804, 0.945098, 0.105882, 1 )
+
+[sub_resource type="SpatialMaterial" id=7]
+albedo_color = Color( 1, 0.0901961, 0.0901961, 1 )
+
 [node name="Player" type="KinematicBody" groups=[
 "Player",
 ]]
@@ -70,7 +82,7 @@ shape = SubResource( 1 )
 disabled = true
 
 [node name="Camroot" type="Spatial" parent="."]
-transform = Transform( 0.967872, 0, 0.251444, 0, 1, 0, -0.251444, 0, 0.967872, -1.73149, 2.07692, -1.6852 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 script = ExtResource( 1 )
 
 [node name="h" type="Spatial" parent="Camroot"]
@@ -317,3 +329,20 @@ anchor_left = 0.456
 anchor_top = 0.425
 anchor_right = 0.969
 anchor_bottom = 0.425
+
+[node name="DebugAxes" type="Spatial" parent="."]
+
+[node name="z" type="MeshInstance" parent="DebugAxes"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -5.96046e-08, 2 )
+mesh = SubResource( 4 )
+material/0 = SubResource( 5 )
+
+[node name="y" type="MeshInstance" parent="DebugAxes"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0 )
+mesh = SubResource( 4 )
+material/0 = SubResource( 6 )
+
+[node name="x" type="MeshInstance" parent="DebugAxes"]
+transform = Transform( -4.37114e-08, 1, -4.37114e-08, 0, -4.37114e-08, -1, -1, -4.37114e-08, 1.91069e-15, 2, -5.96046e-08, -1.19209e-07 )
+mesh = SubResource( 4 )
+material/0 = SubResource( 7 )

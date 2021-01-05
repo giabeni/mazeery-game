@@ -25,6 +25,9 @@ var rng = RandomNumberGenerator.new()
 
 var spawn_containers = []
 
+var all_sections = []
+var cur_section = null
+
 onready var maze: Spatial = $Maze
 
 func _ready():
@@ -72,8 +75,12 @@ func _build_maze():
 			
 			section.request_ready()
 			maze.add_child(section)
+			section.name = "Section-" + str(x) + "-" + str(z)
+			section.connect("area_reached", self, "on_Area_Reached")
+			section.set_position(x, z)
 			section.global_transform.origin = Vector3(x, 0, z)
 			section.rotation_degrees = Vector3(0, section_rotation, 0)
+			all_sections.append(section)
 			
 			if (z == 0):
 				var side: Spatial = MAZE_SIDE.instance()
@@ -114,12 +121,14 @@ func _build_maze():
 		
 func _spawn_player():
 	if (PLAYER_SCENE):
-		var spawn_container = _get_random_spawn_container()
+		var spawn_container: Spatial = _get_random_spawn_container()
+		spawn_container.rotation.y = -spawn_container.get_parent_spatial().global_transform.basis.get_euler().y
 		var player: Spatial = PLAYER_SCENE.instance()
 		player.request_ready()
+		player.name = "Player"
 		spawn_container.add_child(player)
 		player.transform.origin = Vector3(0, 0, 0)
-		player.global_scale(Vector3(0.5, 0.5, 0.5))
+#		player.global_scale(Vector3(0.5, 0.5, 0.5))
 	else:
 		print("WARNING! No Player Scene provided to LevelBuilder")
 	
@@ -144,3 +153,21 @@ func _clear_current_maze():
 		if child.name != "Camera":
 			maze.remove_child(child)
 			child.queue_free()
+
+func on_Area_Reached(x, z):
+	
+	if (Vector2(x, z) == cur_section):
+		return
+	cur_section = Vector2(x, z)
+	
+	print("Area reached = ", str(cur_section))
+
+	var section_node: MazeSection = maze.get_node("Section-" + str(x) + "-" + str(z))
+		
+	for section in all_sections:
+		if (section as MazeSection).position.x in [x - SECTION_SIZE, x, x + SECTION_SIZE] and (section as MazeSection).position.y in [z - SECTION_SIZE, z, z + SECTION_SIZE]:
+			section.set_visible(true)
+		else:
+			section.set_visible(false)
+	
+	
