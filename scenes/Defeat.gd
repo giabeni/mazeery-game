@@ -9,7 +9,7 @@ func _ready():
 	fader.connect("fade_in_finished", self, "on_fade_in_finished")
 	fader.connect("fade_out_finished", self, "on_fade_out_finished")
 	menu_scene = load("res://scenes/Menu Components/MainMenu.tscn")
-	level_scene = load("res://scenes/Root.tscn")
+	level_scene = load("res://scenes/RootRuins.tscn")
 
 func on_fade_in_finished():
 	get_tree().change_scene_to(level_scene)

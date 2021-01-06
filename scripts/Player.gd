@@ -36,6 +36,7 @@ var strafe = Vector3.ZERO
 #var aim_turn = 0
 var is_jumping = false
 var velocity = Vector3.ZERO
+var snap = Vector3.DOWN * 2.5
 var is_walking = false
 var vertical_velocity = 0
 var movement_speed = 0
@@ -150,6 +151,11 @@ func _physics_process(delta):
 		strafe_dir = Vector3.ZERO
 		
 	velocity = lerp(velocity, direction * movement_speed, delta * ACCELERATION)
+	if !direction.dot(velocity) > 0:
+		if velocity.x < 2 && velocity.x > -2:
+			velocity.x = 0
+		if velocity.z < 2 && velocity.z > -2:
+			velocity.z = 0
 	
 	is_walking = abs(velocity.x) >= 0.01 or abs(velocity.z) >= 0.01
 	
@@ -173,9 +179,22 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("light_toggle"):
 		state.light_enabled = !state.light_enabled
 
-	vertical_velocity += GRAVITY * delta
-	velocity = move_and_slide(velocity + Vector3.DOWN * vertical_velocity, Vector3.UP, true, 18)
+	# Movement ---------------------------
 	
+	# Gravity applied only when not on floor
+	if not is_on_floor():
+		vertical_velocity += GRAVITY * delta
+		
+	velocity = move_and_slide_with_snap(velocity + Vector3.DOWN * vertical_velocity, snap, Vector3.UP, true, 4, deg2rad(75))
+	
+	# Hack to stop on slope
+	var slides = get_slide_count()
+	if slides:
+		for i in slides:
+			var touched = get_slide_collision(i)
+			if is_on_floor() and touched.normal.y < 1 and (velocity.x != 0 or velocity.y != 0):
+				velocity.y = touched.normal.y
+				
 	if Input.is_action_just_pressed("force_die"):
 		_die()
 	
@@ -187,15 +206,20 @@ func _physics_process(delta):
 	# Gravity and Jumping-------------------------
 
 	if is_on_floor():
+#		if velocity.y < -0.25:
+#			velocity.y = 0.25
 		if Input.is_action_just_pressed("jump") and not is_jumping:
 			print ("is on floor? ", is_on_floor(), "  is jumping? ", is_jumping)
 			anim_tree.set("parameters/toJump/active", true)
 			yield(get_tree().create_timer(0.1), "timeout")
+			snap = Vector3.ZERO
 			vertical_velocity = -JUMP_FORCE
 			is_jumping = true
 			
 	else:
 		is_jumping = false
+		
+	print("Vel", velocity)
 	
 	# Aiming
 	if Input.is_action_just_pressed("aim"):

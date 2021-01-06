@@ -1,7 +1,6 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://scenes/Levels/LevelBuilder.tscn" type="PackedScene" id=1]
-[ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/MazeSections/Ruins/RuinSection1.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scripts/WorldEnvironment.gd" type="Script" id=4]
 [ext_resource path="res://assets/sounds/ambient_ghost.ogg" type="AudioStream" id=6]
@@ -16,40 +15,44 @@ script = ExtResource( 32 )
 
 [node name="LevelBuilder" parent="." instance=ExtResource( 1 )]
 SECTIONS = [ ExtResource( 3 ) ]
-PLAYER_SCENE = ExtResource( 2 )
 X_SECTIONS = 3
 Z_SECTIONS = 3
-SECTION_SIZE = 6.0
-ENEMY_PROB = 0.0
-ITEM_PROB = 0.0
+ENEMY_PROB = 0.5
+ITEM_PROB = 0.9
 
 [node name="AmbientSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 6 )
-volume_db = -17.957
+volume_db = -31.641
 autoplay = true
 
 [node name="WindFear" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 29 )
+volume_db = -5.474
 
 [node name="Whispers" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 31 )
-volume_db = -33.681
+volume_db = -53.751
 
 [node name="SoundTrack" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 30 )
-volume_db = -11.223
+volume_db = -34.03
 autoplay = true
 
 [node name="WindTimer" type="Timer" parent="."]
-wait_time = 8.0
+wait_time = 15.599
 autostart = true
 
 [node name="WhisperTimer" type="Timer" parent="."]
-wait_time = 15.0
+wait_time = 29.248
 autostart = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource( 7 )
 script = ExtResource( 4 )
+
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( 0.230865, -0.296144, -0.926823, 0, 0.952555, -0.304366, 0.972986, 0.0702674, 0.219912, 135.639, 86.5764, -36.9841 )
+light_color = Color( 0.901961, 0.827451, 0.662745, 1 )
+light_energy = 0.02
 [connection signal="timeout" from="WindTimer" to="." method="_on_WindTimer_timeout"]
 [connection signal="timeout" from="WhisperTimer" to="." method="_on_WhisperTimer_timeout"]

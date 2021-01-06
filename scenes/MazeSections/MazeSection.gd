@@ -73,7 +73,7 @@ func spawn_enemy():
 		enemy.request_ready()
 		enemy_container.add_child(enemy)
 		enemy.transform.origin = Vector3(0, 0, 0)
-		enemy.scale = Vector3(0.4, 0.4, 0.4)
+		enemy.scale = Vector3(0.5, 0.5, 0.5)
 	elif enemy != null:
 		enemy.request_ready()
 		enemy_container.add_child(enemy)
