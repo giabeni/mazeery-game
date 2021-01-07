@@ -151,11 +151,11 @@ func _physics_process(delta):
 		strafe_dir = Vector3.ZERO
 		
 	velocity = lerp(velocity, direction * movement_speed, delta * ACCELERATION)
-	if !direction.dot(velocity) > 0:
-		if velocity.x < 2 && velocity.x > -2:
-			velocity.x = 0
-		if velocity.z < 2 && velocity.z > -2:
-			velocity.z = 0
+#	if !direction.dot(velocity) > 0:
+#		if velocity.x < 2 && velocity.x > -2:
+#			velocity.x = 0
+#		if velocity.z < 2 && velocity.z > -2:
+#			velocity.z = 0
 	
 	is_walking = abs(velocity.x) >= 0.01 or abs(velocity.z) >= 0.01
 	
@@ -192,8 +192,9 @@ func _physics_process(delta):
 	if slides:
 		for i in slides:
 			var touched = get_slide_collision(i)
-			if is_on_floor() and touched.normal.y < 1 and (velocity.x != 0 or velocity.y != 0):
-				velocity.y = touched.normal.y
+			print("normal: ", touched.normal)
+			if is_on_floor() and touched.normal.y < cos(75) and velocity.y < 0 and (velocity.x != 0 or velocity.y != 0):
+				vertical_velocity = 0
 				
 	if Input.is_action_just_pressed("force_die"):
 		_die()
@@ -206,8 +207,8 @@ func _physics_process(delta):
 	# Gravity and Jumping-------------------------
 
 	if is_on_floor():
-#		if velocity.y < -0.25:
-#			velocity.y = 0.25
+#		if velocity.y < 0:
+#			velocity.y = 0
 		if Input.is_action_just_pressed("jump") and not is_jumping:
 			print ("is on floor? ", is_on_floor(), "  is jumping? ", is_jumping)
 			anim_tree.set("parameters/toJump/active", true)
@@ -215,11 +216,11 @@ func _physics_process(delta):
 			snap = Vector3.ZERO
 			vertical_velocity = -JUMP_FORCE
 			is_jumping = true
+#		print("Vel", velocity)
 			
 	else:
 		is_jumping = false
 		
-	print("Vel", velocity)
 	
 	# Aiming
 	if Input.is_action_just_pressed("aim"):
@@ -305,7 +306,7 @@ func _set_lighting(delta):
 	light.visible = state.light_enabled
 	if (state.light_enabled):
 		target_light_range = clamp(target_light_range - 0.001, 0, MAX_LIGHT_RANGE)
-	var attenuation =  3 if state.alive else 50
+	var attenuation =  2 if state.alive else 200
 	if (abs(light.omni_range - target_light_range) > 0.00001):
 		light.omni_range = lerp(light.omni_range, target_light_range, delta * attenuation)
 	
