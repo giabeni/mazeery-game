@@ -1,5 +1,7 @@
 extends Spatial
 
+class_name Level
+
 const light_env = preload("res://enviroments/LightEnv.tres")
 const dark_env = preload("res://enviroments/DarkEnv.tres")
 
@@ -18,12 +20,15 @@ func _ready():
 
 
 func _on_WindTimer_timeout():
-	wind_timer.wait_time = rng.randf_range(60, 100.0)
+	rng.randomize()
+	wind_timer.wait_time = rng.randf_range(120, 300.0)
+	sound_wind.pitch_scale = rng.randf_range(0.7, 1.3)
 	sound_wind.play()
 
 
 func _on_WhisperTimer_timeout():
 	whisper_timer.wait_time = rng.randf_range(60, 200.0)
+	sound_whisper.pitch_scale = rng.randf_range(0.7, 1.3)
 	sound_whisper.play()
 	
 func set_env(env_mode):

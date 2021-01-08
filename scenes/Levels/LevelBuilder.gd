@@ -9,6 +9,9 @@ export(Array, PackedScene) var ITEMS = []
 export(PackedScene) var MAZE_SIDE = null
 export(PackedScene) var PLAYER_SCENE = null
 
+export(NodePath) var gi_probe
+export(NodePath) var dir_light
+
 export(int) var X_SECTIONS = 5
 export(int) var Z_SECTIONS = 5
 export(float) var SECTION_SIZE = 20
@@ -39,6 +42,7 @@ func _ready():
 	
 	_rand_sections_with_gems()
 	_build_maze()
+	_bake_lights()
 	_spawn_player()
 	
 # Assures that there are at list 7 sections
@@ -126,6 +130,7 @@ func _spawn_player():
 		var player: Spatial = PLAYER_SCENE.instance()
 		player.request_ready()
 		player.name = "Player"
+		player.set_root_node(self.get_parent_spatial())
 		spawn_container.add_child(player)
 		player.transform.origin = Vector3(0, 0, 0)
 #		player.global_scale(Vector3(0.5, 0.5, 0.5))
@@ -153,6 +158,16 @@ func _clear_current_maze():
 		if child.name != "Camera":
 			maze.remove_child(child)
 			child.queue_free()
+
+func _bake_lights():
+	if gi_probe:
+		print("Baking lights")
+		var probe: GIProbe = get_node(gi_probe)
+		probe.extents = Vector3(1, 1, 1) * SECTION_SIZE
+		probe.bake()
+		if dir_light:
+			var light: DirectionalLight = get_node(dir_light)
+			light.shadow_enabled = false
 
 func on_Area_Reached(x, z):
 	

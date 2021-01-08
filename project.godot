@@ -9,10 +9,20 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Area",
+"class": "DamageArea",
+"language": "GDScript",
+"path": "res://scripts/DamageArea.gd"
+}, {
 "base": "Spatial",
 "class": "HealthBar3D",
 "language": "GDScript",
 "path": "res://scripts/HealthBar3D.gd"
+}, {
+"base": "Spatial",
+"class": "Level",
+"language": "GDScript",
+"path": "res://scenes/Level.gd"
 }, {
 "base": "Spatial",
 "class": "MazeSection",
@@ -35,7 +45,9 @@ _global_script_classes=[ {
 "path": "res://scripts/Gem.gd"
 } ]
 _global_script_class_icons={
+"DamageArea": "",
 "HealthBar3D": "",
+"Level": "",
 "MazeSection": "",
 "Player": "",
 "Spider": "",

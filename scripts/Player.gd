@@ -17,11 +17,12 @@ export(float) var RUN_SPEED = 8
 export(float) var TURN_SENSITIVITY = 0.015
 
 export(float) var ACCELERATION = 6
+export(float) var AIR_ACCELERATION = 0.2
 export(float) var ANGULAR_ACCELERATION = 7
 export(float) var AIM_SENSITIVITY = 2
 
 export(float) var ROLL_FORCE = 17
-export(float) var JUMP_FORCE = 2
+export(float) var JUMP_FORCE = 2.1
 
 export(float) var MAX_HP = 100
 
@@ -48,6 +49,8 @@ var is_in_pickable_area = false
 var pickable_item = null
 
 var next_aim_blend = 0
+
+var root: Level
 
 enum TalismanColor {
 	RED,
@@ -141,7 +144,7 @@ func _physics_process(delta):
 		direction = direction.rotated(Vector3.UP, h_rot).normalized()
 		debug_axes.rotation.y = h_rot
 		
-		if Input.is_action_pressed("run") and is_on_floor():
+		if Input.is_action_pressed("run"):
 			movement_speed = RUN_SPEED
 		else:
 			movement_speed = WALK_SPEED
@@ -151,11 +154,11 @@ func _physics_process(delta):
 		strafe_dir = Vector3.ZERO
 		
 	velocity = lerp(velocity, direction * movement_speed, delta * ACCELERATION)
-#	if !direction.dot(velocity) > 0:
-#		if velocity.x < 2 && velocity.x > -2:
-#			velocity.x = 0
-#		if velocity.z < 2 && velocity.z > -2:
-#			velocity.z = 0
+	
+	if is_jumping:
+		velocity.x *= AIR_ACCELERATION * delta
+		velocity.z *= AIR_ACCELERATION * delta
+		
 	
 	is_walking = abs(velocity.x) >= 0.01 or abs(velocity.z) >= 0.01
 	
@@ -184,6 +187,9 @@ func _physics_process(delta):
 	# Gravity applied only when not on floor
 	if not is_on_floor():
 		vertical_velocity += GRAVITY * delta
+		$Camroot/h/v.translation = $Camroot/h/v.translation.linear_interpolate(Vector3(0, -3, 0), delta * AIM_SENSITIVITY * 0.4)
+	else:
+		$Camroot/h/v.translation = $Camroot/h/v.translation.linear_interpolate(Vector3(0, 2.755, 0), delta * AIM_SENSITIVITY)
 		
 	velocity = move_and_slide_with_snap(velocity + Vector3.DOWN * vertical_velocity, snap, Vector3.UP, true, 4, deg2rad(75))
 	
@@ -214,7 +220,7 @@ func _physics_process(delta):
 			anim_tree.set("parameters/toJump/active", true)
 			yield(get_tree().create_timer(0.1), "timeout")
 			snap = Vector3.ZERO
-			vertical_velocity = -JUMP_FORCE
+			vertical_velocity = -clamp(JUMP_FORCE * (Vector2(velocity.x, velocity.z).length() / RUN_SPEED), JUMP_FORCE * 0.75, JUMP_FORCE)
 			is_jumping = true
 #		print("Vel", velocity)
 			
@@ -438,10 +444,13 @@ func _go_to_defeat():
 func is_alive():
 	return state.alive
 	
+func set_root_node(root_node):
+	root = root_node
+	
 func _win():
 	win_sound.play()
 	state.alive = false
-	get_parent_spatial().set_env("light")
+	root.set_env("light")
 	$Camroot.enable_movement = false
 	anim_tree.set("parameters/gameState/current", 2)
 	yield(get_tree().create_timer(2), "timeout")

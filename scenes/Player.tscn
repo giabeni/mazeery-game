@@ -26,26 +26,26 @@ margin = 0.001
 radius = 0.637433
 height = 2.0
 
-[sub_resource type="SpatialMaterial" id=3]
+[sub_resource type="SpatialMaterial" id=2]
 emission_enabled = true
 emission = Color( 0.988235, 0.0509804, 0.0509804, 1 )
 emission_energy = 1.81
 emission_operator = 0
 emission_on_uv2 = false
 
-[sub_resource type="CanvasItemMaterial" id=4]
-next_pass = SubResource( 3 )
+[sub_resource type="CanvasItemMaterial" id=3]
+next_pass = SubResource( 2 )
 
-[sub_resource type="PrismMesh" id=5]
+[sub_resource type="PrismMesh" id=4]
 size = Vector3( 0.2, 4, 0.2 )
 
-[sub_resource type="SpatialMaterial" id=6]
+[sub_resource type="SpatialMaterial" id=5]
 albedo_color = Color( 0.105882, 0.631373, 0.945098, 1 )
 
-[sub_resource type="SpatialMaterial" id=7]
+[sub_resource type="SpatialMaterial" id=6]
 albedo_color = Color( 0.309804, 0.945098, 0.105882, 1 )
 
-[sub_resource type="SpatialMaterial" id=8]
+[sub_resource type="SpatialMaterial" id=7]
 albedo_color = Color( 1, 0.0901961, 0.0901961, 1 )
 
 [node name="Player" type="KinematicBody" groups=[
@@ -90,7 +90,7 @@ script = ExtResource( 1 )
 transform = Transform( 1, 0, 0, 0, 1, 0, -2.98023e-08, 0, 1, 0, 2.7548, 0 )
 
 [node name="Camera" type="ClippedCamera" parent="Camroot/h/v"]
-transform = Transform( -1, 0, -3.25841e-07, -5.91786e-08, 0.983369, 0.181618, 3.20422e-07, 0.181618, -0.983369, 0, 2.03251, -5.56319 )
+transform = Transform( -1, 5.41263e-09, -3.55148e-07, -5.91786e-08, 0.983369, 0.181618, 3.20422e-07, 0.181618, -0.983369, 0, 5.19065, -10.1401 )
 current = true
 process_mode = 1
 
@@ -253,7 +253,7 @@ __meta__ = {
 }
 
 [node name="CurrentHealthBar" type="ColorRect" parent="UI/VerticalContainer/TopContainer/RightContainer/HealthBar"]
-material = SubResource( 4 )
+material = SubResource( 3 )
 margin_right = 233.0
 margin_bottom = 4.0
 color = Color( 0.945098, 0.313726, 0.243137, 1 )
@@ -277,7 +277,7 @@ __meta__ = {
 }
 
 [node name="CurrentLightBar" type="ColorRect" parent="UI/VerticalContainer/TopContainer/RightContainer/LightBar"]
-material = SubResource( 4 )
+material = SubResource( 3 )
 margin_right = 233.0
 margin_bottom = 4.0
 color = Color( 0.952941, 0.396078, 0.101961, 1 )
@@ -334,15 +334,15 @@ visible = false
 
 [node name="z" type="MeshInstance" parent="DebugAxes"]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -5.96046e-08, 2 )
-mesh = SubResource( 5 )
-material/0 = SubResource( 6 )
+mesh = SubResource( 4 )
+material/0 = SubResource( 5 )
 
 [node name="y" type="MeshInstance" parent="DebugAxes"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0 )
-mesh = SubResource( 5 )
-material/0 = SubResource( 7 )
+mesh = SubResource( 4 )
+material/0 = SubResource( 6 )
 
 [node name="x" type="MeshInstance" parent="DebugAxes"]
 transform = Transform( -4.37114e-08, 1, -4.37114e-08, 0, -4.37114e-08, -1, -1, -4.37114e-08, 1.91069e-15, 2, -5.96046e-08, -1.19209e-07 )
-mesh = SubResource( 5 )
-material/0 = SubResource( 8 )
+mesh = SubResource( 4 )
+material/0 = SubResource( 7 )
