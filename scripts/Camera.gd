@@ -37,6 +37,9 @@ const MODES = {
 	}
 }
 
+onready var camera: ClippedCamera = $h/v/Camera
+var initial_camera_translation: Vector3
+
 func set_mode(new_mode):
 	mode = new_mode
 	new_translation = MODES[new_mode].translation
@@ -47,6 +50,7 @@ func _ready():
 	$h/v/Camera.add_exception(get_parent())
 	new_translation = MODES[mode].translation
 	new_rotation_degrees = MODES[mode].rotation
+	initial_camera_translation = camera.translation
 	
 	
 func _input(event):
@@ -82,3 +86,8 @@ func _physics_process(delta):
 		else:
 			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	# -------------------------------------------------------
+	
+#	if camera.get_clip_offset() > 5:
+#		camera.translate(Vector3(0, -1, 0))
+#	elif camera.translation != initial_camera_translation:
+#		camera.translate(Vector3(0, 1, 0))

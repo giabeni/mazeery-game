@@ -90,9 +90,8 @@ script = ExtResource( 1 )
 transform = Transform( 1, 0, 0, 0, 1, 0, -2.98023e-08, 0, 1, 0, 2.7548, 0 )
 
 [node name="Camera" type="ClippedCamera" parent="Camroot/h/v"]
-transform = Transform( -1, 5.41263e-09, -3.55148e-07, -5.91786e-08, 0.983369, 0.181618, 3.20422e-07, 0.181618, -0.983369, 0, 5.19065, -10.1401 )
+transform = Transform( -1, 5.41264e-09, -3.55148e-07, -5.91786e-08, 0.983369, 0.181618, 3.20422e-07, 0.181618, -0.983369, 1.3403e-06, 3.12641, -6.66192 )
 current = true
-process_mode = 1
 
 [node name="SoundBreathing" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 4 )

@@ -152,22 +152,6 @@ func _check_for_players_in_sight():
 				if collision.has("collider") and collision.collider.is_in_group("Player"):
 					_set_target(collision.collider)
 					_awake()
-#	if middle_sight_ray_cast.is_colliding() or left_sight_ray_cast.is_colliding() or right_sight_ray_cast.is_colliding():
-#		var body
-#		if middle_sight_ray_cast.is_colliding():
-#			body = middle_sight_ray_cast.get_collider()
-#		elif left_sight_ray_cast.is_colliding():
-#			body = left_sight_ray_cast.get_collider()
-#		elif right_sight_ray_cast.is_colliding():
-#			body = right_sight_ray_cast.get_collider()
-#
-#		if is_instance_valid(body) and body.is_in_group("Player") and body.is_alive():
-#			state.target = body
-#			_awake()
-#		else:
-#			_forget_target()
-#	else:
-#		_forget_target()
 
 func _set_target(body):
 	if body.is_alive():

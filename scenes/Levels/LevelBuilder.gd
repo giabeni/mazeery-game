@@ -9,7 +9,7 @@ export(Array, PackedScene) var ITEMS = []
 export(PackedScene) var MAZE_SIDE = null
 export(PackedScene) var PLAYER_SCENE = null
 
-export(NodePath) var gi_probe
+export(NodePath) var baked_lightmap
 export(NodePath) var dir_light
 
 export(int) var X_SECTIONS = 5
@@ -160,11 +160,11 @@ func _clear_current_maze():
 			child.queue_free()
 
 func _bake_lights():
-	if gi_probe:
+	if baked_lightmap:
 		print("Baking lights")
-		var probe: GIProbe = get_node(gi_probe)
-		probe.extents = Vector3(1, 1, 1) * SECTION_SIZE
-		probe.bake()
+		var lightmap: BakedLightmap = get_node(baked_lightmap)
+		lightmap.bake_extents = Vector3(1, 1, 1) * SECTION_SIZE
+		lightmap.bake()
 		if dir_light:
 			var light: DirectionalLight = get_node(dir_light)
 			light.shadow_enabled = false

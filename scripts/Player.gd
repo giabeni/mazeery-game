@@ -198,7 +198,6 @@ func _physics_process(delta):
 	if slides:
 		for i in slides:
 			var touched = get_slide_collision(i)
-			print("normal: ", touched.normal)
 			if is_on_floor() and touched.normal.y < cos(75) and velocity.y < 0 and (velocity.x != 0 or velocity.y != 0):
 				vertical_velocity = 0
 				
@@ -216,7 +215,7 @@ func _physics_process(delta):
 #		if velocity.y < 0:
 #			velocity.y = 0
 		if Input.is_action_just_pressed("jump") and not is_jumping:
-			print ("is on floor? ", is_on_floor(), "  is jumping? ", is_jumping)
+#			print ("is on floor? ", is_on_floor(), "  is jumping? ", is_jumping)
 			anim_tree.set("parameters/toJump/active", true)
 			yield(get_tree().create_timer(0.1), "timeout")
 			snap = Vector3.ZERO
