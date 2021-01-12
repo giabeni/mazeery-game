@@ -34,7 +34,6 @@ export(bool) var debug_vectors = true
 var direction = Vector3.FORWARD
 var strafe_dir = Vector3.ZERO
 var strafe = Vector3.ZERO
-#var aim_turn = 0
 var is_jumping = false
 var velocity = Vector3.ZERO
 var snap = Vector3.DOWN * 2.5
@@ -43,6 +42,8 @@ var vertical_velocity = 0
 var movement_speed = 0
 var target_light_range = 0
 var h_rot
+var impulse: Vector3 = Vector3.ZERO
+
 var slash_timer: SceneTreeTimer
 
 var is_in_pickable_area = false
@@ -182,7 +183,7 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("light_toggle"):
 		state.light_enabled = !state.light_enabled
 
-	# Movement ---------------------------
+	# ------------- Movement ---------------------------
 	
 	# Gravity applied only when not on floor
 	if not is_on_floor():
@@ -191,6 +192,7 @@ func _physics_process(delta):
 	else:
 		$Camroot/h/v.translation = $Camroot/h/v.translation.linear_interpolate(Vector3(0, 2.755, 0), delta * AIM_SENSITIVITY)
 		
+	# Main movement
 	velocity = move_and_slide_with_snap(velocity + Vector3.DOWN * vertical_velocity, snap, Vector3.UP, true, 4, deg2rad(75))
 	
 	# Hack to stop on slope
@@ -200,17 +202,19 @@ func _physics_process(delta):
 			var touched = get_slide_collision(i)
 			if is_on_floor() and touched.normal.y < cos(75) and velocity.y < 0 and (velocity.x != 0 or velocity.y != 0):
 				vertical_velocity = 0
-				
-	if Input.is_action_just_pressed("force_die"):
-		_die()
 	
+	# Triggering impulses
+	if impulse != Vector3.ZERO:
+		print("Pushing body by impulse")
+		velocity = move_and_slide(velocity + impulse, Vector3.UP)
+		impulse = Vector3.ZERO
+	
+	# Set walk animation
 	strafe = lerp(strafe, strafe_dir, delta * ACCELERATION)
-	
 #	print('Strafe', strafe, strafe_dir, Vector2(strafe.z, -strafe.x) * velocity.length()/RUN_SPEED)
 	anim_tree.set("parameters/Strafe/blend_position", Vector2(strafe.z, -strafe.x) * velocity.length()/RUN_SPEED)
 	
 	# Gravity and Jumping-------------------------
-
 	if is_on_floor():
 #		if velocity.y < 0:
 #			velocity.y = 0
@@ -259,6 +263,10 @@ func _physics_process(delta):
 	# Sounds -----------------------
 	if Vector2(velocity.x, velocity.z).length() < WALK_SPEED * 0.3:
 		_stop_steps_sounds()
+		
+	# Force death
+	if Input.is_action_just_pressed("force_die"):
+		_die()
 		
 func _stop_steps_sounds():
 	left_walk_step_sound.stop()
@@ -416,6 +424,9 @@ func _set_slot_icon(slot, icon):
 	var slot_button = backpack_slots.get_node("Slot" + String(slot))
 	if is_instance_valid(slot_button):
 		slot_button.icon = load("res://assets/icons/weapons/" + icon) if icon != null else null
+	
+func add_impulse(impulse_vector):
+	impulse = impulse_vector
 	
 func hurt(damage):
 	anim_tree.set("parameters/toHurt/active", true)

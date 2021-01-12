@@ -43,6 +43,11 @@ _global_script_classes=[ {
 "class": "Talisman",
 "language": "GDScript",
 "path": "res://scripts/Gem.gd"
+}, {
+"base": "RigidBody",
+"class": "Weapon",
+"language": "GDScript",
+"path": "res://scripts/EnemyWeapon.gd"
 } ]
 _global_script_class_icons={
 "DamageArea": "",
@@ -51,7 +56,8 @@ _global_script_class_icons={
 "MazeSection": "",
 "Player": "",
 "Spider": "",
-"Talisman": ""
+"Talisman": "",
+"Weapon": ""
 }
 
 [application]

@@ -4,7 +4,7 @@ onready var timer_attack_interval: Timer = $AttackIntervalTimer
 onready var slash_sound: AudioStreamPlayer3D = $SlashSound
 onready var pickable_area: Area = $PickableArea
 
-var ATTRIBUTES = {
+export var ATTRIBUTES = {
 	"DAMAGE": 10,
 	"ATTACK_INTERVAL": 0.6947
 }
@@ -62,6 +62,11 @@ func _on_Sword_body_entered(body: Object):
 		if body.is_in_group("Enemy") or body.is_in_group("Player"):
 			timer_attack_interval.start(ATTRIBUTES.ATTACK_INTERVAL)
 			_hit_enemies(body)
+			
+		# Push body
+		if body.has_method("add_impulse"):
+			var normal = self.global_transform.origin.direction_to(body.global_transform.origin) 
+			body.add_impulse(normal.normalized() * 30)
 
 
 func _on_PickableArea_body_entered(body):
