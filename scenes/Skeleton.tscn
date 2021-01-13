@@ -831,15 +831,15 @@ nodes/TimeScale/position = Vector2( 800, 120 )
 nodes/output/position = Vector2( 1000, 120 )
 node_connections = [ "output", 0, "TimeScale", "TimeScale", 0, "Seek", "Seek", 0, "Animation" ]
 
-[sub_resource type="AnimationNodeAnimation" id=33]
+[sub_resource type="AnimationNodeAnimation" id=23]
 animation = "SkeletonArmature|Skeleton_Spawn"
 
-[sub_resource type="AnimationNodeTimeScale" id=34]
+[sub_resource type="AnimationNodeTimeScale" id=24]
 
-[sub_resource type="AnimationNodeBlendTree" id=35]
-nodes/Animation/node = SubResource( 33 )
+[sub_resource type="AnimationNodeBlendTree" id=25]
+nodes/Animation/node = SubResource( 23 )
 nodes/Animation/position = Vector2( 120, 80 )
-nodes/TimeScale/node = SubResource( 34 )
+nodes/TimeScale/node = SubResource( 24 )
 nodes/TimeScale/position = Vector2( 540, 80 )
 nodes/output/position = Vector2( 820, 80 )
 node_connections = [ "output", 0, "TimeScale", "TimeScale", 0, "Animation" ]
@@ -849,43 +849,44 @@ xfade_time = 0.3
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=27]
 switch_mode = 2
-auto_advance = true
+advance_condition = "reborn"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=36]
+[sub_resource type="AnimationNodeStateMachineTransition" id=28]
+advance_condition = "can_spawn"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=37]
+[sub_resource type="AnimationNodeStateMachineTransition" id=29]
 switch_mode = 2
 auto_advance = true
 xfade_time = 0.3
 
-[sub_resource type="AnimationNodeStateMachine" id=28]
+[sub_resource type="AnimationNodeStateMachine" id=30]
 states/Awake/node = SubResource( 17 )
 states/Awake/position = Vector2( 542.732, 106 )
 states/Die/node = SubResource( 18 )
 states/Die/position = Vector2( 352.033, 209.872 )
 states/Sleep/node = SubResource( 22 )
 states/Sleep/position = Vector2( 138, 106 )
-states/Spawn/node = SubResource( 35 )
+states/Spawn/node = SubResource( 25 )
 states/Spawn/position = Vector2( 352.033, 106 )
-transitions = [ "Awake", "Die", SubResource( 26 ), "Die", "Sleep", SubResource( 27 ), "Sleep", "Spawn", SubResource( 36 ), "Spawn", "Awake", SubResource( 37 ) ]
+transitions = [ "Awake", "Die", SubResource( 26 ), "Die", "Sleep", SubResource( 27 ), "Sleep", "Spawn", SubResource( 28 ), "Spawn", "Awake", SubResource( 29 ) ]
 start_node = "Sleep"
 graph_offset = Vector2( -268.967, 31.872 )
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=29]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=31]
 
-[sub_resource type="CapsuleShape" id=30]
+[sub_resource type="CapsuleShape" id=32]
 radius = 0.76373
 height = 3.38415
 
-[sub_resource type="CapsuleShape" id=38]
+[sub_resource type="CapsuleShape" id=33]
 radius = 1.71902
 height = 0.002
 
-[sub_resource type="CylinderShape" id=31]
+[sub_resource type="CylinderShape" id=34]
 radius = 13.5033
 height = 13.5675
 
-[sub_resource type="BoxShape" id=32]
+[sub_resource type="BoxShape" id=35]
 extents = Vector3( 0.0257447, 0.0300448, 0.023743 )
 
 [node name="Skeleton" type="KinematicBody" groups=[
@@ -1022,7 +1023,6 @@ spot_angle = 40.6102
 
 [node name="SightArea" type="Area" parent="SkeletonArmature/HeadBone/Eyes"]
 transform = Transform( 0.000665162, 0.000397699, 0.00996992, -2.67786e-05, 0.00999208, -0.00039679, -0.00997782, -3.03861e-07, 0.000665699, -0.00207685, -0.0431553, 0.000113122 )
-visible = false
 monitoring = false
 monitorable = false
 collision_layer = 0
@@ -1041,7 +1041,7 @@ transform = Transform( 1, 8.74228e-08, 0, -8.74228e-08, 1, 0, 0, 0, 0.268521, 3.
 shape = SubResource( 6 )
 
 [node name="HealthBar3D" parent="SkeletonArmature/HeadBone" instance=ExtResource( 5 )]
-transform = Transform( 0.775913, 0.00894609, -0.630776, 0.00880596, 0.999648, 0.0250098, 0.630778, -0.0249601, 0.775562, -3.4334e-05, 0.0152384, -8.22703e-05 )
+transform = Transform( 0.775913, 0.00894609, -0.630776, 0.00880596, 0.999648, 0.0250099, 0.630778, -0.0249601, 0.775562, 0.00313917, 0.017338, -8.22694e-05 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/SkeletonArmature|Skeleton_Attack = SubResource( 7 )
@@ -1051,12 +1051,14 @@ anims/SkeletonArmature|Skeleton_Running = SubResource( 10 )
 anims/SkeletonArmature|Skeleton_Spawn = SubResource( 11 )
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
-tree_root = SubResource( 28 )
+tree_root = SubResource( 30 )
 anim_player = NodePath("../AnimationPlayer")
 active = true
 process_mode = 0
 root_motion_track = NodePath("SkeletonArmature:Hips")
-parameters/playback = SubResource( 29 )
+parameters/playback = SubResource( 31 )
+parameters/conditions/can_spawn = false
+parameters/conditions/reborn = false
 parameters/Awake/Attacking/active = false
 parameters/Awake/Moving/blend_amount = 0.0
 parameters/Sleep/Seek/seek_position = -1.0
@@ -1065,12 +1067,12 @@ parameters/Spawn/TimeScale/scale = 1.0
 
 [node name="AliveCollision" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 2.67867, 0 )
-shape = SubResource( 30 )
+shape = SubResource( 32 )
 disabled = true
 
 [node name="SleepCollision" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -6.52829e-08, 0.36107, 0, -1.4935, -1.57829e-08, 0, 0.737575, 0.0986998 )
-shape = SubResource( 38 )
+shape = SubResource( 33 )
 
 [node name="PresenceArea" type="Area" parent="."]
 visible = false
@@ -1081,7 +1083,7 @@ collision_mask = 2
 
 [node name="CollisionShape" type="CollisionShape" parent="PresenceArea"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.78184, 0 )
-shape = SubResource( 31 )
+shape = SubResource( 34 )
 
 [node name="AttackArea" type="Area" parent="."]
 transform = Transform( 100, 0, 0, 0, 100, 0, 0, 0, 100, -0.117756, 3.89441, 1.14186 )
@@ -1092,7 +1094,7 @@ collision_mask = 2
 
 [node name="CollisionShape" type="CollisionShape" parent="AttackArea"]
 transform = Transform( 1, 0, -5.96046e-08, 2.98023e-08, 1, -1.11759e-08, -7.45058e-09, 0, 1, 0.00349332, -0.0100863, 0.00366843 )
-shape = SubResource( 32 )
+shape = SubResource( 35 )
 
 [node name="ForgetTargetTimer" type="Timer" parent="."]
 wait_time = 3.0
@@ -1108,6 +1110,26 @@ one_shot = true
 [node name="RebornTimer" type="Timer" parent="."]
 wait_time = 5.0
 one_shot = true
+
+[node name="Debug" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Info" type="RichTextLabel" parent="Debug"]
+margin_left = 13.0
+margin_top = 429.0
+margin_right = 231.0
+margin_bottom = 592.0
+text = "State = JUMP
+HP = 0
+Animation = 
+"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="body_entered" from="SkeletonArmature/HeadBone/Eyes/SightArea" to="." method="_on_SightArea_body_entered"]
 [connection signal="body_exited" from="SkeletonArmature/HeadBone/Eyes/SightArea" to="." method="_on_SightArea_body_exited"]
 [connection signal="body_entered" from="PresenceArea" to="." method="_on_PresenceArea_body_entered"]
@@ -1116,4 +1138,4 @@ one_shot = true
 [connection signal="timeout" from="ForgetTargetTimer" to="." method="_forget_target"]
 [connection signal="timeout" from="RotateTimer" to="." method="_set_next_rotation"]
 [connection signal="timeout" from="AttackDelayTimer" to="." method="_on_AttackDelayTimer_timeout"]
-[connection signal="timeout" from="RebornTimer" to="." method="_reborn"]
+[connection signal="timeout" from="RebornTimer" to="." method="_on_RebornTimer_timeout"]

@@ -32,5 +32,5 @@ func _process(delta):
 	if cur_hp != target_hp:
 		cur_hp = lerp(cur_hp, target_hp, delta * 10)
 		
-		bar.mesh.size.x = initial_bar_size * cur_hp/max_hp
-		bar.translation.x = -(initial_bar_size - bar.mesh.size.x)/2
+	bar.mesh.size.x = initial_bar_size * cur_hp/max_hp
+	bar.translation.x = -(initial_bar_size - bar.mesh.size.x)/2

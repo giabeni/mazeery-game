@@ -60,55 +60,78 @@ func _ready():
 	
 	# Set health bar parameters
 	hp_bar.set_max_hp(MAX_HP)
-
+	
+func _debug():
+	
+	$Debug/Info.text = " Status = " + str(status)
+	$Debug/Info.text += "\n HP = " + str(state.hp)
+	$Debug/Info.text += "\n Sleeping = " + str(state.sleeping)
+	$Debug/Info.text += "\n Anim Node = " + str(anim_tree["parameters/playback"].get_current_node())
+	
+	$Debug/Info.text += "\n --- PRESENCE ----"
+	$Debug/Info.text += "\n Presence Monitoring = " + str(presence_area.monitoring)
+	
+	$Debug/Info.text += "\n --- SIGHT ----"
+	$Debug/Info.text += "\n Has Target in Sight = " + str(has_target_in_sight)
+	$Debug/Info.text += "\n Target = " + (str(target.get_instance_id()) if is_instance_valid(target) else "_")
+	$Debug/Info.text += "\n Sight Monitoring = " + str(sight_area.monitoring)
+	$Debug/Info.text += "\n Sight Count = " + str(sight_area.get_overlapping_bodies().size() if sight_area.monitorable else "???")
+	$Debug/Info.text += "\n Sight Scale = " + str(sight_area.scale)
+	$Debug/Info.text += "\n Sight Origin = " + str(sight_area.translation)
+		
 func _physics_process(delta):
 	_update_status()
-	_update_animation()
 	_update_hp_bar()
+	_debug()
 	
 	match status:
 		Status.SLEEP:
-			presence_area.monitoring = true
-			sight_area.monitoring = false
-			attack_area.monitoring = false
-			alive_collision.disabled = true
-			sleep_collision.disabled = false
+			presence_area.set_deferred("monitoring", true)
+			sight_area.set_deferred("monitoring", false)
+			attack_area.set_deferred("monitoring", false)
+			alive_collision.set_deferred("disabled", true)
+			sleep_collision.set_deferred("disabled", false)
+
 			hp_bar.hide()
+			
 		Status.IDLE:
-			presence_area.monitoring = false
-			sight_area.monitoring = true
-			attack_area.monitoring = false
-			alive_collision.disabled = false
-			sleep_collision.disabled = true
+			presence_area.set_deferred("monitoring", false)
+			sight_area.set_deferred("monitoring", true)
+			attack_area.set_deferred("monitoring", false)
+			alive_collision.set_deferred("disabled", false)
+			sleep_collision.set_deferred("disabled", true)
 			hp_bar.hide()
 			
 			_check_for_players_in_sight()
 			_rotate_to_look(delta)
-		Status.FOLLOWING:
-			presence_area.monitoring = false
-			sight_area.monitoring = true
-			attack_area.monitoring = true
-			alive_collision.disabled = false
-			sleep_collision.disabled = true
+			
+		Status.FOLLOWING:			
+			presence_area.set_deferred("monitoring", false)
+			sight_area.set_deferred("monitoring", true)
+			attack_area.set_deferred("monitoring", true)
+			alive_collision.set_deferred("disabled", false)
+			sleep_collision.set_deferred("disabled", true)
 			hp_bar.show()
 			_follow_target(delta)
 			_check_for_players_in_sight()
+			
 		Status.RETREATING:
-			presence_area.monitoring = false
-			sight_area.monitoring = true
-			attack_area.monitoring = false
-			alive_collision.disabled = false
-			sleep_collision.disabled = true
+			presence_area.set_deferred("monitoring", false)
+			sight_area.set_deferred("monitoring", true)
+			attack_area.set_deferred("monitoring", false)
+			alive_collision.set_deferred("disabled", false)
+			sleep_collision.set_deferred("disabled", true)
 			hp_bar.show()
 			
 			_follow_target(delta)
 			_check_for_players_in_sight()
+			
 		Status.DEAD:
-			presence_area.monitoring = false
-			sight_area.monitoring = false
-			attack_area.monitoring = false
-			alive_collision.disabled = true
-			sleep_collision.disabled = false
+			presence_area.set_deferred("monitoring", false)
+			sight_area.set_deferred("monitoring", false)
+			attack_area.set_deferred("monitoring", false)
+			alive_collision.set_deferred("disabled", true)
+			sleep_collision.set_deferred("disabled", false)
 			hp_bar.hide()
 			
 # ==== SLEEP STATUS HANDLERS ===== #
@@ -116,36 +139,46 @@ func _physics_process(delta):
 # Detect presence to wake up
 func _on_PresenceArea_body_entered(body):
 	if (body.is_in_group("Player")):
-		print("Skeleton: Body entered presence area")
-		if target == null or (target != null and body.get_instance_id() != target.get_instance_id()):
-			targets_in_area = targets_in_area + 1
-		state.sleeping = false
+		call_deferred("_wake_up", body)
 		
 func _on_PresenceArea_body_exited(body):
 	if (body.is_in_group("Player")):
 		print("Skeleton: Body exited presence area")
 		targets_in_area = targets_in_area - 1
 		
+func _wake_up(body):
+	print("Skeleton: Body entered presence area ", is_instance_valid(target), body.get_instance_id())
+	if not is_instance_valid(target) or (is_instance_valid(target) and body.get_instance_id() != target.get_instance_id()):
+		targets_in_area = targets_in_area + 1
+	state.sleeping = false
+	# Hack to restart monitoring of sight area
+	sight_area.monitoring = true
+	sight_area.scale = Vector3(0.01, 0.01, 0.01)
+	yield(get_tree().create_timer(2), "timeout")
+#	if sight_area.scale != Vector3(1, 1, 1):
+	print("Reseting sight scale")
+	sight_area.scale = Vector3(1, 1, 1)
 # ==== AWAKE STATUS HANDLERS ===== #
 
 # Look for player to follow
 func _on_SightArea_body_entered(body):
-	if (body.is_in_group("Player")):
-		print("Skeleton: Body ENTERED sight area")
-		has_target_in_sight = true
+	call_deferred("_set_target", body, true)
 
 # Lost player of sight
 func _on_SightArea_body_exited(body):
+	call_deferred("_set_target", body, false)
+		
+func _set_target(body, entered = true):
 	if (body.is_in_group("Player")):
-		print("Skeleton: Body EXITED sight area")
-		has_target_in_sight = false
+		print("Skeleton: Body " +  ("ENTERED" if entered else "EXITED") + " sight area")
+		has_target_in_sight = entered
 
 # Scan area to find player
 func _rotate_to_look(delta):
 	if rotate_timer.is_stopped():
 		rotate_timer.start()
 	if next_rotation != 0:
-		var angle = lerp_angle(self.rotation.y, next_rotation, delta * ANGULAR_ACELLERATION)
+		var angle = lerp_angle(self.rotation.y, next_rotation, delta * ANGULAR_ACELLERATION * 10)
 		self.rotation.y = angle
 		next_rotation = 0
 		
@@ -179,8 +212,6 @@ func _check_for_players_in_sight():
 					
 					if target != prev_target:
 						print("Status = ", status, "  Forgetting target? ", forgetting_target, "     Target = ", target)
-					
-					
 				else:
 					_start_forget_timer()
 		return false
@@ -297,7 +328,6 @@ func hurt(damage):
 		return
 
 	state.hp -= damage
-	# TODO retreat
 	print("Skeleton got damage of ", damage, ". => Cur HP = ", state.hp)
 	if state.hp <= 0:
 		_die()
@@ -311,24 +341,42 @@ func _die():
 	if not state.alive:
 		return
 	_forget_target()
+	forget_target_timer.stop()
+	rotate_timer.stop()
+	attack_delay_timer.stop()
+	reborn_timer.stop()
+
 	state.alive = false
 	state.sleeping = true
 	status = Status.DEAD
-	if reborn_timer.is_stopped():
-		reborn_timer.start()
-
+	
+	reborn_timer.start()
+	
+	print("DIED")
+	
+# Calls reborn method after sleeping period
+func _on_RebornTimer_timeout():
+	call_deferred("_reborn")
+	
 # Reborn after timer
 func _reborn():
 	print("Skeleton reborning...")
 	if status != Status.DEAD:
 		return
 	
-	status = Status.SLEEP
 	state.hp = MAX_HP
 	state.alive = true
+	status = Status.SLEEP
 	
-	presence_area.monitoring = true
+	print(">> Checking if there is body in presence area...")
+	# Hack to restart monitoring of presence area
+	presence_area.set_deferred("monitoring", true)
+	presence_area.scale = Vector3(0.01, 0.01, 0.01)
+#	sight_area.scale = Vector3(0.01, 0.01, 0.01)
+	yield(get_tree().create_timer(1), "timeout")
+	presence_area.scale = Vector3(1, 1, 1)
 	for body in presence_area.get_overlapping_bodies():
+		print(">>>> Body already in presence area")
 		_on_PresenceArea_body_entered(body)
 	
 # Updates health bar
@@ -369,7 +417,11 @@ func _update_status():
 				status = Status.DEAD
 				
 		Status.DEAD:
-			pass
+			if state.hp <= 0:
+				status = Status.DEAD
+				
+	_update_animation()
+	
 	
 func has_target():
 	return is_instance_valid(target)
@@ -378,22 +430,28 @@ func has_target():
 func _update_animation():
 	match status:
 		Status.SLEEP:
-			anim_tree["parameters/playback"].travel("Sleep")
 			anim_tree["parameters/Sleep/Seek/seek_position"] = 0
+			anim_tree["parameters/conditions/can_spawn"] = not state.sleeping
+			anim_tree["parameters/conditions/reborn"] = true			
+			anim_tree["parameters/playback"].travel("Sleep")
 		Status.IDLE:
 			anim_tree["parameters/playback"].travel("Awake")
 			anim_tree["parameters/Awake/Moving/blend_amount"] = 0
+			anim_tree["parameters/conditions/can_spawn"] = false
 			
 		Status.FOLLOWING:
 			anim_tree["parameters/playback"].travel("Awake")
 			anim_tree["parameters/Awake/Moving/blend_amount"] = clamp(velocity.length() / MAX_SPEED, 0, 0.7)
+			anim_tree["parameters/conditions/can_spawn"] = false
 			
 		Status.RETREATING:
 			anim_tree["parameters/playback"].travel("Awake")
 			anim_tree["parameters/Awake/Moving/blend_amount"] = clamp(velocity.length() / MAX_SPEED, 0, 0.4)
-						
-		Status.DEAD:
-			anim_tree["parameters/playback"].travel("Die")
+			anim_tree["parameters/conditions/can_spawn"] = false
 			
-
-
+		Status.DEAD:
+			if anim_tree["parameters/playback"].get_current_node() != "Die":
+				anim_tree["parameters/playback"].travel("Die")
+				anim_tree["parameters/Sleep/Seek/seek_position"] = 0
+				anim_tree["parameters/conditions/can_spawn"] = false
+				anim_tree["parameters/conditions/reborn"] = false

@@ -1606,7 +1606,7 @@ nodes/SpeedWalk/position = Vector2( 400, 360 )
 nodes/Walking/node = SubResource( 18 )
 nodes/Walking/position = Vector2( 200, 360 )
 nodes/output/position = Vector2( 1600, 240 )
-node_connections = [ "output", 0, "Die", "Attack", 0, "IdleWalk", "Attack", 1, "Attacking", "Die", 0, "Jump", "Die", 1, "Death", "IdleWalk", 0, "Idle", "IdleWalk", 1, "SpeedWalk", "SpeedWalk", 0, "Walking", "Jump", 0, "Attack", "Jump", 1, "Jumping" ]
+node_connections = [ "output", 0, "Die", "Attack", 0, "IdleWalk", "Attack", 1, "Attacking", "SpeedWalk", 0, "Walking", "Die", 0, "Jump", "Die", 1, "Death", "IdleWalk", 0, "Idle", "IdleWalk", 1, "SpeedWalk", "Jump", 0, "Attack", "Jump", 1, "Jumping" ]
 
 [sub_resource type="CapsuleShape" id=20]
 radius = 1.82922
