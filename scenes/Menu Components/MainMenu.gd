@@ -20,4 +20,4 @@ func on_quit_pressed():
 	get_tree().quit()
 
 func on_fade_finished():
-	get_tree().change_scene_to(game_scene)
+	get_tree().call_deferred("change_scene_to", game_scene)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=2]
+[gd_scene load_steps=43 format=2]
 
 [ext_resource path="res://scripts/Skeleton.gd" type="Script" id=1]
 [ext_resource path="res://scenes/Weapons/Axe_Double.tscn" type="PackedScene" id=2]
@@ -60,23 +60,11 @@ bind/11/name = ""
 bind/11/bone = 11
 bind/11/pose = Transform( 0.112218, -0.0273581, 0.993307, 0.993584, 0.0172189, -0.111775, -0.0140458, 0.999477, 0.0291148, -0.00365612, -0.0149113, -0.00105599 )
 
-[sub_resource type="SphereMesh" id=3]
+[sub_resource type="SphereMesh" id=8]
 radius = 0.05
 height = 0.1
 
-[sub_resource type="CylinderShape" id=4]
-radius = 8.96278
-height = 13.5675
-
-[sub_resource type="ConvexPolygonShape" id=5]
-points = PoolVector3Array( 0, 1, 0, 0, -2, 0, 35, 5, 15, -35, 5, 15, 35, -5, 15, -35, -5, 15 )
-
-[sub_resource type="CylinderShape" id=6]
-radius = 33.2155
-height = 10.0
-
-[sub_resource type="Animation" id=7]
-resource_name = "SkeletonArmature|Skeleton_Attack"
+[sub_resource type="Animation" id=9]
 length = 0.933333
 tracks/0/type = "transform"
 tracks/0/path = NodePath("SkeletonArmature:Head")
@@ -181,33 +169,8 @@ tracks/13/keys = {
 "update": 1,
 "values": [ true ]
 }
-tracks/14/type = "value"
-tracks/14/path = NodePath("SkeletonArmature/HeadBone/Eyes/EyeLeft/LightLeft:visible")
-tracks/14/interp = 1
-tracks/14/loop_wrap = true
-tracks/14/imported = false
-tracks/14/enabled = true
-tracks/14/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ true ]
-}
-tracks/15/type = "value"
-tracks/15/path = NodePath("SkeletonArmature/HeadBone/Eyes/EyeRight/LightRight:visible")
-tracks/15/interp = 1
-tracks/15/loop_wrap = true
-tracks/15/imported = false
-tracks/15/enabled = true
-tracks/15/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ true ]
-}
 
-[sub_resource type="Animation" id=8]
-resource_name = "SkeletonArmature|Skeleton_Death"
+[sub_resource type="Animation" id=10]
 length = 0.366667
 tracks/0/type = "transform"
 tracks/0/path = NodePath("SkeletonArmature:Head")
@@ -307,62 +270,13 @@ tracks/13/loop_wrap = true
 tracks/13/imported = false
 tracks/13/enabled = true
 tracks/13/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ false ]
-}
-tracks/14/type = "value"
-tracks/14/path = NodePath("SkeletonArmature/HeadBone/Eyes/EyeRight/LightRight:light_energy")
-tracks/14/interp = 1
-tracks/14/loop_wrap = true
-tracks/14/imported = false
-tracks/14/enabled = true
-tracks/14/keys = {
 "times": PoolRealArray( 0, 0.2 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ 3.0, 0.0 ]
-}
-tracks/15/type = "value"
-tracks/15/path = NodePath("SkeletonArmature/HeadBone/Eyes/EyeRight/LightRight:visible")
-tracks/15/interp = 1
-tracks/15/loop_wrap = true
-tracks/15/imported = false
-tracks/15/enabled = true
-tracks/15/keys = {
-"times": PoolRealArray( 0, 0.3 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ true, false ]
 }
-tracks/16/type = "value"
-tracks/16/path = NodePath("SkeletonArmature/HeadBone/Eyes/EyeLeft/LightLeft:visible")
-tracks/16/interp = 1
-tracks/16/loop_wrap = true
-tracks/16/imported = false
-tracks/16/enabled = true
-tracks/16/keys = {
-"times": PoolRealArray( 0.3 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ false ]
-}
-tracks/17/type = "value"
-tracks/17/path = NodePath("SkeletonArmature/HeadBone/Eyes/EyeLeft/LightLeft:light_energy")
-tracks/17/interp = 1
-tracks/17/loop_wrap = true
-tracks/17/imported = false
-tracks/17/enabled = true
-tracks/17/keys = {
-"times": PoolRealArray( 0, 0.2 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ 3.0, 0.0 ]
-}
 
-[sub_resource type="Animation" id=9]
-resource_name = "SkeletonArmature|Skeleton_Idle"
+[sub_resource type="Animation" id=11]
 length = 8.0
 loop = true
 step = 0.01
@@ -458,44 +372,55 @@ tracks/12/imported = false
 tracks/12/enabled = true
 tracks/12/keys = PoolRealArray( -0.01, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0.79, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1.69, 1, 0, 0, 0, 0, -0.351, 0, 0.936, 1, 1, 1, 2.52, 1, 0, 0, 0, 0, -0.351, 0, 0.936, 1, 1, 1, 3.62, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 4.51, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 5.59, 1, 0, 0, 0, 0, 0.351, 0, 0.936, 1, 1, 1, 6.73, 1, 0, 0, 0, 0, 0.351, 0, 0.936, 1, 1, 1, 8, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1 )
 tracks/13/type = "value"
-tracks/13/path = NodePath("SkeletonArmature/HeadBone/Eyes:visible")
+tracks/13/path = NodePath("SightArea:rotation_degrees")
 tracks/13/interp = 1
 tracks/13/loop_wrap = true
 tracks/13/imported = false
 tracks/13/enabled = true
 tracks/13/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ true ]
+"times": PoolRealArray( 0, 0.78, 1.73, 2.52, 3.62, 4.51, 5.59, 6.73, 8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 0, 0, 0 ), Vector3( 0, -30.065, 0 ), Vector3( 0, -26.2769, 0 ), Vector3( 0, 0, 0 ), Vector3( 0, 0, 0 ), Vector3( 0, 46.801, 0 ), Vector3( 0, 46.801, 0 ), Vector3( 0, 0, 0 ) ]
 }
 tracks/14/type = "value"
-tracks/14/path = NodePath("SkeletonArmature/HeadBone/Eyes/EyeRight/LightRight:visible")
+tracks/14/path = NodePath("SkeletonArmature/HeadBone/Eyes/EyeRight/LightRight:light_energy")
 tracks/14/interp = 1
 tracks/14/loop_wrap = true
 tracks/14/imported = false
 tracks/14/enabled = true
 tracks/14/keys = {
-"times": PoolRealArray( 0, 1, 1.1 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 1,
-"values": [ true, false, true ]
+"times": PoolRealArray( 0, 1.25, 1.4, 1.66, 5.23, 5.38, 5.64, 8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 2.0, 2.0, 2.0, 0.0787879, 2.0, 2.0, 0.0787879, 2.0 ]
 }
 tracks/15/type = "value"
-tracks/15/path = NodePath("SkeletonArmature/HeadBone/Eyes/EyeLeft/LightLeft:visible")
+tracks/15/path = NodePath("SkeletonArmature/HeadBone/Eyes/EyeLeft/LightLeft:light_energy")
 tracks/15/interp = 1
 tracks/15/loop_wrap = true
 tracks/15/imported = false
 tracks/15/enabled = true
 tracks/15/keys = {
-"times": PoolRealArray( 0, 1, 1.09 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
+"times": PoolRealArray( 0, 1.23, 1.39, 1.65, 5.22, 5.38, 5.64, 8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 2.0, 2.0, 2.0, 0.0816944, 2.0, 2.0, 0.0816944, 2.0 ]
+}
+tracks/16/type = "value"
+tracks/16/path = NodePath("SkeletonArmature/HeadBone/Eyes:visible")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/keys = {
+"times": PoolRealArray( 0, 8 ),
+"transitions": PoolRealArray( 1, 1 ),
 "update": 1,
-"values": [ true, false, true ]
+"values": [ true, true ]
 }
 
-[sub_resource type="Animation" id=10]
-resource_name = "SkeletonArmature|Skeleton_Running"
+[sub_resource type="Animation" id=12]
 loop = true
 tracks/0/type = "transform"
 tracks/0/path = NodePath("SkeletonArmature:Head")
@@ -595,38 +520,13 @@ tracks/13/loop_wrap = true
 tracks/13/imported = false
 tracks/13/enabled = true
 tracks/13/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
 "update": 1,
-"values": [ true ]
-}
-tracks/14/type = "value"
-tracks/14/path = NodePath("SkeletonArmature/HeadBone/Eyes/EyeRight/LightRight:visible")
-tracks/14/interp = 1
-tracks/14/loop_wrap = true
-tracks/14/imported = false
-tracks/14/enabled = true
-tracks/14/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ true ]
-}
-tracks/15/type = "value"
-tracks/15/path = NodePath("SkeletonArmature/HeadBone/Eyes/EyeLeft/LightLeft:visible")
-tracks/15/interp = 1
-tracks/15/loop_wrap = true
-tracks/15/imported = false
-tracks/15/enabled = true
-tracks/15/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ true ]
+"values": [ true, true ]
 }
 
-[sub_resource type="Animation" id=11]
-resource_name = "SkeletonArmature|Skeleton_Spawn"
+[sub_resource type="Animation" id=13]
 length = 2.9
 tracks/0/type = "transform"
 tracks/0/path = NodePath("SkeletonArmature:Head")
@@ -726,167 +626,161 @@ tracks/13/loop_wrap = true
 tracks/13/imported = false
 tracks/13/enabled = true
 tracks/13/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PoolRealArray( 0, 1.5 ),
+"transitions": PoolRealArray( 1, 1 ),
 "update": 1,
-"values": [ false ]
+"values": [ false, true ]
 }
 tracks/14/type = "value"
-tracks/14/path = NodePath("SkeletonArmature/HeadBone/Eyes/EyeRight/LightRight:visible")
+tracks/14/path = NodePath("SkeletonArmature/HeadBone/Eyes/EyeRight/LightRight:light_energy")
 tracks/14/interp = 1
 tracks/14/loop_wrap = true
 tracks/14/imported = false
 tracks/14/enabled = true
 tracks/14/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ false ]
+"times": PoolRealArray( 0, 1.5, 2.9 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 0.0, 2.0 ]
 }
 tracks/15/type = "value"
-tracks/15/path = NodePath("SkeletonArmature/HeadBone/Eyes/EyeLeft/LightLeft:visible")
+tracks/15/path = NodePath("SkeletonArmature/HeadBone/Eyes/EyeLeft/LightLeft:light_energy")
 tracks/15/interp = 1
 tracks/15/loop_wrap = true
 tracks/15/imported = false
 tracks/15/enabled = true
 tracks/15/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ false ]
-}
-tracks/16/type = "value"
-tracks/16/path = NodePath("SkeletonArmature/HeadBone/Eyes/EyeLeft/LightLeft:light_energy")
-tracks/16/interp = 1
-tracks/16/loop_wrap = true
-tracks/16/imported = false
-tracks/16/enabled = true
-tracks/16/keys = {
-"times": PoolRealArray( 1.5, 2.9 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0, 1.5, 2.9 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
-"values": [ 0.0, 3.0 ]
-}
-tracks/17/type = "value"
-tracks/17/path = NodePath("SkeletonArmature/HeadBone/Eyes/EyeRight/LightRight:light_energy")
-tracks/17/interp = 1
-tracks/17/loop_wrap = true
-tracks/17/imported = false
-tracks/17/enabled = true
-tracks/17/keys = {
-"times": PoolRealArray( 1.5, 2.9 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ 0.0, 3.0 ]
+"values": [ 0.0, 0.0, 2.0 ]
 }
 
-[sub_resource type="AnimationNodeAnimation" id=12]
+[sub_resource type="AnimationNodeAnimation" id=14]
 animation = "SkeletonArmature|Skeleton_Attack"
 
-[sub_resource type="AnimationNodeOneShot" id=13]
+[sub_resource type="AnimationNodeOneShot" id=15]
 filter_enabled = true
 filters = [ "SkeletonArmature", "SkeletonArmature:Head", "SkeletonArmature:Hips", "SkeletonArmature:L.DownLeg.001", "SkeletonArmature:L.UpperLeg.001", "SkeletonArmature:Neck", "SkeletonArmature:R.DownLeg.001", "SkeletonArmature:R.UpperLeg.001", "SkeletonArmature:Torso" ]
 
-[sub_resource type="AnimationNodeAnimation" id=14]
+[sub_resource type="AnimationNodeAnimation" id=16]
 animation = "SkeletonArmature|Skeleton_Idle"
 
-[sub_resource type="AnimationNodeBlend2" id=15]
+[sub_resource type="AnimationNodeBlend2" id=17]
 
-[sub_resource type="AnimationNodeAnimation" id=16]
+[sub_resource type="AnimationNodeAnimation" id=18]
 animation = "SkeletonArmature|Skeleton_Running"
 
-[sub_resource type="AnimationNodeBlendTree" id=17]
+[sub_resource type="AnimationNodeBlendTree" id=19]
 graph_offset = Vector2( 0, 196.5 )
-nodes/Attack/node = SubResource( 12 )
+nodes/Attack/node = SubResource( 14 )
 nodes/Attack/position = Vector2( 400, 540 )
-nodes/Attacking/node = SubResource( 13 )
+nodes/Attacking/node = SubResource( 15 )
 nodes/Attacking/position = Vector2( 800, 220 )
-nodes/Idle/node = SubResource( 14 )
+nodes/Idle/node = SubResource( 16 )
 nodes/Idle/position = Vector2( 100, 140 )
-nodes/Moving/node = SubResource( 15 )
+nodes/Moving/node = SubResource( 17 )
 nodes/Moving/position = Vector2( 540, 220 )
-nodes/Run/node = SubResource( 16 )
+nodes/Run/node = SubResource( 18 )
 nodes/Run/position = Vector2( 100, 360 )
 nodes/output/position = Vector2( 1080, 340 )
 node_connections = [ "output", 0, "Attacking", "Attacking", 0, "Moving", "Attacking", 1, "Attack", "Moving", 0, "Idle", "Moving", 1, "Run" ]
 
-[sub_resource type="AnimationNodeAnimation" id=18]
+[sub_resource type="AnimationNodeAnimation" id=20]
 animation = "SkeletonArmature|Skeleton_Death"
 
-[sub_resource type="AnimationNodeAnimation" id=19]
+[sub_resource type="AnimationNodeAnimation" id=21]
 animation = "SkeletonArmature|Skeleton_Spawn"
 
-[sub_resource type="AnimationNodeTimeSeek" id=20]
+[sub_resource type="AnimationNodeTimeSeek" id=22]
 
-[sub_resource type="AnimationNodeTimeScale" id=21]
+[sub_resource type="AnimationNodeTimeScale" id=23]
 
-[sub_resource type="AnimationNodeBlendTree" id=22]
+[sub_resource type="AnimationNodeBlendTree" id=24]
 graph_offset = Vector2( 0, 65.5 )
-nodes/Animation/node = SubResource( 19 )
+nodes/Animation/node = SubResource( 21 )
 nodes/Animation/position = Vector2( 180, 140 )
-nodes/Seek/node = SubResource( 20 )
+nodes/Seek/node = SubResource( 22 )
 nodes/Seek/position = Vector2( 620, 120 )
-nodes/TimeScale/node = SubResource( 21 )
+nodes/TimeScale/node = SubResource( 23 )
 nodes/TimeScale/position = Vector2( 800, 120 )
 nodes/output/position = Vector2( 1000, 120 )
 node_connections = [ "output", 0, "TimeScale", "TimeScale", 0, "Seek", "Seek", 0, "Animation" ]
 
-[sub_resource type="AnimationNodeAnimation" id=23]
+[sub_resource type="AnimationNodeAnimation" id=25]
 animation = "SkeletonArmature|Skeleton_Spawn"
 
-[sub_resource type="AnimationNodeTimeScale" id=24]
+[sub_resource type="AnimationNodeTimeScale" id=26]
 
-[sub_resource type="AnimationNodeBlendTree" id=25]
-nodes/Animation/node = SubResource( 23 )
+[sub_resource type="AnimationNodeBlendTree" id=27]
+nodes/Animation/node = SubResource( 25 )
 nodes/Animation/position = Vector2( 120, 80 )
-nodes/TimeScale/node = SubResource( 24 )
+nodes/TimeScale/node = SubResource( 26 )
 nodes/TimeScale/position = Vector2( 540, 80 )
 nodes/output/position = Vector2( 820, 80 )
 node_connections = [ "output", 0, "TimeScale", "TimeScale", 0, "Animation" ]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=26]
+[sub_resource type="AnimationNodeStateMachineTransition" id=28]
 xfade_time = 0.3
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=27]
+[sub_resource type="AnimationNodeStateMachineTransition" id=29]
 switch_mode = 2
 advance_condition = "reborn"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=28]
+[sub_resource type="AnimationNodeStateMachineTransition" id=30]
 advance_condition = "can_spawn"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=29]
+[sub_resource type="AnimationNodeStateMachineTransition" id=31]
 switch_mode = 2
 auto_advance = true
 xfade_time = 0.3
 
-[sub_resource type="AnimationNodeStateMachine" id=30]
-states/Awake/node = SubResource( 17 )
+[sub_resource type="AnimationNodeStateMachine" id=32]
+states/Awake/node = SubResource( 19 )
 states/Awake/position = Vector2( 542.732, 106 )
-states/Die/node = SubResource( 18 )
+states/Die/node = SubResource( 20 )
 states/Die/position = Vector2( 352.033, 209.872 )
-states/Sleep/node = SubResource( 22 )
+states/Sleep/node = SubResource( 24 )
 states/Sleep/position = Vector2( 138, 106 )
-states/Spawn/node = SubResource( 25 )
+states/Spawn/node = SubResource( 27 )
 states/Spawn/position = Vector2( 352.033, 106 )
-transitions = [ "Awake", "Die", SubResource( 26 ), "Die", "Sleep", SubResource( 27 ), "Sleep", "Spawn", SubResource( 28 ), "Spawn", "Awake", SubResource( 29 ) ]
+transitions = [ "Awake", "Die", SubResource( 28 ), "Die", "Sleep", SubResource( 29 ), "Sleep", "Spawn", SubResource( 30 ), "Spawn", "Awake", SubResource( 31 ) ]
 start_node = "Sleep"
 graph_offset = Vector2( -268.967, 31.872 )
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=31]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=33]
 
-[sub_resource type="CapsuleShape" id=32]
+[sub_resource type="CapsuleShape" id=34]
 radius = 0.76373
 height = 3.38415
 
-[sub_resource type="CapsuleShape" id=33]
+[sub_resource type="CapsuleShape" id=35]
 radius = 1.71902
 height = 0.002
 
-[sub_resource type="CylinderShape" id=34]
+[sub_resource type="CylinderShape" id=3]
+radius = 8.96278
+height = 13.5675
+
+[sub_resource type="ConvexPolygonShape" id=4]
+points = PoolVector3Array( 0, 1, 0, 0, -2, 0, 35, 5, 15, -35, 5, 15, 35, -5, 15, -35, -5, 15 )
+
+[sub_resource type="CylinderShape" id=5]
+radius = 33.2155
+height = 10.0
+
+[sub_resource type="SpatialMaterial" id=6]
+flags_transparent = true
+albedo_color = Color( 1, 0.231373, 0.231373, 0.34902 )
+
+[sub_resource type="SpatialMaterial" id=7]
+albedo_color = Color( 0.996078, 0.0196078, 0.0196078, 0.34902 )
+
+[sub_resource type="CylinderShape" id=36]
 radius = 13.5033
 height = 13.5675
 
-[sub_resource type="BoxShape" id=35]
+[sub_resource type="BoxShape" id=37]
 extents = Vector3( 0.0257447, 0.0300448, 0.023743 )
 
 [node name="Skeleton" type="KinematicBody" groups=[
@@ -979,7 +873,7 @@ skin = SubResource( 2 )
 material/0 = null
 
 [node name="WeaponBone" type="BoneAttachment" parent="SkeletonArmature"]
-transform = Transform( 0.0336044, 0.491352, 0.870312, -0.11848, -0.862706, 0.491632, 0.992387, -0.119635, 0.0292246, 0.0101209, -0.00843123, -0.012076 )
+transform = Transform( 0.0336046, 0.491352, 0.870312, -0.11848, -0.862706, 0.491632, 0.992387, -0.119635, 0.0292245, 0.0101209, -0.00843123, -0.0111719 )
 bone_name = "R.DownLeg.001"
 
 [node name="Weapon" type="Spatial" parent="SkeletonArmature/WeaponBone"]
@@ -989,7 +883,7 @@ transform = Transform( 1, 1.35624e-08, 1.86265e-09, 4.10364e-09, 1, -1.86265e-09
 transform = Transform( 0.458091, -0.343121, 0.820012, -0.858009, 0.0704161, 0.508782, -0.232316, -0.936648, -0.262144, -0.000836974, 0.00536912, -0.00266192 )
 
 [node name="HeadBone" type="BoneAttachment" parent="SkeletonArmature"]
-transform = Transform( 1.82955e-07, 1.5111e-07, -1, -0.551774, 0.833994, -5.52633e-08, 0.833994, 0.551774, 1.03635e-07, -2.8132e-09, -0.0130316, -0.0105791 )
+transform = Transform( 3.32085e-07, 2.49775e-07, -1, -0.551774, 0.833994, -5.52634e-08, 0.833994, 0.551773, 2.82449e-07, -5.25071e-09, -0.0130316, -0.00967494 )
 bone_name = "Head"
 
 [node name="Eyes" type="Spatial" parent="SkeletonArmature/HeadBone"]
@@ -997,66 +891,47 @@ transform = Transform( 0.998023, 0.000283528, 0.0628565, -0.00012381, 0.999997, 
 
 [node name="EyeRight" type="MeshInstance" parent="SkeletonArmature/HeadBone/Eyes"]
 transform = Transform( 0.0473865, -0.000518171, -0.0148525, -0.000424663, 0.0356648, 0.000589962, 0.0144685, -0.000591066, 0.0330565, 0.0031297, -0.00023865, 0.00280628 )
-mesh = SubResource( 3 )
+mesh = SubResource( 8 )
 material/0 = ExtResource( 4 )
 
 [node name="LightRight" type="SpotLight" parent="SkeletonArmature/HeadBone/Eyes/EyeRight"]
 transform = Transform( -0.0210953, 0.00340757, -0.202386, 0.000872924, 0.28041, -0.00287524, 0.27078, -0.00252559, -0.0633864, -0.081382, 0.00653589, -0.0491566 )
 light_color = Color( 0.996078, 0.45098, 0.45098, 1 )
-light_energy = 3.0
+light_energy = 0.0
 light_indirect_energy = 3.0
 spot_range = 36.524
 spot_angle = 39.4
 
 [node name="EyeLeft" type="MeshInstance" parent="SkeletonArmature/HeadBone/Eyes"]
 transform = Transform( 0.0473865, -0.000518172, -0.0148525, -0.000424663, 0.0356649, 0.000589962, 0.0144685, -0.000591066, 0.0330565, 0.00396994, -0.0002723, -0.00235556 )
-mesh = SubResource( 3 )
+mesh = SubResource( 8 )
 material/0 = ExtResource( 4 )
 
 [node name="LightLeft" type="SpotLight" parent="SkeletonArmature/HeadBone/Eyes/EyeLeft"]
 transform = Transform( 0.148253, 0.00592401, -0.139293, -0.0060719, 0.280308, -0.00544638, 0.214196, 0.00705066, 0.177247, -0.0539518, 0.00542223, 0.0949698 )
 light_color = Color( 0.996078, 0.45098, 0.45098, 1 )
-light_energy = 3.0
+light_energy = 0.0
 light_indirect_energy = 3.0
 spot_range = 36.6565
 spot_angle = 40.6102
-
-[node name="SightArea" type="Area" parent="SkeletonArmature/HeadBone/Eyes"]
-transform = Transform( 0.000665162, 0.000397699, 0.00996992, -2.67786e-05, 0.00999208, -0.00039679, -0.00997782, -3.03861e-07, 0.000665699, -0.00207685, -0.0431553, 0.000113122 )
-monitoring = false
-monitorable = false
-collision_layer = 0
-collision_mask = 2
-
-[node name="CloseCollision" type="CollisionShape" parent="SkeletonArmature/HeadBone/Eyes/SightArea"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.78184, 0 )
-shape = SubResource( 4 )
-
-[node name="PrismaCollision" type="CollisionShape" parent="SkeletonArmature/HeadBone/Eyes/SightArea"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.34102, 0 )
-shape = SubResource( 5 )
-
-[node name="RoundCollision" type="CollisionShape" parent="SkeletonArmature/HeadBone/Eyes/SightArea"]
-transform = Transform( 1, 8.74228e-08, 0, -8.74228e-08, 1, 0, 0, 0, 0.268521, 3.61837e-07, 4.13893, 15.1742 )
-shape = SubResource( 6 )
 
 [node name="HealthBar3D" parent="SkeletonArmature/HeadBone" instance=ExtResource( 5 )]
 transform = Transform( 0.775913, 0.00894609, -0.630776, 0.00880596, 0.999648, 0.0250099, 0.630778, -0.0249601, 0.775562, 0.00313917, 0.017338, -8.22694e-05 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/SkeletonArmature|Skeleton_Attack = SubResource( 7 )
-anims/SkeletonArmature|Skeleton_Death = SubResource( 8 )
-anims/SkeletonArmature|Skeleton_Idle = SubResource( 9 )
-anims/SkeletonArmature|Skeleton_Running = SubResource( 10 )
-anims/SkeletonArmature|Skeleton_Spawn = SubResource( 11 )
+anims/SkeletonArmature|Skeleton_Attack = SubResource( 9 )
+anims/SkeletonArmature|Skeleton_Death = SubResource( 10 )
+anims/SkeletonArmature|Skeleton_Idle = SubResource( 11 )
+anims/SkeletonArmature|Skeleton_Running = SubResource( 12 )
+anims/SkeletonArmature|Skeleton_Spawn = SubResource( 13 )
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
-tree_root = SubResource( 30 )
+tree_root = SubResource( 32 )
 anim_player = NodePath("../AnimationPlayer")
 active = true
 process_mode = 0
 root_motion_track = NodePath("SkeletonArmature:Hips")
-parameters/playback = SubResource( 31 )
+parameters/playback = SubResource( 33 )
 parameters/conditions/can_spawn = false
 parameters/conditions/reborn = false
 parameters/Awake/Attacking/active = false
@@ -1067,12 +942,45 @@ parameters/Spawn/TimeScale/scale = 1.0
 
 [node name="AliveCollision" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 2.67867, 0 )
-shape = SubResource( 32 )
+shape = SubResource( 34 )
 disabled = true
 
 [node name="SleepCollision" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -6.52829e-08, 0.36107, 0, -1.4935, -1.57829e-08, 0, 0.737575, 0.0986998 )
-shape = SubResource( 33 )
+shape = SubResource( 35 )
+
+[node name="SightArea" type="Area" parent="."]
+transform = Transform( 0.999999, 0, 0, 0, 1, 0, 0, 0, 1, 0.000123712, 0.00822043, -4.55715e-05 )
+monitoring = false
+monitorable = false
+collision_layer = 0
+collision_mask = 2
+
+[node name="CloseCollision" type="CollisionShape" parent="SightArea"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.78184, 0 )
+shape = SubResource( 3 )
+
+[node name="PrismaCollision" type="CollisionShape" parent="SightArea"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.34102, 0 )
+shape = SubResource( 4 )
+
+[node name="RoundCollision" type="CollisionShape" parent="SightArea"]
+transform = Transform( 1, 8.74228e-08, 0, -8.74228e-08, 1, 0, 0, 0, 0.268521, 3.61837e-07, 4.13893, 15.1742 )
+shape = SubResource( 5 )
+
+[node name="CSGPolygon" type="CSGPolygon" parent="SightArea"]
+transform = Transform( 0.994567, 0.103427, -0.0120194, 0.0120842, 2.98023e-08, 0.999929, 0.103419, -0.994638, -0.00124976, -1.61043, 8.93963, 1.08628 )
+visible = false
+polygon = PoolVector2Array( -31.9895, -17.4199, 0.703679, 1.10828, 2.15988, 1.14378, 37.4815, -10.2898, 30.8806, -16.8784, 11.2791, -22.2879, -7.5398, -23.7489, -23.8542, -22.1448 )
+depth = 9.67
+material = SubResource( 6 )
+
+[node name="CSGPolygon2" type="CSGPolygon" parent="SightArea"]
+transform = Transform( 0.994567, 0.103427, -0.0120194, 0.0120842, -2.98041e-08, 0.999929, 0.103419, -0.994638, -0.00124979, -1.56341, 5.0281, 1.09117 )
+visible = false
+polygon = PoolVector2Array( -0.927844, 0.0687621, 0.703679, 1.10828, 2.15988, 1.14378, 3.79215, 0.554911 )
+depth = 2.377
+material = SubResource( 7 )
 
 [node name="PresenceArea" type="Area" parent="."]
 visible = false
@@ -1083,7 +991,7 @@ collision_mask = 2
 
 [node name="CollisionShape" type="CollisionShape" parent="PresenceArea"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.78184, 0 )
-shape = SubResource( 34 )
+shape = SubResource( 36 )
 
 [node name="AttackArea" type="Area" parent="."]
 transform = Transform( 100, 0, 0, 0, 100, 0, 0, 0, 100, -0.117756, 3.89441, 1.14186 )
@@ -1094,14 +1002,14 @@ collision_mask = 2
 
 [node name="CollisionShape" type="CollisionShape" parent="AttackArea"]
 transform = Transform( 1, 0, -5.96046e-08, 2.98023e-08, 1, -1.11759e-08, -7.45058e-09, 0, 1, 0.00349332, -0.0100863, 0.00366843 )
-shape = SubResource( 35 )
+shape = SubResource( 37 )
 
 [node name="ForgetTargetTimer" type="Timer" parent="."]
 wait_time = 3.0
 one_shot = true
 
 [node name="RotateTimer" type="Timer" parent="."]
-wait_time = 4.0
+wait_time = 8.0
 
 [node name="AttackDelayTimer" type="Timer" parent="."]
 wait_time = 2.0
@@ -1112,6 +1020,7 @@ wait_time = 5.0
 one_shot = true
 
 [node name="Debug" type="Control" parent="."]
+visible = false
 margin_right = 40.0
 margin_bottom = 40.0
 __meta__ = {
@@ -1130,8 +1039,8 @@ Animation =
 __meta__ = {
 "_edit_use_anchors_": false
 }
-[connection signal="body_entered" from="SkeletonArmature/HeadBone/Eyes/SightArea" to="." method="_on_SightArea_body_entered"]
-[connection signal="body_exited" from="SkeletonArmature/HeadBone/Eyes/SightArea" to="." method="_on_SightArea_body_exited"]
+[connection signal="body_entered" from="SightArea" to="." method="_on_SightArea_body_entered"]
+[connection signal="body_exited" from="SightArea" to="." method="_on_SightArea_body_exited"]
 [connection signal="body_entered" from="PresenceArea" to="." method="_on_PresenceArea_body_entered"]
 [connection signal="body_exited" from="PresenceArea" to="." method="_on_PresenceArea_body_exited"]
 [connection signal="body_entered" from="AttackArea" to="." method="_on_AttackArea_body_entered"]

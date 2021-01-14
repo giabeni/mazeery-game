@@ -43,7 +43,7 @@ onready var head = $SkeletonArmature/HeadBone
 onready var alive_collision: CollisionShape = $AliveCollision
 onready var sleep_collision: CollisionShape = $SleepCollision
 onready var presence_area: Area = $PresenceArea
-onready var sight_area: Area = $SkeletonArmature/HeadBone/Eyes/SightArea
+onready var sight_area: Area = $SightArea
 onready var attack_area: Area = $AttackArea
 onready var forget_target_timer: Timer = $ForgetTargetTimer
 onready var rotate_timer: Timer = $RotateTimer
@@ -52,8 +52,9 @@ onready var reborn_timer: Timer = $RebornTimer
 onready var hp_bar: HealthBar3D = $SkeletonArmature/HeadBone/HealthBar3D
 
 func _ready():
-	# Set initial spawn point to retreat
+	# Set initial spawn point and rotations to retreat
 	initial_origin = self.global_transform.origin
+	next_rotation = self.rotation.y
 	
 	# Set parent of weapon to avoid self hurt
 	(get_weapon() as Weapon).set_parent(self)
@@ -78,6 +79,7 @@ func _debug():
 	$Debug/Info.text += "\n Sight Count = " + str(sight_area.get_overlapping_bodies().size() if sight_area.monitorable else "???")
 	$Debug/Info.text += "\n Sight Scale = " + str(sight_area.scale)
 	$Debug/Info.text += "\n Sight Origin = " + str(sight_area.translation)
+	$Debug/Info.text += "\n Sight Visible = " + str(sight_area.visible)
 		
 func _physics_process(delta):
 	_update_status()
@@ -102,6 +104,12 @@ func _physics_process(delta):
 			sleep_collision.set_deferred("disabled", true)
 			hp_bar.hide()
 			
+			# Hack to restart monitoring of sight area
+			if sight_area.scale != Vector3(1, 1, 1):
+				yield(get_tree().create_timer(1), "timeout")
+				print("Reseting sight scale")
+				sight_area.scale = Vector3(1, 1, 1)
+			
 			_check_for_players_in_sight()
 			_rotate_to_look(delta)
 			
@@ -112,6 +120,8 @@ func _physics_process(delta):
 			alive_collision.set_deferred("disabled", false)
 			sleep_collision.set_deferred("disabled", true)
 			hp_bar.show()
+			
+			
 			_follow_target(delta)
 			_check_for_players_in_sight()
 			
@@ -150,18 +160,15 @@ func _wake_up(body):
 	print("Skeleton: Body entered presence area ", is_instance_valid(target), body.get_instance_id())
 	if not is_instance_valid(target) or (is_instance_valid(target) and body.get_instance_id() != target.get_instance_id()):
 		targets_in_area = targets_in_area + 1
-	state.sleeping = false
 	# Hack to restart monitoring of sight area
-	sight_area.monitoring = true
-	sight_area.scale = Vector3(0.01, 0.01, 0.01)
-	yield(get_tree().create_timer(2), "timeout")
-#	if sight_area.scale != Vector3(1, 1, 1):
-	print("Reseting sight scale")
-	sight_area.scale = Vector3(1, 1, 1)
+	sight_area.set_deferred("monitoring", true)
+
+	state.sleeping = false
 # ==== AWAKE STATUS HANDLERS ===== #
 
 # Look for player to follow
 func _on_SightArea_body_entered(body):
+	print("_on_SightArea_body_entered")
 	call_deferred("_set_target", body, true)
 
 # Lost player of sight
@@ -177,13 +184,14 @@ func _set_target(body, entered = true):
 func _rotate_to_look(delta):
 	if rotate_timer.is_stopped():
 		rotate_timer.start()
-	if next_rotation != 0:
-		var angle = lerp_angle(self.rotation.y, next_rotation, delta * ANGULAR_ACELLERATION * 10)
+	if self.rotation.y != next_rotation:
+		print("Rotating to next_rotation = ", next_rotation, " from current = ", self.rotation.y)
+		var angle = lerp_angle(self.rotation.y, next_rotation, delta * ANGULAR_ACELLERATION)
 		self.rotation.y = angle
-		next_rotation = 0
 		
 func _set_next_rotation():
-	next_rotation = deg2rad(90)
+	next_rotation += deg2rad(90)
+	print("Setting new rotation = ", next_rotation)
 	
 # Check if can see player	
 func _check_for_players_in_sight():
@@ -229,6 +237,9 @@ func _forget_target():
 	if is_instance_valid(target):
 		target = null
 		forgetting_target = false
+		
+func _is_away_from_spawn_point():
+	return abs((self.global_transform.origin - initial_origin).length()) > 0.2
 
 # Runs after player
 func _follow_target(delta):
@@ -246,7 +257,7 @@ func _follow_target(delta):
 	if not state.sleeping:
 		# Setting direction to look
 		direction = (target_position - self_origin)
-		if direction.length() <= 2:
+		if direction.length() <= 1.5:
 			direction = Vector3.ZERO
 		else:
 			direction = direction.normalized()
@@ -276,7 +287,8 @@ func _follow_target(delta):
 
 # If enemy return to spawn point
 func _is_at_retreat_area():
-	return self.global_transform.origin.distance_to(initial_origin) <= 0.01
+	print ("distance to origin = ", self.global_transform.origin.distance_to(initial_origin))
+	return self.global_transform.origin.distance_to(initial_origin) <= 1
 
 # Checks for player in attack area
 func _on_AttackArea_body_entered(body):
@@ -372,7 +384,7 @@ func _reborn():
 	# Hack to restart monitoring of presence area
 	presence_area.set_deferred("monitoring", true)
 	presence_area.scale = Vector3(0.01, 0.01, 0.01)
-#	sight_area.scale = Vector3(0.01, 0.01, 0.01)
+	sight_area.scale = Vector3(0.01, 0.01, 0.01)
 	yield(get_tree().create_timer(1), "timeout")
 	presence_area.scale = Vector3(1, 1, 1)
 	for body in presence_area.get_overlapping_bodies():
@@ -394,6 +406,10 @@ func _update_status():
 				print("Skeleton must follow player: IDLE => FOLLOWING")
 				status = Status.FOLLOWING
 				
+			# Go back to spawn point if is away from
+			if not _is_at_retreat_area():
+				status = Status.RETREATING
+				
 			if state.hp <= 0:
 				status = Status.DEAD
 
@@ -409,7 +425,6 @@ func _update_status():
 			if has_target():
 				print("Skeleton must follow player: REATREATING => FOLLOWING")
 				status = Status.FOLLOWING
-
 			elif _is_at_retreat_area():
 				status = Status.IDLE
 				

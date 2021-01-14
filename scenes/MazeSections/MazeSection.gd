@@ -20,10 +20,11 @@ export(Vector2) var position: Vector2 = Vector2(0, 0)
 signal area_reached
 
 func _enter_tree ():
-	yield(get_tree().create_timer(4), "timeout")
+#	yield(get_tree().create_timer(4), "timeout")
+	pass
 
 func _ready():
-	yield(get_tree().create_timer(3), "timeout")
+#	yield(get_tree().create_timer(3), "timeout")
 	
 	section_area.connect("body_entered", self, "_on_Area_body_entered")
 	section_area.connect("body_exited", self, "_on_Area_body_exited")
