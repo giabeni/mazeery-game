@@ -9,7 +9,7 @@ enum Status {
 	DROPPED
 }
 
-
+export(float) var IMPULSE_FORCE = 45
 var status = Status.EQUIPPED
 var parent: Node = null
 
@@ -65,4 +65,4 @@ func _on_Axe_Double_body_entered(body: Spatial):
 		# Push body
 		if body.has_method("add_impulse"):
 			var normal = self.global_transform.origin.direction_to(body.global_transform.origin) 
-			body.add_impulse(normal.normalized() * 30)
+			body.add_impulse(normal.normalized() * IMPULSE_FORCE)

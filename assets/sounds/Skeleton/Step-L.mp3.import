@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Step-L.mp3-79a3cf5f2e9d7ce845ea92b47c96bda9.mp3str"
+
+[deps]
+
+source_file="res://assets/sounds/Skeleton/Step-L.mp3"
+dest_files=[ "res://.import/Step-L.mp3-79a3cf5f2e9d7ce845ea92b47c96bda9.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

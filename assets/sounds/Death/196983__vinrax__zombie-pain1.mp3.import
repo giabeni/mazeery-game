@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/196983__vinrax__zombie-pain1.mp3-e297df42e417011018271d0e2f17c405.mp3str"
+
+[deps]
+
+source_file="res://assets/sounds/Death/196983__vinrax__zombie-pain1.mp3"
+dest_files=[ "res://.import/196983__vinrax__zombie-pain1.mp3-e297df42e417011018271d0e2f17c405.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

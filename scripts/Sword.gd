@@ -6,7 +6,8 @@ onready var pickable_area: Area = $PickableArea
 
 export var ATTRIBUTES = {
 	"DAMAGE": 10,
-	"ATTACK_INTERVAL": 0.6947
+	"ATTACK_INTERVAL": 0.6947,
+	"IMPULSE_FORCE": 65,
 }
 
 var state = {
@@ -66,7 +67,7 @@ func _on_Sword_body_entered(body: Object):
 		# Push body
 		if body.has_method("add_impulse"):
 			var normal = self.global_transform.origin.direction_to(body.global_transform.origin) 
-			body.add_impulse(normal.normalized() * 30)
+			body.add_impulse(normal.normalized() * ATTRIBUTES.IMPULSE_FORCE)
 
 
 func _on_PickableArea_body_entered(body):

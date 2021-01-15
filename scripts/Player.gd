@@ -15,6 +15,7 @@ export(float) var GRAVITY = 5
 export(float) var WALK_SPEED = 3
 export(float) var RUN_SPEED = 8
 export(float) var TURN_SENSITIVITY = 0.015
+export(float) var WEIGHT = 1
 
 export(float) var ACCELERATION = 6
 export(float) var AIR_ACCELERATION = 0.2
@@ -206,7 +207,7 @@ func _physics_process(delta):
 	# Triggering impulses
 	if impulse != Vector3.ZERO:
 		print("Pushing body by impulse")
-		velocity = move_and_slide(velocity + impulse, Vector3.UP)
+		velocity = move_and_slide(velocity + impulse/WEIGHT, Vector3.UP)
 		impulse = Vector3.ZERO
 	
 	# Set walk animation

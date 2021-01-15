@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/BoneSpawning.mp3-431a26a70a78451f143b5b6510007b7c.mp3str"
+
+[deps]
+
+source_file="res://assets/sounds/Skeleton/BoneSpawning.mp3"
+dest_files=[ "res://.import/BoneSpawning.mp3-431a26a70a78451f143b5b6510007b7c.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

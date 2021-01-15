@@ -5,6 +5,7 @@ export(float) var MAX_HP = 30.0
 export(float) var ACCELERATION = 3.0
 export(float) var ANGULAR_ACELLERATION = 3.0
 export(float) var ATTACK_DURATION = 0.933
+export(float) var WEIGHT = 0.8
 
 const GRAVITY: float = 5.0
 
@@ -50,6 +51,7 @@ onready var rotate_timer: Timer = $RotateTimer
 onready var attack_delay_timer: Timer = $AttackDelayTimer
 onready var reborn_timer: Timer = $RebornTimer
 onready var hp_bar: HealthBar3D = $SkeletonArmature/HeadBone/HealthBar3D
+onready var bone_spill: Particles = $BonesSpill
 
 func _ready():
 	# Set initial spawn point and rotations to retreat
@@ -282,7 +284,7 @@ func _follow_target(delta):
 	
 	# Adding impulses
 	if impulse != Vector3.ZERO:
-		velocity = move_and_slide(velocity + impulse, Vector3.UP)
+		velocity = move_and_slide(velocity + impulse/WEIGHT, Vector3.UP)
 		impulse = Vector3.ZERO
 
 # If enemy return to spawn point
@@ -333,8 +335,13 @@ func get_weapon():
 	return weapon.get_child(0) if weapon.get_child_count() > 0 else null
 
 # Take damage when attacked by player
-func hurt(damage):
-#	blood_spill.emitting = true
+func hurt(damage, attack_normal = self.global_transform.basis.z):
+	# Seting rotation to opposite of the normal and emitting blood particles
+	attack_normal.y = 0
+	var particles_forward: Vector3 = -bone_spill.global_transform.basis.z
+	particles_forward.y = 0
+	bone_spill.global_rotate(Vector3.UP, particles_forward.angle_to(-attack_normal))
+	bone_spill.emitting = true
 #	hurt_audio.play()
 	if not state.alive:
 		return
@@ -357,6 +364,7 @@ func _die():
 	rotate_timer.stop()
 	attack_delay_timer.stop()
 	reborn_timer.stop()
+	impulse = Vector3.ZERO
 
 	state.alive = false
 	state.sleeping = true

@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/BonesCracking2.wav-ee4ba7f5416130a59218d8c41c9f882c.sample"
+
+[deps]
+
+source_file="res://assets/sounds/Skeleton/BonesCracking2.wav"
+dest_files=[ "res://.import/BonesCracking2.wav-ee4ba7f5416130a59218d8c41c9f882c.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
