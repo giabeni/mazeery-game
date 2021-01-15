@@ -42,7 +42,7 @@ onready var sight_area: Area = $SightArea
 
 var state = {
 	"target": null,
-	"dead": false,
+	"alive": true,
 	"sleeping": true,
 	"hp": MAX_HP,
 	"players_in_danger": []
@@ -61,7 +61,7 @@ func _ready():
 	
 func _physics_process(delta):
 	
-	if state.dead:
+	if state.alive:
 		return
 	
 	_check_for_players_in_sight()
@@ -80,7 +80,7 @@ func _physics_process(delta):
 			audio_scream.playing = false
 	else:
 		_open_eyes(delta)
-		health_bar.show()		
+		health_bar.show()
 		if audio_breath.playing:
 			audio_breath.playing = false
 		if not audio_scream.playing:
@@ -212,11 +212,11 @@ func _set_health_bar(bar: HealthBar3D, current_hp):
 		bar.set_current_hp(current_hp)
 		
 func _die():
-	if state.dead:
+	if not state.alive:
 		return
 	_sleep()
 	_close_eyes(1)
-	state.dead = true
+	state.alive = false
 	death_audio.play()
 	audio_breath.playing = false
 	audio_scream.playing = false

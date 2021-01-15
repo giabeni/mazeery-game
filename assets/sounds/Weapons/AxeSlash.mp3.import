@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/AxeSlash.mp3-c7f1c3e03e608529c2c7dd1844395b9a.mp3str"
+
+[deps]
+
+source_file="res://assets/sounds/Weapons/AxeSlash.mp3"
+dest_files=[ "res://.import/AxeSlash.mp3-c7f1c3e03e608529c2c7dd1844395b9a.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

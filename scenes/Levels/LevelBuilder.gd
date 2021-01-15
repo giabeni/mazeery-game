@@ -119,9 +119,9 @@ func _build_maze():
 				if side.has_node("SpawnContainer"):
 					spawn_containers.push_back(side.get_node("SpawnContainer"))
 					
-		print ("NUMBER OF ENEMIES", enemies_count)	
-		print ("NUMBER OF GEMS", gems_count)	
-		print ("SPAWN_CONTAINERS", spawn_containers)	
+		print ("NUMBER OF ENEMIES = ", enemies_count)	
+		print ("NUMBER OF GEMS = ", gems_count)	
+		print ("SPAWN_CONTAINERS = ", spawn_containers)	
 		
 func _spawn_player():
 	if (PLAYER_SCENE):

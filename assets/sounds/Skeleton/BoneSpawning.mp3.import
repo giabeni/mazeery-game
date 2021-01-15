@@ -11,5 +11,5 @@ dest_files=[ "res://.import/BoneSpawning.mp3-431a26a70a78451f143b5b6510007b7c.mp
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

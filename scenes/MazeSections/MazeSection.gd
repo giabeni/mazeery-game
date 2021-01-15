@@ -43,13 +43,14 @@ func _ready():
 		item.transform.origin = Vector3(0, 0, 0)
 	
 		
-func set_gem(scene):
+func set_gem(scene: PackedScene):
 	gem_scene = scene
 	
-func set_item(scene):
+func set_item(scene: PackedScene):
 	item_scene = scene
 	
-func set_enemy(scene):
+func set_enemy(scene: PackedScene):
+	print(">>> Enemy scene = ", scene.resource_name)
 	enemy_scene = scene
 	
 func set_position(x, z):
@@ -78,7 +79,7 @@ func spawn_enemy():
 		enemy.request_ready()
 		enemy_container.add_child(enemy)
 		enemy.transform.origin = Vector3(0, 0, 0)
-		enemy.scale = Vector3(0.5, 0.5, 0.5)
+#		enemy.scale = Vector3(0.5, 0.5, 0.5)
 	elif enemy != null:
 		enemy.request_ready()
 		enemy_container.add_child(enemy)
@@ -101,6 +102,6 @@ func _on_Area_body_entered(body: Object):
 
 
 func _on_Area_body_exited(body):
-	if body.is_in_group("Player") and enemy != null and enemy.state.sleeping and not enemy.state.dead:
+	if body.is_in_group("Player") and enemy != null and enemy.state.sleeping and enemy.state.alive:
 		print("Despawning spider")
 		despawn_enemy()

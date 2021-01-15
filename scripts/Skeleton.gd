@@ -52,6 +52,8 @@ onready var attack_delay_timer: Timer = $AttackDelayTimer
 onready var reborn_timer: Timer = $RebornTimer
 onready var hp_bar: HealthBar3D = $SkeletonArmature/HeadBone/HealthBar3D
 onready var bone_spill: Particles = $BonesSpill
+onready var hurt_sound: AudioStreamPlayer3D = $Sounds/HurtSound
+onready var hunf_sound: AudioStreamPlayer3D = $Sounds/HunfSound
 
 func _ready():
 	# Set initial spawn point and rotations to retreat
@@ -336,13 +338,14 @@ func get_weapon():
 
 # Take damage when attacked by player
 func hurt(damage, attack_normal = self.global_transform.basis.z):
+	hurt_sound.play()
+	hunf_sound.play()
 	# Seting rotation to opposite of the normal and emitting blood particles
 	attack_normal.y = 0
 	var particles_forward: Vector3 = -bone_spill.global_transform.basis.z
 	particles_forward.y = 0
 	bone_spill.global_rotate(Vector3.UP, particles_forward.angle_to(-attack_normal))
 	bone_spill.emitting = true
-#	hurt_audio.play()
 	if not state.alive:
 		return
 

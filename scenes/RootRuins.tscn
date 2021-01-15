@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://scenes/Levels/LevelBuilder.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/MazeSections/Ruins/RuinSection3.tscn" type="PackedScene" id=2]
@@ -7,6 +7,8 @@
 [ext_resource path="res://scenes/MazeSections/Ruins/RuinSection1.tscn" type="PackedScene" id=5]
 [ext_resource path="res://assets/sounds/ambient_ghost.ogg" type="AudioStream" id=6]
 [ext_resource path="res://enviroments/DarkEnv.tres" type="Environment" id=7]
+[ext_resource path="res://scenes/Spider.tscn" type="PackedScene" id=8]
+[ext_resource path="res://scenes/Skeleton.tscn" type="PackedScene" id=9]
 [ext_resource path="res://assets/sounds/horror_soundtrack.ogg" type="AudioStream" id=29]
 [ext_resource path="res://assets/sounds/main_theme.wav" type="AudioStream" id=30]
 [ext_resource path="res://assets/sounds/whispers.wav" type="AudioStream" id=31]
@@ -17,16 +19,16 @@ script = ExtResource( 32 )
 
 [node name="LevelBuilder" parent="." instance=ExtResource( 1 )]
 SECTIONS = [ ExtResource( 5 ), ExtResource( 3 ), ExtResource( 2 ) ]
+ENEMIES = [ ExtResource( 8 ), ExtResource( 9 ) ]
 dir_light = NodePath("DirectionalLight")
 X_SECTIONS = 3
 Z_SECTIONS = 3
-ENEMY_PROB = 0.5
+ENEMY_PROB = 0.75
 ITEM_PROB = 1.0
 
 [node name="DirectionalLight" type="DirectionalLight" parent="LevelBuilder"]
 transform = Transform( 0.016881, -0.52413, 0.851471, 0.0787758, 0.849643, 0.521442, -0.996749, 0.0582729, 0.0556316, 135.639, 24.0063, -36.9841 )
-light_color = Color( 0.615686, 0.615686, 0.615686, 1 )
-light_energy = 0.1
+light_color = Color( 0.611765, 0.388235, 0.654902, 1 )
 light_indirect_energy = 10.39
 light_bake_mode = 2
 shadow_enabled = true
@@ -60,5 +62,6 @@ autostart = true
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource( 7 )
 script = ExtResource( 4 )
+
 [connection signal="timeout" from="WindTimer" to="." method="_on_WindTimer_timeout"]
 [connection signal="timeout" from="WhisperTimer" to="." method="_on_WhisperTimer_timeout"]
