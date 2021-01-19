@@ -30,18 +30,9 @@ func _ready():
 	section_area.connect("body_exited", self, "_on_Area_body_exited")
 	
 	if (gem_scene):
-		var gem: Spatial = gem_scene.instance()
-		gem.request_ready()
-		gem_container.add_child(gem)
-		gem.transform.origin = Vector3(0, 0, 0)
-		gem.scale = Vector3(1.5, 1.5, 1.5)
-		
+		call_deferred("_instance_gem", gem_scene)
 	if (item_scene):
-		var item: Spatial = item_scene.instance()
-		item.request_ready()
-		item_container.add_child(item)
-		item.transform.origin = Vector3(0, 0, 0)
-	
+		call_deferred("_instance_item", item_scene)
 		
 func set_gem(scene: PackedScene):
 	gem_scene = scene
@@ -58,6 +49,19 @@ func set_position(x, z):
 	
 func get_position():
 	return position
+	
+func _instance_gem(gem_scene: PackedScene):
+	var gem: Spatial = gem_scene.instance()
+	gem.request_ready()
+	gem_container.add_child(gem)
+	gem.transform.origin = Vector3(0, 0, 0)
+	gem.scale = Vector3(1.5, 1.5, 1.5)
+	
+func _instance_item(item_scene: PackedScene):
+	var item: Spatial = item_scene.instance()
+	item.request_ready()
+	item_container.add_child(item)
+	item.transform.origin = Vector3(0, 0, 0)
 	
 func get_neighbor_sections():
 	return [
@@ -92,16 +96,18 @@ func set_visible(visible):
 	self.visible = visible
 	$GridMap.visible = visible
 	
+func _should_despawn_enemy():
+	return is_instance_valid(enemy) and "state" in enemy and enemy.state.sleeping and enemy.state.alive
+	
 
 func _on_Area_body_entered(body: Object):
 	if body.is_in_group("Player"):
 		emit_signal("area_reached", position.x, position.y)
 		if (enemy_scene != null):
 			print("Spawning spider")
-			spawn_enemy()
-
+			call_deferred("spawn_enemy")
 
 func _on_Area_body_exited(body):
-	if body.is_in_group("Player") and enemy != null and enemy.state.sleeping and enemy.state.alive:
+	if body.is_in_group("Player") and _should_despawn_enemy():
 		print("Despawning spider")
-		despawn_enemy()
+		call_deferred("despawn_enemy")

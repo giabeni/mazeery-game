@@ -97,6 +97,8 @@ func _physics_process(delta):
 			attack_area.set_deferred("monitoring", false)
 			alive_collision.set_deferred("disabled", true)
 			sleep_collision.set_deferred("disabled", false)
+			if weapon.visible:
+				weapon.hide()
 
 			hp_bar.hide()
 			
@@ -107,6 +109,9 @@ func _physics_process(delta):
 			alive_collision.set_deferred("disabled", false)
 			sleep_collision.set_deferred("disabled", true)
 			hp_bar.hide()
+			if not weapon.visible:
+				weapon.show()
+
 			
 			# Hack to restart monitoring of sight area
 			if sight_area.scale != Vector3(1, 1, 1):
@@ -125,6 +130,8 @@ func _physics_process(delta):
 			sleep_collision.set_deferred("disabled", true)
 			hp_bar.show()
 			
+			if not weapon.visible:
+				weapon.show()
 			
 			_follow_target(delta)
 			_check_for_players_in_sight()
@@ -137,6 +144,9 @@ func _physics_process(delta):
 			sleep_collision.set_deferred("disabled", true)
 			hp_bar.show()
 			
+			if not weapon.visible:
+				weapon.show()
+			
 			_follow_target(delta)
 			_check_for_players_in_sight()
 			
@@ -147,6 +157,9 @@ func _physics_process(delta):
 			alive_collision.set_deferred("disabled", true)
 			sleep_collision.set_deferred("disabled", false)
 			hp_bar.hide()
+			
+			if not weapon.visible:
+				weapon.show()
 			
 # ==== SLEEP STATUS HANDLERS ===== #
 

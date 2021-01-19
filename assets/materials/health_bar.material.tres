@@ -4,4 +4,5 @@
 flags_transparent = true
 flags_unshaded = true
 params_billboard_mode = 1
+params_billboard_keep_scale = true
 albedo_color = Color( 0.827451, 0.105882, 0.105882, 0.976471 )

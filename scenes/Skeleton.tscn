@@ -986,17 +986,18 @@ skin = SubResource( 2 )
 material/0 = null
 
 [node name="WeaponBone" type="BoneAttachment" parent="SkeletonArmature"]
-transform = Transform( 0.0336044, 0.491352, 0.870312, -0.11848, -0.862706, 0.491632, 0.992387, -0.119635, 0.0292246, 0.0101209, -0.00843123, -0.012076 )
+transform = Transform( 0.0336046, 0.491352, 0.870312, -0.11848, -0.862706, 0.491632, 0.992387, -0.119635, 0.0292245, 0.0101209, -0.00843123, -0.0119938 )
 bone_name = "R.DownLeg.001"
 
 [node name="Weapon" type="Spatial" parent="SkeletonArmature/WeaponBone"]
 transform = Transform( 1, 1.35624e-08, 1.86265e-09, 4.10364e-09, 1, -1.86265e-09, 1.86265e-09, -1.86265e-09, 1, 0, 0, 0 )
+visible = false
 
 [node name="Axe_Double" parent="SkeletonArmature/WeaponBone/Weapon" instance=ExtResource( 2 )]
 transform = Transform( 0.458091, -0.343121, 0.820012, -0.858009, 0.0704161, 0.508782, -0.232316, -0.936648, -0.262144, -0.000836974, 0.00536912, -0.00266192 )
 
 [node name="HeadBone" type="BoneAttachment" parent="SkeletonArmature"]
-transform = Transform( 1.82955e-07, 1.5111e-07, -1, -0.551774, 0.833994, -5.52633e-08, 0.833994, 0.551774, 1.03635e-07, -2.8132e-09, -0.0130316, -0.0105791 )
+transform = Transform( 3.32085e-07, 2.49775e-07, -1, -0.551774, 0.833994, -5.52634e-08, 0.833994, 0.551773, 2.82449e-07, -5.34869e-09, -0.0130316, -0.0104969 )
 bone_name = "Head"
 
 [node name="Eyes" type="Spatial" parent="SkeletonArmature/HeadBone"]
@@ -1029,7 +1030,7 @@ spot_range = 36.6565
 spot_angle = 40.6102
 
 [node name="HealthBar3D" parent="SkeletonArmature/HeadBone" instance=ExtResource( 5 )]
-transform = Transform( 0.775913, 0.00894612, -0.630776, 0.00880596, 0.999648, 0.0250099, 0.630778, -0.0249601, 0.775562, 0.00313917, 0.017338, -8.22694e-05 )
+transform = Transform( 0.00997715, -2.07114e-06, 0.000675667, 3.85373e-06, 0.00999997, -2.62577e-05, -0.000675661, 2.64594e-05, 0.00997711, 0.00085239, 0.0214008, -5.5639e-05 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/SkeletonArmature|Skeleton_Attack = SubResource( 4 )
@@ -1042,8 +1043,6 @@ anims/SkeletonArmature|Skeleton_Spawn = SubResource( 8 )
 tree_root = SubResource( 27 )
 anim_player = NodePath("../AnimationPlayer")
 active = true
-process_mode = 0
-root_motion_track = NodePath("SkeletonArmature:Hips")
 parameters/playback = SubResource( 28 )
 parameters/conditions/can_spawn = false
 parameters/conditions/reborn = false
@@ -1063,7 +1062,7 @@ transform = Transform( 1, 0, 0, 0, -6.52829e-08, 0.36107, 0, -1.4935, -1.57829e-
 shape = SubResource( 30 )
 
 [node name="SightArea" type="Area" parent="."]
-transform = Transform( 0.872496, 0, -0.488619, 0, 1, 0, 0.488618, 0, 0.872497, 0.000123712, 0.00822043, -4.55715e-05 )
+transform = Transform( 0.684533, 0, 0.72898, 0, 1, 0, -0.728979, 0, 0.684534, 0.000123712, 0.00822043, -4.55715e-05 )
 monitoring = false
 monitorable = false
 collision_layer = 0

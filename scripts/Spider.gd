@@ -2,15 +2,12 @@ extends KinematicBody
 
 class_name Spider
 
-const Player = preload("res://scenes/Player.tscn")
-const HealthBar3D = preload("res://scenes/HealthBar3D.tscn")
-
 const BLACK_EYE_COLOR = "#160202"
 const RED_EYE_COLOR = "#ea2525"
 
 const SPEED = 9
 const ACCEL = 2
-const ANGULAR_ACCEL = 1.4
+const ANGULAR_ACCEL = 2
 const GRAVITY = 5
 
 const MAX_HP = 20
@@ -37,7 +34,7 @@ onready var audio_scream: AudioStreamPlayer3D = $ScreamAudio
 onready var audio_bite: AudioStreamPlayer3D = $BiteAudio
 onready var hurt_audio: AudioStreamPlayer3D = $HurtAudio
 onready var death_audio: AudioStreamPlayer3D = $DeathAudio
-onready var health_bar = $SpiderArmature/Skeleton/Cube/HealthBar3D
+onready var health_bar: HealthBar3D = $SpiderArmature/Skeleton/HeadBone/HealthBar3D
 onready var sight_area: Area = $SightArea
 
 var state = {
@@ -59,9 +56,24 @@ func _ready():
 	print("Spider ready, HP is ", state.hp)
 	_set_health_bar_max(health_bar, MAX_HP)
 	
+func _debug():
+	
+	$Debug/Info.text = "\n HP = " + str(state.hp)
+	$Debug/Info.text += "\n Sleeping = " + str(state.sleeping)
+	
+	$Debug/Info.text += "\n --- SIGHT ----"
+	$Debug/Info.text += "\n Target = " + (str(state.target.get_instance_id()) if is_instance_valid(state.target) else "_")
+	$Debug/Info.text += "\n Sight Monitoring = " + str(sight_area.monitoring)
+	$Debug/Info.text += "\n Sight Count = " + str(sight_area.get_overlapping_bodies().size() if sight_area.monitorable else "???")
+	$Debug/Info.text += "\n Sight Scale = " + str(sight_area.scale)
+	$Debug/Info.text += "\n Sight Origin = " + str(sight_area.translation)
+	$Debug/Info.text += "\n Sight Visible = " + str(sight_area.visible)
+	
 func _physics_process(delta):
 	
-	if state.alive:
+	_debug()
+	
+	if not state.alive:
 		return
 	
 	_check_for_players_in_sight()
@@ -95,7 +107,8 @@ func _physics_process(delta):
 		
 		direction = (target_position - self_origin).normalized()
 		
-		var angle = atan2(-direction.x, -direction.z) - self.global_transform.basis.get_euler().y
+		var angle_to_target = atan2(-direction.x, -direction.z) - self.global_transform.basis.get_euler().y
+		var angle = lerp_angle(0, angle_to_target, delta * ANGULAR_ACCEL)
 		self.global_rotate(Vector3.UP, angle)
 	else:
 		direction = Vector3.ZERO
@@ -193,10 +206,11 @@ func _awake():
 	state.sleeping = false
 	
 func hurt(damage):
-	blood_spill.emitting = true
-	hurt_audio.play()
-	state.hp -= damage
-	_set_health_bar(health_bar, state.hp)
+	if state.alive:
+		blood_spill.emitting = true
+		hurt_audio.play()
+		state.hp -= damage
+		_set_health_bar(health_bar, state.hp)
 	
 	timer_dizzy.start()
 #	print("Spider got damage of ", damage, ". => Cur HP = ", state.hp)
@@ -223,12 +237,12 @@ func _die():
 	audio_bite.playing = false
 	audio_steps.playing = false
 	anim_tree.active = false
-	health_bar.queue_free()
+	health_bar.hide()
 	anim_player.play("Spider_Death")
 	yield(anim_player, "animation_finished")
 	anim_player.play("Fade_Out")
 	yield(anim_player, "animation_finished")
-	queue_free()
+	call_deferred("queue_free")
 	
 func _on_AttackArea_body_entered(body):
 	if body.is_in_group("Player") and not body in state.players_in_danger:
