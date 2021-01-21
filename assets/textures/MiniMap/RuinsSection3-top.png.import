@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/CyanGem.png-bef40ad2fda0a0e6feb6ef433ec9035d.s3tc.stex"
-path.etc2="res://.import/CyanGem.png-bef40ad2fda0a0e6feb6ef433ec9035d.etc2.stex"
+path.s3tc="res://.import/RuinsSection3-top.png-9e6f152f6488f021b325d361ece6a8cd.s3tc.stex"
+path.etc2="res://.import/RuinsSection3-top.png-9e6f152f6488f021b325d361ece6a8cd.etc2.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc2" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/icons/Gems/CyanGem.png"
-dest_files=[ "res://.import/CyanGem.png-bef40ad2fda0a0e6feb6ef433ec9035d.s3tc.stex", "res://.import/CyanGem.png-bef40ad2fda0a0e6feb6ef433ec9035d.etc2.stex" ]
+source_file="res://assets/textures/MiniMap/RuinsSection3-top.png"
+dest_files=[ "res://.import/RuinsSection3-top.png-9e6f152f6488f021b325d361ece6a8cd.s3tc.stex", "res://.import/RuinsSection3-top.png-9e6f152f6488f021b325d361ece6a8cd.etc2.stex" ]
 
 [params]
 
