@@ -1,0 +1,53 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://libs/RuinsTileset.meshlib" type="MeshLibrary" id=1]
+[ext_resource path="res://assets/textures/MiniMap/RuinsSection9-top.png" type="Texture" id=2]
+[ext_resource path="res://scenes/Sword.tscn" type="PackedScene" id=3]
+
+[sub_resource type="OpenSimplexNoise" id=1]
+
+[sub_resource type="NoiseTexture" id=2]
+noise = SubResource( 1 )
+
+[node name="RuinsSide" type="Spatial"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 48, 0, 0 )
+
+[node name="GridMap" type="GridMap" parent="."]
+mesh_library = ExtResource( 1 )
+cell_size = Vector3( 1, 2, 1 )
+cell_center_x = false
+cell_center_y = false
+cell_center_z = false
+cell_scale = 4.0
+data = {
+"cells": PoolIntArray( 131076, 65512, 1075183617, 131084, 65512, -1072300031, 131092, 65512, 1075183617, 196588, 65512, 1075183617, 196596, 65512, 1075183617, 196604, 65512, 538312705, 4, 65516, 65537, 12, 65516, 65537, 20, 65516, 65537, 65516, 65516, 65537, 65524, 65516, 65537, 65532, 65516, 65537, 131096, 65516, 1074397185, 196584, 65516, 1073741825, 4, 65524, 65537, 12, 65524, 65537, 20, 65524, 65537, 65516, 65524, 65537, 65524, 65524, 65537, 65532, 65524, 65537, 131096, 65524, 1074397185, 196584, 65524, 1073741825, 4, 65532, 65537, 12, 65532, 65537, 20, 65532, 65537, 65516, 65532, 65537, 65524, 65532, 65537, 65532, 65532, 65537, 131096, 65532, 655361, 196584, 65532, 1073741825 )
+}
+__meta__ = {
+"_editor_clip_": 0,
+"_editor_floor_": Vector3( 0, 2, -10 )
+}
+
+[node name="MiniMapThumb" type="Sprite3D" parent="."]
+transform = Transform( 8, 0, 0, 0, -3.49691e-07, 1, 0, -8, -4.37114e-08, 0, 0, 0 )
+visible = false
+layers = 524288
+modulate = Color( 1, 1, 1, 0.572549 )
+texture = ExtResource( 2 )
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="MiniMapCover" type="Sprite3D" parent="."]
+transform = Transform( 9.34, 0, 0, 0, -2.07192e-07, 1, 0, -4.74, -4.37114e-08, 0, -0.1, -12 )
+layers = 524288
+modulate = Color( 0.290196, 0.290196, 0.290196, 1 )
+texture = SubResource( 2 )
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="SpawnContainer" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -14.2511 )
+
+[node name="Sword" parent="." instance=ExtResource( 3 )]
+transform = Transform( -0.122788, 0.122788, -0.984808, -0.992404, -0.00759624, 0.122788, 0.00759606, 0.992404, 0.122788, -2, 6.08395, -6 )

@@ -1,0 +1,66 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://libs/RuinsTileset.meshlib" type="MeshLibrary" id=1]
+[ext_resource path="res://assets/textures/MiniMap/RuinsSection4-top.png" type="Texture" id=2]
+[ext_resource path="res://scenes/MazeSections/MazeSection.gd" type="Script" id=3]
+[ext_resource path="res://scenes/Items/Parchment.tscn" type="PackedScene" id=4]
+
+[sub_resource type="BoxShape" id=1]
+extents = Vector3( 23.9861, 10.9826, 24.0569 )
+
+[sub_resource type="OpenSimplexNoise" id=2]
+
+[sub_resource type="NoiseTexture" id=3]
+noise = SubResource( 2 )
+
+[node name="RuinsSection4" type="Spatial"]
+script = ExtResource( 3 )
+
+[node name="GridMap" type="GridMap" parent="."]
+mesh_library = ExtResource( 1 )
+cell_size = Vector3( 1, 2, 1 )
+cell_center_x = false
+cell_center_y = false
+cell_center_z = false
+cell_scale = 4.0
+data = {
+"cells": PoolIntArray( 4, 4, 65537, 12, 4, 1073807361, 20, 4, 1073807361, 65516, 4, 1073807361, 65524, 4, 65537, 65532, 4, 65537, 131077, 4, 1048628, 196590, 6, 1048628, 131092, 7, 52, 196604, 7, -1609170892, 196597, 8, 1441844, 131088, 10, 1075183668, 196593, 11, -1610612684, 4, 12, 65537, 12, 12, 65537, 20, 12, 65537, 65516, 12, 65537, 65524, 12, 65537, 65532, 12, 65537, 131077, 12, 1048628, 131088, 14, 655412, 196604, 15, 1441844, 196593, 18, 655412, 4, 20, 65537, 12, 20, 65537, 20, 20, -1073676287, 65516, 20, 65537, 65524, 20, 65537, 65532, 20, 65537, 131077, 20, 1048628, 131072, 65513, 52, 131080, 65513, 536870964, 196593, 65513, 536870964, 4, 65516, 536936449, 12, 65516, 536936449, 20, 65516, 65537, 65516, 65516, 536936449, 65524, 65516, 536936449, 65532, 65516, 536936449, 131090, 65517, 537919540, 131073, 65521, 537526324, 131087, 65521, 537526324, 196593, 65521, 537526324, 196601, 65521, 537526324, 4, 65524, 536936449, 12, 65524, 536936449, 20, 65524, 536936449, 65516, 65524, 536936449, 65524, 65524, 536936449, 65532, 65524, 536936449, 131077, 65524, 537919540, 131084, 65524, 537919540, 196593, 65531, 537526324, 196601, 65531, 537526324, 4, 65532, 536936449, 12, 65532, 536936449, 20, 65532, 536936449, 65516, 65532, 536936449, 65524, 65532, 536936449, 65532, 65532, 536936449, 131077, 65532, 537919540, 131084, 65532, 537919540, 131090, 65532, 538312756, 196590, 65534, 537919540, 131087, 65535, 536870964, 196604, 65535, 538312756 )
+}
+__meta__ = {
+"_editor_clip_": 0,
+"_editor_floor_": Vector3( 0, 2, -10 )
+}
+
+[node name="GemContainer" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -14.7733, 1.73681, 8.7488 )
+
+[node name="EnemyContainer" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8.1685, 0.5, 14.2693 )
+
+[node name="PumpkinContainter" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20.2932, 2.11488, 11.2051 )
+
+[node name="FragmentContainer" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 14.8901, 0.7, -3.5132 )
+
+[node name="Parchment" parent="FragmentContainer" instance=ExtResource( 4 )]
+
+[node name="Area" type="Area" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape" type="CollisionShape" parent="Area"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.12932, 0 )
+shape = SubResource( 1 )
+
+[node name="MiniMapThumb" type="Sprite3D" parent="."]
+transform = Transform( 8, 0, 0, 0, -3.49691e-07, 1, 0, -8, -4.37114e-08, 0, 0, 0 )
+visible = false
+layers = 524288
+modulate = Color( 1, 1, 1, 0.572549 )
+texture = ExtResource( 2 )
+
+[node name="MiniMapCover" type="Sprite3D" parent="."]
+transform = Transform( 9.34, 0, 0, 0, -4.37114e-08, 1, 0, -9.48, -4.14384e-07, 0, -0.1, 0 )
+layers = 524288
+modulate = Color( 0.301961, 0.0313726, 0.25098, 1 )
+texture = SubResource( 3 )

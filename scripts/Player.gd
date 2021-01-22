@@ -100,10 +100,8 @@ onready var right_walk_step_sound: AudioStreamPlayer3D = $Mesh/PunkMan/StepsSoun
 onready var left_run_step_sound: AudioStreamPlayer3D = $Mesh/PunkMan/StepsSounds/LeftRunStepSound
 onready var right_run_step_sound: AudioStreamPlayer3D = $Mesh/PunkMan/StepsSounds/RightStepSound
 onready var timer_dizzy: Timer = $DizzyTimer
-onready var light_bar: ColorRect = $UI/VerticalContainer/TopContainer/RightContainer/LightBar
-onready var current_light_bar: ColorRect = $UI/VerticalContainer/TopContainer/RightContainer/LightBar/CurrentLightBar
-onready var health_bar: ColorRect = $UI/VerticalContainer/TopContainer/RightContainer/HealthBar
-onready var current_health_bar: ColorRect = $UI/VerticalContainer/TopContainer/RightContainer/HealthBar/CurrentHealthBar
+onready var light_bar: ProgressBar = $UI/VerticalContainer/TopContainer/RightContainer/LightBar
+onready var health_bar: ProgressBar = $UI/VerticalContainer/TopContainer/RightContainer/HealthBar
 onready var backpack_slots: Control = $UI/VerticalContainer/BottomContainer/RightContainer/BackpackSlots
 onready var talismans_icons: HBoxContainer = $UI/VerticalContainer/TopContainer/LeftContainer/TalismansIcons
 onready var fist_attachment: BoneAttachment = $Mesh/PunkMan/CharacterArmature/Skeleton/FistAttachment
@@ -111,6 +109,7 @@ onready var blood_spill: Particles = $Mesh/BloodSpill/Particles
 onready var pickable_msg: RichTextLabel = $MessagesControl/PickableMessage
 onready var aim_slash: CSGPolygon = $Mesh/PunkMan/AimSlash
 onready var dead_collision: CollisionShape = $DeadCollisionShape
+onready var minimap_camera: Camera = $UI/VerticalContainer/BottomContainer/LeftContainer/MiniMapContainer/MiniMapViewport/MiniMapCamera
 
 onready var debug_axes: Spatial = $DebugAxes
 
@@ -260,6 +259,7 @@ func _physics_process(delta):
 	# Setiing UI feedback -------------------
 	_set_lighting(delta)
 	_set_hp_bar(delta)	
+	_set_mini_map_camera(true)
 	
 	# Sounds -----------------------
 	if Vector2(velocity.x, velocity.z).length() < WALK_SPEED * 0.3:
@@ -269,6 +269,16 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("force_die"):
 		_die()
 		
+		
+func _set_mini_map_camera(visible):
+	minimap_camera.visible = visible
+	minimap_camera.global_transform.origin = $Mesh/MiniMapCameraPosition.global_transform.origin
+	minimap_camera.rotation_degrees = Vector3(-90, -180, 0)
+	if Input.is_action_just_pressed("map_zoom_out"):
+		minimap_camera.size = clamp(minimap_camera.size + 20, 20, 200)
+	elif Input.is_action_just_pressed("map_zoom_in"):
+		minimap_camera.size = clamp(minimap_camera.size - 20, 20, 200)	
+	
 func _stop_steps_sounds():
 	left_walk_step_sound.stop()
 	right_walk_step_sound.stop()
@@ -312,9 +322,9 @@ func _on_pumpkin_collected(energy):
 	target_light_range = light.omni_range + energy
 	
 func _set_hp_bar(delta):
-	if health_bar and current_health_bar:
-		var new_bar_width = lerp(current_health_bar.rect_size.x, state.hp * health_bar.rect_size.x / MAX_HP, delta * 10)
-		current_health_bar.rect_size.x = clamp(new_bar_width, 0, health_bar.rect_size.x)
+	if health_bar:
+		var new_hp = lerp(health_bar.ratio, state.hp / MAX_HP, delta * 10)
+		health_bar.ratio = new_hp
 	
 func _set_lighting(delta):
 	light.visible = state.light_enabled
@@ -326,8 +336,9 @@ func _set_lighting(delta):
 	
 	state.light_range = light.omni_range
 	_set_skin_energy(state.light_range / MAX_LIGHT_RANGE if state.light_enabled else 0.1)
-	if light_bar and current_light_bar:
-		current_light_bar.rect_size.x = lerp(current_light_bar.rect_size.x, state.light_range * light_bar.rect_size.x / MAX_LIGHT_RANGE, delta * 10)
+	if light_bar:
+		var new_light = lerp(light_bar.ratio, state.light_range / MAX_LIGHT_RANGE, delta * 10)
+		light_bar.ratio = new_light
 
 func _set_skin_energy(energy):
 	if energy < 0.05:

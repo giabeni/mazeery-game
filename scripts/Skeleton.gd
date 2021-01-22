@@ -109,8 +109,7 @@ func _physics_process(delta):
 			alive_collision.set_deferred("disabled", false)
 			sleep_collision.set_deferred("disabled", true)
 			hp_bar.hide()
-			if not weapon.visible:
-				weapon.show()
+			weapon.show()
 
 			
 			# Hack to restart monitoring of sight area
@@ -129,9 +128,7 @@ func _physics_process(delta):
 			alive_collision.set_deferred("disabled", false)
 			sleep_collision.set_deferred("disabled", true)
 			hp_bar.show()
-			
-			if not weapon.visible:
-				weapon.show()
+			weapon.show()
 			
 			_follow_target(delta)
 			_check_for_players_in_sight()
@@ -143,9 +140,7 @@ func _physics_process(delta):
 			alive_collision.set_deferred("disabled", false)
 			sleep_collision.set_deferred("disabled", true)
 			hp_bar.show()
-			
-			if not weapon.visible:
-				weapon.show()
+			weapon.show()
 			
 			_follow_target(delta)
 			_check_for_players_in_sight()
@@ -157,9 +152,7 @@ func _physics_process(delta):
 			alive_collision.set_deferred("disabled", true)
 			sleep_collision.set_deferred("disabled", false)
 			hp_bar.hide()
-			
-			if not weapon.visible:
-				weapon.show()
+			weapon.show()
 			
 # ==== SLEEP STATUS HANDLERS ===== #
 
@@ -304,7 +297,7 @@ func _follow_target(delta):
 
 # If enemy return to spawn point
 func _is_at_retreat_area():
-	print ("distance to origin = ", self.global_transform.origin.distance_to(initial_origin))
+#	print ("distance to origin = ", self.global_transform.origin.distance_to(initial_origin))
 	return self.global_transform.origin.distance_to(initial_origin) <= 1
 
 # Checks for player in attack area

@@ -237,6 +237,7 @@ func _die():
 	audio_bite.playing = false
 	audio_steps.playing = false
 	anim_tree.active = false
+	$MiniMapThumb.hide()
 	health_bar.hide()
 	anim_player.play("Spider_Death")
 	yield(anim_player, "animation_finished")

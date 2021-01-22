@@ -10,7 +10,11 @@ export(PackedScene) var enemy_scene = null
 onready var gem_container: Spatial = $GemContainer
 onready var item_container: Spatial = $PumpkinContainter
 onready var enemy_container: Spatial = $EnemyContainer
+onready var map_fragment: RigidBody = $FragmentContainer/Parchment
+onready var map_fragment_area: Area = $FragmentContainer/Parchment/PickableArea
 onready var section_area: Area = $Area
+onready var minimap_plant: Sprite3D = $MiniMapThumb
+onready var minimap_cover: Sprite3D = $MiniMapCover
 
 var gem: Talisman
 var enemy: Spatial
@@ -28,6 +32,7 @@ func _ready():
 	
 	section_area.connect("body_entered", self, "_on_Area_body_entered")
 	section_area.connect("body_exited", self, "_on_Area_body_exited")
+	map_fragment_area.connect("body_entered", self, "_on_MapFragment_body_entered")
 	
 	if (gem_scene):
 		call_deferred("_instance_gem", gem_scene)
@@ -84,7 +89,7 @@ func spawn_enemy():
 		enemy_container.add_child(enemy)
 		enemy.transform.origin = Vector3(0, 0, 0)
 #		enemy.scale = Vector3(0.5, 0.5, 0.5)
-	elif enemy != null:
+	elif is_instance_valid(enemy):
 		enemy.request_ready()
 		enemy_container.add_child(enemy)
 		
@@ -92,14 +97,21 @@ func despawn_enemy():
 	if (enemy):
 		enemy_container.remove_child(enemy)
 		
-func set_visible(visible):
-	self.visible = visible
-	$GridMap.visible = visible
+func set_visible(_visible):
+	self.visible = _visible
+	$GridMap.visible = _visible
 	
 func _should_despawn_enemy():
 	return is_instance_valid(enemy) and "state" in enemy and enemy.state.sleeping and enemy.state.alive
 	
+func show_minimap():
+	minimap_cover.hide()
+	minimap_plant.show()
 
+func hide_minimap():
+	minimap_plant.hide()
+	minimap_cover.show()
+	
 func _on_Area_body_entered(body: Object):
 	if body.is_in_group("Player"):
 		emit_signal("area_reached", position.x, position.y)
@@ -111,3 +123,9 @@ func _on_Area_body_exited(body):
 	if body.is_in_group("Player") and _should_despawn_enemy():
 		print("Despawning spider")
 		call_deferred("despawn_enemy")
+
+
+func _on_MapFragment_body_entered(body):
+	if body.is_in_group("Player"):
+		show_minimap()
+		$FragmentContainer/Parchment.call_deferred("queue_free")

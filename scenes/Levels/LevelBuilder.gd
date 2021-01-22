@@ -19,6 +19,8 @@ export(float) var SECTION_SIZE = 20
 export var ENEMY_PROB = 0.4
 export var ITEM_PROB = 0.7
 
+export(bool) var DEBUG = false
+
 var enemies_count = 0
 var gems_count = 0
 
@@ -36,7 +38,8 @@ onready var maze: Spatial = $Maze
 func _ready():
 	rng.randomize()
 	
-	_clear_current_maze()
+	if not DEBUG:
+		_clear_current_maze()
 	
 	_clamp_maze_size()
 	
@@ -90,7 +93,7 @@ func _build_maze():
 				var side: Spatial = MAZE_SIDE.instance()
 				side.request_ready()
 				maze.add_child(side)
-				side.rotation_degrees = Vector3(0, 180, 0)
+				side.rotation_degrees = Vector3(0, 0, 0)
 				side.global_transform.origin = Vector3(x, 0, -SECTION_SIZE/2)
 				if side.has_node("SpawnContainer"):
 					spawn_containers.push_back(side.get_node("SpawnContainer"))
@@ -98,7 +101,7 @@ func _build_maze():
 				var side: Spatial = MAZE_SIDE.instance()
 				side.request_ready()
 				maze.add_child(side)
-				side.rotation_degrees = Vector3(0, 0, 0)
+				side.rotation_degrees = Vector3(0, 180, 0)
 				side.global_transform.origin = Vector3(x, 0, Z_SECTIONS * SECTION_SIZE - SECTION_SIZE/2)
 				if side.has_node("SpawnContainer"):
 					spawn_containers.push_back(side.get_node("SpawnContainer"))
@@ -106,7 +109,7 @@ func _build_maze():
 				var side: Spatial = MAZE_SIDE.instance()
 				side.request_ready()
 				maze.add_child(side)
-				side.rotation_degrees = Vector3(0, -90, 0)
+				side.rotation_degrees = Vector3(0, 90, 0)
 				side.global_transform.origin = Vector3(-SECTION_SIZE/2, 0, z)
 				if side.has_node("SpawnContainer"):
 					spawn_containers.push_back(side.get_node("SpawnContainer"))
@@ -114,7 +117,7 @@ func _build_maze():
 				var side: Spatial = MAZE_SIDE.instance()
 				side.request_ready()
 				maze.add_child(side)
-				side.rotation_degrees = Vector3(0, 90, 0)
+				side.rotation_degrees = Vector3(0, -90, 0)
 				side.global_transform.origin = Vector3(Z_SECTIONS * SECTION_SIZE - SECTION_SIZE/2, 0, z)
 				if side.has_node("SpawnContainer"):
 					spawn_containers.push_back(side.get_node("SpawnContainer"))

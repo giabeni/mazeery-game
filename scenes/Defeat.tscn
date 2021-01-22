@@ -3,7 +3,7 @@
 [ext_resource path="res://assets/fonts/murder.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://assets/fonts/default_font.tres" type="DynamicFont" id=2]
 [ext_resource path="res://scenes/Defeat.gd" type="Script" id=3]
-[ext_resource path="res://assets/sounds/Death/defeat.wav" type="AudioStream" id=4]
+[ext_resource path="res://assets/sounds/Death/defeat.ogg" type="AudioStream" id=4]
 [ext_resource path="res://scenes/Fader.tscn" type="PackedScene" id=6]
 
 [sub_resource type="DynamicFont" id=1]
@@ -93,6 +93,7 @@ volume_db = 5.237
 autoplay = true
 
 [node name="Fader" parent="." instance=ExtResource( 6 )]
+
 [connection signal="pressed" from="CanvasLayer/UI/Control/VBoxContainer/CenterContainer/VBoxContainer/RestartButton" to="." method="_on_RestartButton_pressed"]
 [connection signal="pressed" from="CanvasLayer/UI/Control/VBoxContainer/CenterContainer/VBoxContainer/MenuButton" to="." method="_on_MenuButton_pressed"]
 [connection signal="pressed" from="CanvasLayer/UI/Control/VBoxContainer/CenterContainer/VBoxContainer/QuitGameButton" to="." method="_on_QuitGameButton_pressed"]

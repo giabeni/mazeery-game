@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://scripts/Gem.gd" type="Script" id=1]
 [ext_resource path="res://assets/materials/diamond_orange.tres" type="Material" id=2]
 [ext_resource path="res://scenes/Gems/GemSounds.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/icons/Gems/OrangeGem.png" type="Texture" id=4]
 
 [sub_resource type="Shader" id=1]
 resource_name = "Shader Nodetree"
@@ -241,3 +242,8 @@ anims/Collected = SubResource( 5 )
 anims/Idle = SubResource( 6 )
 
 [node name="Sounds" parent="." instance=ExtResource( 3 )]
+
+[node name="MiniMapThumb" type="Sprite3D" parent="."]
+transform = Transform( 10, -9.656e-06, 4.22077e-13, 0, -4.37114e-07, -10, 9.656e-06, 10, -4.37114e-07, 0, -5.96046e-08, 0 )
+layers = 524288
+texture = ExtResource( 4 )

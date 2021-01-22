@@ -1,14 +1,14 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=36 format=2]
 
 [ext_resource path="res://scripts/Camera.gd" type="Script" id=1]
 [ext_resource path="res://assets/sounds/Hurt/simple-hurt.wav" type="AudioStream" id=2]
 [ext_resource path="res://scenes/PunkMan.tscn" type="PackedScene" id=3]
-[ext_resource path="res://assets/sounds/breathing.wav" type="AudioStream" id=4]
+[ext_resource path="res://assets/sounds/Player/breathing.ogg" type="AudioStream" id=4]
 [ext_resource path="res://scenes/BloodSpill.tscn" type="PackedScene" id=5]
 [ext_resource path="res://assets/sounds/steps.wav" type="AudioStream" id=6]
 [ext_resource path="res://assets/sounds/Player/pickup.wav" type="AudioStream" id=7]
 [ext_resource path="res://assets/sounds/Hurt/male-hurt-4.wav" type="AudioStream" id=8]
-[ext_resource path="res://assets/sounds/Win/victory.wav" type="AudioStream" id=9]
+[ext_resource path="res://assets/sounds/Win/victory.ogg" type="AudioStream" id=9]
 [ext_resource path="res://scenes/BackpackSlots.tscn" type="PackedScene" id=10]
 [ext_resource path="res://assets/icons/pumpkin.png" type="Texture" id=11]
 [ext_resource path="res://assets/icons/heart.png" type="Texture" id=12]
@@ -26,26 +26,98 @@ margin = 0.001
 radius = 0.637433
 height = 2.0
 
-[sub_resource type="SpatialMaterial" id=2]
+[sub_resource type="SphereMesh" id=2]
+
+[sub_resource type="SpatialMaterial" id=3]
+resource_name = "Skin"
+params_cull_mode = 2
+albedo_color = Color( 0.94902, 0.541176, 0.14902, 1 )
+metallic = 1.0
 emission_enabled = true
-emission = Color( 0.988235, 0.0509804, 0.0509804, 1 )
-emission_energy = 1.81
+emission = Color( 0.94902, 0.541176, 0.14902, 1 )
+emission_energy = 0.72
 emission_operator = 0
 emission_on_uv2 = false
 
-[sub_resource type="CanvasItemMaterial" id=3]
-next_pass = SubResource( 2 )
-
 [sub_resource type="PrismMesh" id=4]
-size = Vector3( 0.2, 4, 0.2 )
+size = Vector3( 2, 2, 0.1 )
 
 [sub_resource type="SpatialMaterial" id=5]
+albedo_color = Color( 0.898039, 1, 0.776471, 1 )
+emission_enabled = true
+emission = Color( 0.737255, 0.964706, 0.235294, 1 )
+emission_energy = 1.0
+emission_operator = 0
+emission_on_uv2 = false
+
+[sub_resource type="StyleBoxFlat" id=14]
+bg_color = Color( 0.94902, 0.352941, 0.352941, 1 )
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id=15]
+bg_color = Color( 0.678431, 0.0980392, 0.0980392, 0.619608 )
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id=16]
+bg_color = Color( 0.913725, 0.470588, 0.239216, 1 )
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id=17]
+bg_color = Color( 0.678431, 0.364706, 0.0980392, 0.619608 )
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="ProceduralSky" id=8]
+
+[sub_resource type="Environment" id=9]
+background_mode = 1
+background_sky = SubResource( 8 )
+background_color = Color( 0.690196, 0.588235, 0.443137, 1 )
+background_energy = 10.49
+glow_enabled = true
+glow_bloom = 0.16
+adjustment_enabled = true
+adjustment_brightness = 6.0
+adjustment_contrast = 1.19
+adjustment_saturation = 2.93
+
+[sub_resource type="PrismMesh" id=10]
+size = Vector3( 0.2, 4, 0.2 )
+
+[sub_resource type="SpatialMaterial" id=11]
 albedo_color = Color( 0.105882, 0.631373, 0.945098, 1 )
 
-[sub_resource type="SpatialMaterial" id=6]
+[sub_resource type="SpatialMaterial" id=12]
 albedo_color = Color( 0.309804, 0.945098, 0.105882, 1 )
 
-[sub_resource type="SpatialMaterial" id=7]
+[sub_resource type="SpatialMaterial" id=13]
 albedo_color = Color( 1, 0.0901961, 0.0901961, 1 )
 
 [node name="Player" type="KinematicBody" groups=[
@@ -72,6 +144,9 @@ __meta__ = {
 [node name="BloodSpill" parent="Mesh" instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.09814, 0 )
 
+[node name="MiniMapCameraPosition" type="Position3D" parent="Mesh"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 500, -0.105 )
+
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 1.57946, 0 )
 shape = SubResource( 1 )
@@ -91,7 +166,20 @@ transform = Transform( 1, 0, 0, 0, 1, 0, -2.98023e-08, 0, 1, 0, 2.7548, 0 )
 
 [node name="Camera" type="ClippedCamera" parent="Camroot/h/v"]
 transform = Transform( -1, 5.41264e-09, -3.55148e-07, -5.91786e-08, 0.983369, 0.181618, 3.20422e-07, 0.181618, -0.983369, 1.3403e-06, 3.12641, -6.66192 )
+cull_mask = 524287
 current = true
+
+[node name="MinimapThumb" type="MeshInstance" parent="Camroot/h"]
+transform = Transform( -2.38968, 3.93952e-07, -7.29482e-08, -3.05262e-08, -4.17233e-07, 1, 3.9395e-07, 2.38968, -1.49012e-08, -5.57066e-12, -6.19888e-06, -0.62107 )
+layers = 524288
+mesh = SubResource( 2 )
+material/0 = SubResource( 3 )
+
+[node name="MinimapThumbFront" type="MeshInstance" parent="Camroot/h"]
+transform = Transform( -2.41505, 2.11134e-07, -1.05566e-07, -4.37113e-08, -1.19209e-06, 1, 2.53239e-07, 2.89675, -1.49012e-08, 1.47793e-12, -1.90735e-06, 2.12368 )
+layers = 524288
+mesh = SubResource( 4 )
+material/0 = SubResource( 5 )
 
 [node name="SoundBreathing" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 4 )
@@ -131,6 +219,7 @@ anchor_bottom = 1.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 __meta__ = {
+"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
@@ -172,17 +261,17 @@ size_flags_vertical = 3
 
 [node name="TopContainer" type="HBoxContainer" parent="UI/VerticalContainer"]
 margin_right = 924.0
-margin_bottom = 150.0
+margin_bottom = 75.0
 size_flags_horizontal = 3
 
 [node name="LeftContainer" type="Control" parent="UI/VerticalContainer/TopContainer"]
 margin_right = 300.0
-margin_bottom = 150.0
-rect_min_size = Vector2( 300, 150 )
+margin_bottom = 75.0
+rect_min_size = Vector2( 300, 75 )
 
 [node name="TalismansIcons" type="HBoxContainer" parent="UI/VerticalContainer/TopContainer/LeftContainer"]
 margin_right = 374.0
-margin_bottom = 150.0
+margin_bottom = 75.0
 rect_min_size = Vector2( 300, 50 )
 rect_pivot_offset = Vector2( 0, 50 )
 __meta__ = {
@@ -191,107 +280,98 @@ __meta__ = {
 
 [node name="TalismanRed" type="TextureRect" parent="UI/VerticalContainer/TopContainer/LeftContainer/TalismansIcons"]
 margin_right = 50.0
-margin_bottom = 150.0
+margin_bottom = 75.0
 texture = ExtResource( 16 )
 
 [node name="TalismanOrange" type="TextureRect" parent="UI/VerticalContainer/TopContainer/LeftContainer/TalismansIcons"]
 margin_left = 54.0
 margin_right = 104.0
-margin_bottom = 150.0
+margin_bottom = 75.0
 texture = ExtResource( 17 )
 
 [node name="TalismanYellow" type="TextureRect" parent="UI/VerticalContainer/TopContainer/LeftContainer/TalismansIcons"]
 margin_left = 108.0
 margin_right = 158.0
-margin_bottom = 150.0
+margin_bottom = 75.0
 texture = ExtResource( 18 )
 
 [node name="TalismanGreen" type="TextureRect" parent="UI/VerticalContainer/TopContainer/LeftContainer/TalismansIcons"]
 margin_left = 162.0
 margin_right = 212.0
-margin_bottom = 150.0
+margin_bottom = 75.0
 texture = ExtResource( 15 )
 
 [node name="TalismanCyan" type="TextureRect" parent="UI/VerticalContainer/TopContainer/LeftContainer/TalismansIcons"]
 margin_left = 216.0
 margin_right = 266.0
-margin_bottom = 150.0
+margin_bottom = 75.0
 texture = ExtResource( 13 )
 
 [node name="TalismanBlue" type="TextureRect" parent="UI/VerticalContainer/TopContainer/LeftContainer/TalismansIcons"]
 margin_left = 270.0
 margin_right = 320.0
-margin_bottom = 150.0
+margin_bottom = 75.0
 texture = ExtResource( 14 )
 
 [node name="TalismanPurple" type="TextureRect" parent="UI/VerticalContainer/TopContainer/LeftContainer/TalismansIcons"]
 margin_left = 324.0
 margin_right = 374.0
-margin_bottom = 150.0
+margin_bottom = 75.0
 texture = ExtResource( 19 )
 
 [node name="MiddleContainer" type="Control" parent="UI/VerticalContainer/TopContainer"]
 margin_left = 304.0
 margin_right = 670.0
-margin_bottom = 150.0
+margin_bottom = 75.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="RightContainer" type="Control" parent="UI/VerticalContainer/TopContainer"]
 margin_left = 674.0
 margin_right = 924.0
-margin_bottom = 150.0
-rect_min_size = Vector2( 250, 150 )
+margin_bottom = 75.0
+rect_min_size = Vector2( 250, 75 )
 
-[node name="HealthBar" type="ColorRect" parent="UI/VerticalContainer/TopContainer/RightContainer"]
-margin_right = 233.0
-margin_bottom = 4.0
-color = Color( 0.45098, 0.0901961, 0.0901961, 0.415686 )
+[node name="HealthBar" type="ProgressBar" parent="UI/VerticalContainer/TopContainer/RightContainer"]
+anchor_right = 1.0
+margin_right = 1.52588e-05
+margin_bottom = 20.0
+custom_styles/fg = SubResource( 14 )
+custom_styles/bg = SubResource( 15 )
+value = 100.0
+percent_visible = false
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="CurrentHealthBar" type="ColorRect" parent="UI/VerticalContainer/TopContainer/RightContainer/HealthBar"]
-material = SubResource( 3 )
-margin_right = 233.0
-margin_bottom = 4.0
-color = Color( 0.945098, 0.313726, 0.243137, 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="heart" type="Sprite" parent="UI/VerticalContainer/TopContainer/RightContainer/HealthBar/CurrentHealthBar"]
+[node name="heart" type="Sprite" parent="UI/VerticalContainer/TopContainer/RightContainer/HealthBar"]
 use_parent_material = true
-position = Vector2( 3.17578, 0.621582 )
-scale = Vector2( 0.0206207, 0.0206207 )
+position = Vector2( -2.48047, 8.7533 )
+scale = Vector2( 0.036177, 0.0354699 )
 texture = ExtResource( 12 )
 
-[node name="LightBar" type="ColorRect" parent="UI/VerticalContainer/TopContainer/RightContainer"]
-margin_top = 35.0
-margin_right = 233.0
-margin_bottom = 39.0
-color = Color( 0.45098, 0.215686, 0.0901961, 0.415686 )
+[node name="LightBar" type="ProgressBar" parent="UI/VerticalContainer/TopContainer/RightContainer"]
+anchor_right = 1.0
+margin_left = -1.41425
+margin_top = 37.4767
+margin_right = -1.41423
+margin_bottom = 57.4767
+custom_styles/fg = SubResource( 16 )
+custom_styles/bg = SubResource( 17 )
+value = 100.0
+percent_visible = false
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="CurrentLightBar" type="ColorRect" parent="UI/VerticalContainer/TopContainer/RightContainer/LightBar"]
-material = SubResource( 3 )
-margin_right = 233.0
-margin_bottom = 4.0
-color = Color( 0.952941, 0.396078, 0.101961, 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="pumpkin" type="Sprite" parent="UI/VerticalContainer/TopContainer/RightContainer/LightBar/CurrentLightBar"]
+[node name="pumpkin" type="Sprite" parent="UI/VerticalContainer/TopContainer/RightContainer/LightBar"]
 use_parent_material = true
-position = Vector2( 3.17578, 0.621582 )
-scale = Vector2( 0.0206207, 0.0206207 )
+position = Vector2( -4.24805, 8.91968 )
+scale = Vector2( 0.0391591, 0.0391591 )
 texture = ExtResource( 11 )
 
 [node name="Space" type="Control" parent="UI/VerticalContainer"]
-margin_top = 154.0
+margin_top = 79.0
 margin_right = 924.0
 margin_bottom = 346.0
 size_flags_horizontal = 3
@@ -309,39 +389,71 @@ margin_bottom = 150.0
 rect_min_size = Vector2( 300, 50 )
 rect_pivot_offset = Vector2( 0, 50 )
 
+[node name="MiniMapContainer" type="ViewportContainer" parent="UI/VerticalContainer/BottomContainer/LeftContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MiniMapViewport" type="Viewport" parent="UI/VerticalContainer/BottomContainer/LeftContainer/MiniMapContainer"]
+size = Vector2( 200, 200 )
+transparent_bg = true
+handle_input_locally = false
+msaa = 4
+render_target_update_mode = 3
+
+[node name="Background" type="ColorRect" parent="UI/VerticalContainer/BottomContainer/LeftContainer/MiniMapContainer/MiniMapViewport"]
+self_modulate = Color( 0.858824, 0.737255, 0.737255, 0.247059 )
+show_behind_parent = true
+margin_right = 200.0
+margin_bottom = 200.0
+color = Color( 0.835294, 0.698039, 0.372549, 1 )
+
+[node name="MiniMapCamera" type="Camera" parent="UI/VerticalContainer/BottomContainer/LeftContainer/MiniMapContainer/MiniMapViewport"]
+transform = Transform( -1, 8.74228e-08, 3.82137e-15, 0, -4.37114e-08, 1, 8.74228e-08, 1, 4.37114e-08, 0, 159.514, 0 )
+cull_mask = 524288
+environment = SubResource( 9 )
+projection = 1
+fov = 22.3
+size = 80.0
+near = 0.01
+far = 8192.0
+
 [node name="MiddleContainer" type="Control" parent="UI/VerticalContainer/BottomContainer"]
 margin_left = 304.0
-margin_right = 420.0
+margin_right = 670.0
 margin_bottom = 150.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="RightContainer" type="Control" parent="UI/VerticalContainer/BottomContainer"]
-margin_left = 424.0
+margin_left = 674.0
 margin_right = 924.0
 margin_bottom = 150.0
-rect_min_size = Vector2( 500, 150 )
+rect_min_size = Vector2( 250, 150 )
 
 [node name="BackpackSlots" parent="UI/VerticalContainer/BottomContainer/RightContainer" instance=ExtResource( 10 )]
-anchor_left = 0.456
-anchor_top = 0.425
-anchor_right = 0.969
-anchor_bottom = 0.425
+anchor_left = 0.0
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_right = 0.0
+margin_bottom = 0.0
 
 [node name="DebugAxes" type="Spatial" parent="."]
 visible = false
 
 [node name="z" type="MeshInstance" parent="DebugAxes"]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -5.96046e-08, 2 )
-mesh = SubResource( 4 )
-material/0 = SubResource( 5 )
+mesh = SubResource( 10 )
+material/0 = SubResource( 11 )
 
 [node name="y" type="MeshInstance" parent="DebugAxes"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0 )
-mesh = SubResource( 4 )
-material/0 = SubResource( 6 )
+mesh = SubResource( 10 )
+material/0 = SubResource( 12 )
 
 [node name="x" type="MeshInstance" parent="DebugAxes"]
 transform = Transform( -4.37114e-08, 1, -4.37114e-08, 0, -4.37114e-08, -1, -1, -4.37114e-08, 1.91069e-15, 2, -5.96046e-08, -1.19209e-07 )
-mesh = SubResource( 4 )
-material/0 = SubResource( 7 )
+mesh = SubResource( 10 )
+material/0 = SubResource( 13 )
